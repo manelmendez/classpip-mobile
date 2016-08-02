@@ -1,6 +1,6 @@
 {
   "name": "classpip",
-  "description": "classpip",
+  "description": "Mobile Application for School Gamification",
   "version": "1.0.0",
   "scripts": {
     "test": "gulp test"

@@ -1,3 +1,5 @@
+/*eslint-env node*/
+
 var gulp = require('gulp');
 var buildBrowserify = require('ionic-gulp-browserify-typescript');
 var runSequence = require('run-sequence');
