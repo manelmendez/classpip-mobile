@@ -1,3 +1,5 @@
+/*eslint-env node*/
+
 var gulp = require('gulp');
 var tslint = require('ionic-gulp-tslint');
 
