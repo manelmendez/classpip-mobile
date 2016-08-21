@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/classpip/classpip-mobile.svg?branch=master)](https://travis-ci.org/classpip/classpip-mobile) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bd643be13e654be1a662a6eea7a43b93)](https://www.codacy.com/app/classpip/classpip-mobile?utm_source=github.com&utm_medium=referral&utm_content=classpip/classpip-mobile&utm_campaign=Badge_Grade)
 
-![classpip-icon](https://github.com/classpip/classpip/raw/master/resources/icontext-land.png)
+[![classpip-icon](https://github.com/classpip/classpip/raw/master/resources/icontext-land.png)](https://www.classpip.com/)
 
 [Classpip](https://www.classpip.com) is a Mobile application for School Gamification. The application is builded around a stack of services and websites to provide a full experience in order to gamificate any educational environment.
 
