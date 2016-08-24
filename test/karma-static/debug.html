@@ -5,15 +5,13 @@ but its purpose is to be loaded in the main frame (not within an iframe),
 just for immediate execution, without reporting to Karma server.
 -->
 <html>
-
 <head>
-  %X_UA_COMPATIBLE%
+%X_UA_COMPATIBLE%
   <title>Karma DEBUG RUNNER</title>
   <link href="favicon.ico" rel="icon" type="image/x-icon" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 </head>
-
 <body>
   <ion-app></ion-app>
   <!-- The scripts need to be at the end of body, so that some test running frameworks
@@ -24,12 +22,10 @@ just for immediate execution, without reporting to Karma server.
   <script src="debug.js"></script>
   <script type="text/javascript">
     // Configure our Karma
-    %
-    CLIENT_CONFIG %
+    %CLIENT_CONFIG%
 
-      // All served files with the latest timestamps
-      %
-      MAPPINGS %
+    // All served files with the latest timestamps
+    %MAPPINGS%
   </script>
   <!-- Dynamically replaced with <script> tags -->
   %SCRIPTS%
@@ -37,5 +33,4 @@ just for immediate execution, without reporting to Karma server.
     window.__karma__.loaded();
   </script>
 </body>
-
 </html>
