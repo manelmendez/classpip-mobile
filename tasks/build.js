@@ -9,7 +9,7 @@ var isRelease = argv.indexOf('--release') > -1;
 
 gulp.task('build', ['clean'], function(done) {
   runSequence(
-    ['tslint', 'eslint', 'sass', 'html', 'fonts', 'scripts'],
+    ['tslint', 'sass', 'html', 'fonts', 'scripts'],
     function() {
       buildBrowserify({
         minify: isRelease,

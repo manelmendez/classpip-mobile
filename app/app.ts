@@ -1,25 +1,30 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
-import {Splashscreen} from 'ionic-native';
-import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
-import {ListPage} from './pages/list/list';
-
+import {Component, provide, Type, ViewChild}            from '@angular/core';
+import {disableDeprecatedForms, provideForms}           from '@angular/forms';
+import {ionicBootstrap, Platform, MenuController, Nav}  from 'ionic-angular';
+import {StatusBar, Splashscreen}                        from 'ionic-native';
+import {HelloIonicPage}                                 from './pages/hello-ionic/hello-ionic';
+import {ListPage}                                       from './pages/list/list';
 
 @Component({
   templateUrl: 'build/app.html'
 })
-class MyApp {
+
+export class MyApp {
+
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = HelloIonicPage;
-  pages: Array<{ title: string, component: any }>;
+  private rootPage: Type;
+  private pages: Array<{ title: string, component: any }>;
+  private menu: MenuController;
+  private platform: Platform;
 
-  constructor(
-    private platform: Platform,
-    private menu: MenuController
-  ) {
+  constructor(platform: Platform, menu: MenuController) {
+
+    this.platform = platform;
+    this.menu = menu;
+
+    this.rootPage = HelloIonicPage;
     this.initializeApp();
 
     // set our app's pages
@@ -29,7 +34,7 @@ class MyApp {
     ];
   }
 
-  initializeApp() {
+  private initializeApp(): void {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -38,7 +43,7 @@ class MyApp {
     });
   }
 
-  openPage(page) {
+  public openPage(page: any): void {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
@@ -46,4 +51,9 @@ class MyApp {
   }
 }
 
-ionicBootstrap(MyApp);
+ionicBootstrap(MyApp, [
+
+  disableDeprecatedForms(),
+  provideForms(),
+  HelloIonicPage
+]);
