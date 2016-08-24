@@ -2,4 +2,5 @@ node_modules/
 platforms/
 plugins/
 typings/
+coverage/
 www/build/

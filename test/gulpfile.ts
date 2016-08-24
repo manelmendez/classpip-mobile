@@ -84,18 +84,6 @@ gulp.task('karma-debug', (done: Function) => {
   new karma.Server(karmaOpts, done).start();
 });
 
-// run tslint against all typescript
-// gulp.task('lint', () => {
-//
-//   let tslint: any = require('gulp-tslint');
-//
-//   return gulp.src(join(config.appDir, '**/*.ts'))
-//     .pipe(tslint({
-//       formatter: 'verbose',
-//     }))
-//     .pipe(tslint.report());
-// });
-
 // build unit tests, run unit tests, remap and report coverage
 gulp.task('unit-test', (done: Function) => {
   runSequence(

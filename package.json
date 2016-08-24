@@ -3,11 +3,8 @@
   "description": "Mobile Application for School Gamification",
   "version": "1.0.0",
   "scripts": {
-    "build": "gulp --gulpfile test/gulpfile.ts --cwd ./ build-app",
-    "e2e": "gulp --gulpfile test/gulpfile.ts --cwd ./ build-e2e && protractor test/protractor.conf.js",
     "karma": "gulp --gulpfile test/gulpfile.ts --cwd ./ karma-debug",
-    "postinstall": "ionic state restore && typings install && webdriver-manager update && cp test/karma-static/*.html node_modules/karma/static",
-    "start": "ionic serve",
+    "postinstall": "typings install && cp test/karma-static/*.html node_modules/karma/static",
     "test": "gulp --gulpfile test/gulpfile.ts --cwd ./ unit-test"
   },
   "repository": {
@@ -46,7 +43,6 @@
     "gulp-typescript": "2.13.6",
     "gulp-watch": "4.3.9",
     "ionic-gulp-browserify-typescript": "2.0.0",
-    "ionic-gulp-eslint": "1.0.0",
     "ionic-gulp-fonts-copy": "1.0.0",
     "ionic-gulp-html-copy": "1.0.0",
     "ionic-gulp-sass-build": "1.0.0",
@@ -81,17 +77,21 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard"
   ],
-  "cordovaPlatforms": [{
-    "platform": "android",
-    "version": "",
-    "locator": "android"
-  }, {
-    "platform": "ios",
-    "version": "",
-    "locator": "ios"
-  }, {
-    "platform": "browser",
-    "version": "",
-    "locator": "browser"
-  }]
+  "cordovaPlatforms": [
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
+    },
+    {
+      "platform": "ios",
+      "version": "",
+      "locator": "ios"
+    },
+    {
+      "platform": "browser",
+      "version": "",
+      "locator": "browser"
+    }
+  ]
 }
