@@ -90,6 +90,7 @@ gulp.task('unit-test', (done: Function) => {
     ['clean'], // Ionic's clean task, nukes the whole of www/build
     ['tslint', 'html'],
     'karma',
+    'coveralls',
     (<any>done)
   );
 });

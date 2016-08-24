@@ -1,6 +1,8 @@
 # Classpip Mobile Application
 
-[![Build Status](https://travis-ci.org/classpip/classpip-mobile.svg?branch=master)](https://travis-ci.org/classpip/classpip-mobile) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bd643be13e654be1a662a6eea7a43b93)](https://www.codacy.com/app/classpip/classpip-mobile?utm_source=github.com&utm_medium=referral&utm_content=classpip/classpip-mobile&utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/classpip/classpip-mobile.svg?branch=master)](https://travis-ci.org/classpip/classpip-mobile)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bd643be13e654be1a662a6eea7a43b93)](https://www.codacy.com/app/classpip/classpip-mobile?utm_source=github.com&utm_medium=referral&utm_content=classpip/classpip-mobile&utm_campaign=Badge_Grade)
+[![Coverage Status](https://coveralls.io/repos/github/classpip/classpip-mobile/badge.svg?branch=master)](https://coveralls.io/github/classpip/classpip-mobile?branch=master)
 
 [![classpip-icon](https://github.com/classpip/classpip/raw/master/resources/icontext-land.png)](http://www.classpip.com/)
 
@@ -16,6 +18,7 @@ Make sure you have NodeJS installed. Download the installer [here](https://nodej
 npm install -g ionic@beta
 npm install -g cordova
 npm install -g gulp
+npm install -g typings
 ```
 
 Install ios-deploy to deploy iOS applications to devices.
@@ -26,7 +29,7 @@ npm install -g ios-deploy
 
 ## Local dependencies
 
-All the project dependencies are manage through [npmjs](https://www.npmjs.com/). To install this dependenices you should run:
+All the project dependencies are manage through [npmjs](https://www.npmjs.com/). This command will also download the typings configured in the __typings.json__ file. To install this dependencies you should run:
 
 ```script
 npm install
@@ -62,6 +65,14 @@ Finally if you want to build the application for generating the final artifacts 
 
 ```script
 ionic build [ios|android] --release
+```
+
+## Testing
+
+There are some unit tests configured in the application to validate the integrity of the code. This tests are running using karma over phantomJS. To tun the unit tests configured in the application you should run:
+
+```script
+npm test
 ```
 
 ## License
