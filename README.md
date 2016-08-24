@@ -16,6 +16,7 @@ Make sure you have NodeJS installed. Download the installer [here](https://nodej
 npm install -g ionic@beta
 npm install -g cordova
 npm install -g gulp
+npm install -g typings
 ```
 
 Install ios-deploy to deploy iOS applications to devices.
@@ -26,7 +27,7 @@ npm install -g ios-deploy
 
 ## Local dependencies
 
-All the project dependencies are manage through [npmjs](https://www.npmjs.com/). To install this dependenices you should run:
+All the project dependencies are manage through [npmjs](https://www.npmjs.com/). This command will also download the typings configured in the __typings.json__ file. To install this dependencies you should run:
 
 ```script
 npm install
@@ -62,6 +63,14 @@ Finally if you want to build the application for generating the final artifacts 
 
 ```script
 ionic build [ios|android] --release
+```
+
+## Testing
+
+There are some unit tests configured in the application to validate the integrity of the code. This tests are running using karma over phantomJS. To tun the unit tests configured in the application you should run:
+
+```script
+npm test
 ```
 
 ## License
