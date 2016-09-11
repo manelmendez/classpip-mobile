@@ -2,7 +2,7 @@ import {Component, provide, Type, ViewChild}            from '@angular/core';
 import {disableDeprecatedForms, provideForms}           from '@angular/forms';
 import {ionicBootstrap, Platform, MenuController, Nav}  from 'ionic-angular';
 import {StatusBar, Splashscreen}                        from 'ionic-native';
-import {HelloIonicPage}                                 from './pages/hello-ionic/hello-ionic';
+import {HomePage}                                 from './pages/home/home';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -23,12 +23,12 @@ export class MyApp {
     this.platform = platform;
     this.menu = menu;
 
-    this.rootPage = HelloIonicPage;
+    this.rootPage = HomePage;
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-      { title: 'Home', component: HelloIonicPage },
+      { title: 'Home', component: HomePage },
     ];
   }
 
@@ -53,5 +53,5 @@ ionicBootstrap(MyApp, [
 
   disableDeprecatedForms(),
   provideForms(),
-  HelloIonicPage
+  HomePage
 ]);
