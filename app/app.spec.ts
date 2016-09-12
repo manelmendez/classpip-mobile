@@ -4,7 +4,7 @@ import {
 }                               from '@angular/platform-browser-dynamic/testing';
 import { setBaseTestProviders } from '@angular/core/testing';
 import { MyApp }                from './app';
-import { HelloIonicPage }       from './pages/hello-ionic/hello-ionic';
+import { HomePage }       from './pages/home/home';
 
 // this needs doing _once_ for the entire test suite, hence it's here
 setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
@@ -36,7 +36,7 @@ describe('MyApp', () => {
     myApp = new MyApp(mockClass, mockClass);
   });
 
-  it('initialises with two possible pages', () => {
+  it('initialises with one possible page', () => {
     expect(myApp['pages'].length).toEqual(1);
   });
 
@@ -55,6 +55,6 @@ describe('MyApp', () => {
     spyOn(myApp['nav'], 'setRoot');
     myApp.openPage(myApp['pages'][0]);
     expect(myApp['menu']['close']).toHaveBeenCalled();
-    expect(myApp['nav'].setRoot).toHaveBeenCalledWith(HelloIonicPage);
+    expect(myApp['nav'].setRoot).toHaveBeenCalledWith(HomePage);
   });
 });
