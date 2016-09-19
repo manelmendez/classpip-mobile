@@ -7,7 +7,7 @@ var runSequence = require('run-sequence');
 
 gulp.task('watch', ['clean'], function(done) {
   runSequence(
-    ['linked', 'tslint', 'sass', 'html', 'fonts', 'images', 'scripts'],
+    ['tslint', 'sass', 'html', 'fonts', 'images', 'scripts'],
     function() {
       gulpWatch(['app/**/*.scss', 'node_modules/classpip-theming/**/*.scss', ], function() {
         gulp.start('sass');
