@@ -7,7 +7,7 @@ var runSequence = require('run-sequence');
 
 gulp.task('watch', ['clean'], function(done) {
   runSequence(
-    ['tslint', 'sass', 'html', 'fonts', 'images', 'scripts'],
+    ['linked', 'tslint', 'sass', 'html', 'fonts', 'images', 'scripts'],
     function() {
       gulpWatch(['app/**/*.scss', 'node_modules/classpip-theming/**/*.scss', ], function() {
         gulp.start('sass');
@@ -20,6 +20,10 @@ gulp.task('watch', ['clean'], function(done) {
       });
       gulpWatch('app/**/*.html', function() {
         gulp.start('html');
+      });
+      // watch the linked repository for copying the files on change
+      gulpWatch('../classpip-utils/dist/index.js', function(file) {
+        gulp.start('linked');
       });
       buildBrowserify({
         watch: true
