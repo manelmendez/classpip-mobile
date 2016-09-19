@@ -1,6 +1,18 @@
 /*eslint-env node*/
 
-var gulp = require('gulp');
-var buildSass = require('ionic-gulp-sass-build');
+// Overritten task from https://github.com/driftyco/ionic-gulp-tasks
 
-gulp.task('sass', buildSass);
+var gulp = require('gulp');
+var sassBuild = require('ionic-gulp-sass-build');
+
+gulp.task('sass', function() {
+  return sassBuild({
+    sassOptions: {
+      includePaths: [
+        'node_modules/ionic-angular',
+        'node_modules/ionicons/dist/scss',
+        'node_modules/classpip-theming'
+      ]
+    }
+  });
+});

@@ -3,8 +3,6 @@
 var gulp = require('gulp');
 var tslint = require('ionic-gulp-tslint');
 
-gulp.task('tslint', tslint);
-
 gulp.task('tslint', function() {
   return tslint({
     tslintOptions: {
