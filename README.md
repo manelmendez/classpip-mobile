@@ -1,6 +1,6 @@
 # Classpip Mobile Application
 
-[![Classpip Badge](https://img.shields.io/badge/classpip-mobile-brightgreen.svg)]()
+[![Classpip Badge](https://img.shields.io/badge/classpip-mobile-brightgreen.svg)](https://github.com/classpip/classpip-mobile)
 [![Build Status](https://travis-ci.org/classpip/classpip-mobile.svg?branch=master)](https://travis-ci.org/classpip/classpip-mobile)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bd643be13e654be1a662a6eea7a43b93)](https://www.codacy.com/app/classpip/classpip-mobile?utm_source=github.com&utm_medium=referral&utm_content=classpip/classpip-mobile&utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/classpip/classpip-mobile/badge.svg?branch=master)](https://coveralls.io/github/classpip/classpip-mobile?branch=master)
