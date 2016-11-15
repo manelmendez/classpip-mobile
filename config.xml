@@ -5,14 +5,12 @@
   <author email="ferran.vila.conesa@gmail.com" href="http://www.ferranvila.com/">Ferran Vila</author>
   <content src="index.html"/>
   <access origin="*"/>
-  <access origin="cdvfile://*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>
-  <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
   <platform name="android">
     <allow-intent href="market:*"/>
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
@@ -21,6 +19,12 @@
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi"/>
     <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi"/>
     <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
+    <splash src="resources/android/splash/drawable-land-ldpi-screen.png" density="land-ldpi"/>
+    <splash src="resources/android/splash/drawable-land-mdpi-screen.png" density="land-mdpi"/>
+    <splash src="resources/android/splash/drawable-land-hdpi-screen.png" density="land-hdpi"/>
+    <splash src="resources/android/splash/drawable-land-xhdpi-screen.png" density="land-xhdpi"/>
+    <splash src="resources/android/splash/drawable-land-xxhdpi-screen.png" density="land-xxhdpi"/>
+    <splash src="resources/android/splash/drawable-land-xxxhdpi-screen.png" density="land-xxxhdpi"/>
     <splash src="resources/android/splash/drawable-port-ldpi-screen.png" density="port-ldpi"/>
     <splash src="resources/android/splash/drawable-port-mdpi-screen.png" density="port-mdpi"/>
     <splash src="resources/android/splash/drawable-port-hdpi-screen.png" density="port-hdpi"/>
@@ -52,61 +56,33 @@
     <splash src="resources/ios/splash/Default-568h@2x~iphone.png" width="640" height="1136"/>
     <splash src="resources/ios/splash/Default-667h.png" width="750" height="1334"/>
     <splash src="resources/ios/splash/Default-736h.png" width="1242" height="2208"/>
+    <splash src="resources/ios/splash/Default-Landscape-736h.png" width="2208" height="1242"/>
+    <splash src="resources/ios/splash/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
+    <splash src="resources/ios/splash/Default-Landscape~ipad.png" width="1024" height="768"/>
     <splash src="resources/ios/splash/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
     <splash src="resources/ios/splash/Default-Portrait~ipad.png" width="768" height="1024"/>
     <splash src="resources/ios/splash/Default@2x~iphone.png" width="640" height="960"/>
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
-  <preference name="AllowInlineMediaPlayback" value="true"/>
-  <preference name="AndroidLaunchMode" value="singleTop"/>
-  <preference name="android-minSdkVersion" value="16"/>
-  <preference name="BackgroundColor" value="0xFFFFFFFF"/>
-  <preference name="BackupWebStorage" value="cloud"/>
-  <preference name="CordovaWebViewEngine" value="CDVUIWebViewEngine"/>
-  <preference name="DefaultVolumeStream" value="default"/>
-  <preference name="DisallowOverscroll" value="false"/>
-  <preference name="EnableViewportScale" value="false"/>
-  <preference name="Fullscreen" value="false"/>
-  <preference name="GapBetweenPages" value="0"/>
-  <preference name="InAppBrowserStorageEnabled" value="true"/>
-  <preference name="KeepRunning" value="true"/>
-  <preference name="KeyboardDisplayRequiresUserAction" value="true"/>
-  <preference name="MediaPlaybackAllowsAirPlay" value="true"/>
-  <preference name="Orientation" value="portrait"/>
-  <preference name="PageLength" value="0"/>
-  <preference name="PaginationBreakingMode" value="page"/>
-  <preference name="PaginationMode" value="unpaginated"/>
-  <preference name="ShowTitle" value="true"/>
-  <preference name="Suppresses3DTouchGesture" value="false"/>
-  <preference name="SuppressesIncrementalRendering" value="false"/>
-  <preference name="SuppressesLongPressGesture" value="false"/>
-  <preference name="TopActivityIndicator" value="gray"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
-  <preference name="UIWebViewDecelerationSpeed" value="normal"/>
-  <preference name="deployment-target" value="7.0"/>
-  <preference name="target-device" value="handset"/>
-  <preference name="SplashScreenDelay" value="0"/>
-  <preference name="AutoHideSplashScreen" value="false"/>
-  <preference name="FadeSplashScreen" value="true"/>
-  <preference name="FadeSplashScreenDuration" value="500"/>
-  <preference name="ShowSplashScreenSpinner" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashMaintainAspectRatio" value="true"/>
-  <preference name="SplashShowOnlyFirstTime" value="true"/>
-  <preference name="StatusBarOverlaysWebView" value="true"/>
-  <preference name="StatusBarBackgroundColor" value="#000000"/>
-  <preference name="StatusBarStyle" value="blacktranslucent"/>
+  <preference name="FadeSplashScreenDuration" value="300"/>
   <preference name="SplashScreen" value="screen"/>
+  <preference name="SplashScreenDelay" value="3000"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
-  <plugin name="cordova-plugin-device" spec="~1.1.2"/>
-  <plugin name="cordova-plugin-console" spec="~1.0.3"/>
-  <plugin name="cordova-plugin-whitelist" spec="~1.2.2"/>
-  <plugin name="cordova-plugin-splashscreen" spec="~3.2.2"/>
-  <plugin name="cordova-plugin-statusbar" spec="~2.1.3"/>
+  <plugin name="cordova-plugin-device" spec="~1.1.3"/>
+  <plugin name="cordova-plugin-console" spec="~1.0.4"/>
+  <plugin name="cordova-plugin-whitelist" spec="~1.3.0"/>
+  <plugin name="cordova-plugin-splashscreen" spec="~4.0.0"/>
+  <plugin name="cordova-plugin-statusbar" spec="~2.2.0"/>
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
-  <engine name="android" spec="~5.2.1"/>
-  <engine name="ios" spec="~4.2.0"/>
-  <engine name="browser" spec="~4.1.0"/>
+  <engine name="android" spec="~6.1.0"/>
+  <engine name="ios" spec="~4.3.0"/>
+  <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
 </widget>
