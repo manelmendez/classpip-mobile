@@ -20,7 +20,13 @@ npm install -g ionic
 npm install -g cordova
 ```
 
-Install ios-deploy to deploy iOS applications to devices.
+For building iOS projects you have to install **Xcode** and **Ruby** for installing the following gem:
+
+```
+gem install xcodeproj
+```
+
+Install **ios-deploy** to deploy iOS applications to devices.
 
 ```
 sudo npm install -g ios-deploy --unsafe-perm=true --allow-root
@@ -72,6 +78,15 @@ There are some unit tests configured in the application to validate the integrit
 
 ```
 npm test
+```
+
+## Building
+
+For building the application you should execute two scripts located into the /build folder. These scripts use some ENV_VARS that points to diferent certificates and keystores located in your machine.
+
+```
+cd build
+sh build_{ios|android}.sh
 ```
 
 ## License
