@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { LoginService } from '../../providers/login.service';
@@ -19,7 +19,11 @@ export class LoginPage {
     public navController: NavController,
     public loginService: LoginService,
     public utilsService: UtilsService,
-    public translateService: TranslateService) { }
+    public translateService: TranslateService,
+    public menuController: MenuController) {
+
+    this.menuController.enable(false);
+  }
 
   /**
    * This method manages the call to the service for performing a login
