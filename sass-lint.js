@@ -7,5 +7,5 @@ gulp.task('default', function () {
   return gulp.src('src/**/*.s+(a|c)ss')
     .pipe(sassLint())
     .pipe(sassLint.format())
-    .pipe(sassLint.failOnError())
+    .pipe(sassLint.failOnError());
 });
