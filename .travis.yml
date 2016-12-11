@@ -1,6 +1,8 @@
 sudo: false
+
 language: node_js
-node_js:
-- '6'
+node_js: '6'
+
 script:
-- npm run tslint
+    - npm run tslint
+    - npm run sasslint

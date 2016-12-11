@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { LoginService } from '../../providers/login.service';
+import { LoginResponse } from '../../model/login.response.model';
 
 @Component({
   selector: 'page-home',
@@ -8,8 +9,10 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
-    
-  }
+  public user: LoginResponse;
 
+  constructor(public loginService: LoginService) {
+
+    this.user = loginService.getUserInfo();
+  }
 }
