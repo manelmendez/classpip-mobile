@@ -3,7 +3,7 @@
 var gulp = require('gulp');
 var coveralls = require('gulp-coveralls');
 
-gulp.task('coveralls', function() {
+gulp.task('default', function() {
 
     if (!process.env.TRAVIS) {
       return;
