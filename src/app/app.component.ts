@@ -1,22 +1,38 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { HomePage } from '../pages/home/home';
-
+import { LoginPage } from '../pages/login/login';
+import { AppConfig } from '../app/app.config';
+import { HockeyAppService } from '../providers/hockeyapp.service';
 
 @Component({
-  template: `<ion-nav [root]="rootPage"></ion-nav>`
+  templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = HomePage;
 
-  constructor(platform: Platform) {
+  rootPage = LoginPage;
+
+  constructor(
+    public platform: Platform,
+    public translateService: TranslateService,
+    public hockeyAppService: HockeyAppService) {
+
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+
+      // i18n configuration
+      translateService.setDefaultLang(AppConfig.LANG);
+      translateService.use(AppConfig.LANG);
+
+      // hockeyapp check for updates
+      hockeyAppService.checkHockeyAppUpdates(AppConfig.HA_ANDROID, AppConfig.HA_IOS);
+
+      // App initialization
+      if (platform.is('cordova')) {
+        StatusBar.styleDefault();
+        Splashscreen.hide();
+      }
     });
   }
 }

@@ -1,9 +1,9 @@
 {
   "rules": {
     "no-duplicate-variable": true,
-    "no-unused-variable": [
-      true
-    ]
+    "no-unused-variable": [true],
+    "no-console": [true, "log"],
+    "no-any": true
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"

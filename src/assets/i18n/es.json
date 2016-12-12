@@ -1,0 +1,16 @@
+{
+  "APP": {
+    "ERROR": "ERROR",
+    "WAIT": "Por favor, espera...",
+    "OK": "OK"
+  },
+  "LOGIN": {
+    "USERNAME": "Usuario",
+    "PASSWORD": "Contraseña",
+    "LOGIN": "ENTRAR"
+  },
+  "ERROR": {
+    "LOGIN_FAILED": "El nombre de usuario y/o la contraseña son inválidas.",
+    "INTERNAL_ERROR": "Ha ocurrido un error interno en el servidor. Por favor contacta con tu administrador. "
+  }
+}
