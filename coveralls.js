@@ -8,5 +8,5 @@ gulp.task('default', function() {
     if (!process.env.TRAVIS) {
       return;
     }
-    return gulp.src('coverage/lcov.info').pipe(coveralls());
+    return gulp.src('coverage/coverage.lcov').pipe(coveralls());
 });
