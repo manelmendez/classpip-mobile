@@ -45,6 +45,7 @@ npm install
 For development purposes, you have to restore the cordova state of the application. All the platforms and plugins files are not uploaded into the repo but you could download with the following command:
 
 ```
+mkdir www
 cordova prepare
 ```
 
