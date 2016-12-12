@@ -8,7 +8,7 @@ import { Page } from '../../model/page.model';
 
 @Component({
   selector: 'page-menu',
-  templateUrl: 'menu.html'
+  templateUrl: './menu.html'
 })
 export class MenuPage {
 

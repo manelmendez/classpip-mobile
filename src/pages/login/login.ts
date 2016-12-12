@@ -9,7 +9,7 @@ import { Login } from '../../model/login.model';
 
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html'
+  templateUrl: './login.html'
 })
 export class LoginPage {
 
