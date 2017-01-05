@@ -26,7 +26,7 @@ execute_command "cordova prepare" "Installing cordova dependencies..."
 
 # Build the application
 execute_command "ionic info" ""
-execute_command "ionic build android --release" "Building the app..."
+execute_command "ionic build android --prod --release" "Building the app..."
 execute_command "echo ${KEYSTOREPWD} | jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ${KEYSTORE} ${BUILD_APK} ${KEYSTOREALIAS}" "Signing the app..."
 execute_command "${BUILD_TOOLS}/zipalign -f -v 4 ${BUILD_APK} ${BUILD_DIR}/${APK_NAME}" "Aligning the app..."
 execute_command "mv ${BUILD_DIR}/${APK_NAME} ${OUTPUT_APK}" "Moving final apk..."

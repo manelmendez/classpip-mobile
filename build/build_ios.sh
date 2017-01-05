@@ -27,7 +27,7 @@ execute_command "cordova prepare" "Installing cordova dependencies..."
 
 # Build the application
 execute_command "ionic info" ""
-execute_command "ionic build ios --release" "Building the app..."
+execute_command "ionic build ios --prod --release" "Building the app..."
 execute_command "xcodebuild clean -project ${XCODEPROJ} -configuration Release -alltargets" "Cleaning the project..."
 execute_command "rm -rf ${ARCHIVE}" ""
 execute_command "xcodebuild archive -project ${XCODEPROJ} -scheme ${SCHEME} -archivePath ${ARCHIVE} -configuration Release PROVISIONING_PROFILE=${UUID} CODE_SIGN_IDENTITY=\"${CODE_SIGN}\"" "Generating xcarchive..."
