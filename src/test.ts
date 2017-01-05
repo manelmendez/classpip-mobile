@@ -9,7 +9,7 @@ import 'zone.js/dist/fake-async-test';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
-import { App, MenuController, NavController, Platform, Config, Keyboard, Form, IonicModule, LoadingController, AlertController, GestureController } from 'ionic-angular';
+import { App, MenuController, NavController, Platform, Config, Keyboard, Form, IonicModule, LoadingController, AlertController, GestureController, DomController } from 'ionic-angular';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate/ng2-translate';
 import { ConfigMock } from './mocks';
 
@@ -73,7 +73,7 @@ export class TestUtils {
       providers: [
         App, Platform, Form, Keyboard, MenuController, NavController,
         LoadingController, AlertController, GestureController,
-        TranslateService, TranslateLoader, TranslateParser,
+        TranslateService, TranslateLoader, TranslateParser, DomController,
         { provide: Config, useClass: ConfigMock },
         // services
         LoginService,
