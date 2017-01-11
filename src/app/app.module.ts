@@ -11,6 +11,7 @@ import { AppConfig } from './app.config';
 import { LoginPage } from '../pages/login/login';
 import { MenuPage } from '../pages/menu/menu';
 import { HomePage } from '../pages/home/home';
+import { RoleSelectPage } from '../pages/role-select/role-select';
 
 //services
 import { LoginService } from '../providers/login.service';
@@ -32,7 +33,8 @@ export function exportTranslateStaticLoader(http: Http) {
     MyApp,
     LoginPage,
     MenuPage,
-    HomePage
+    HomePage,
+    RoleSelectPage
   ],
   imports: [
     TranslateModule.forRoot({
@@ -47,7 +49,8 @@ export function exportTranslateStaticLoader(http: Http) {
     MyApp,
     LoginPage,
     MenuPage,
-    HomePage
+    HomePage,
+    RoleSelectPage
   ],
   providers: [
     LoginService,

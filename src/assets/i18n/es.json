@@ -4,7 +4,13 @@
     "WAIT": "Por favor, espera...",
     "OK": "OK"
   },
+  "ROLE-SELECT": {
+    "TEACHER": "Docente",
+    "STUDENT": "Estudiante",
+    "SCHOOL-LEADER": "Director de Escuela"
+  },
   "LOGIN": {
+    "TITLE": "Classpip",
     "USERNAME": "Usuario",
     "PASSWORD": "Contraseña",
     "LOGIN": "ENTRAR"

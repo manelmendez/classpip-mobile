@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Nav } from 'ionic-angular';
 
-import { LoginPage } from '../login/login';
+import { RoleSelectPage } from '../role-select/role-select';
 import { HomePage } from '../home/home';
 import { LoginService } from '../../providers/login.service';
 import { Page } from '../../model/page.model';
@@ -23,7 +23,7 @@ export class MenuPage {
 
     this.rootPage = HomePage;
     this.pages = [
-      new Page('Home', HomePage)
+      new Page(HomePage, 'Home')
     ];
   }
   /**
@@ -39,7 +39,7 @@ export class MenuPage {
    */
   public logout(): void {
     this.loginService.logout().subscribe(success => {
-      this.nav.setRoot(LoginPage)
+      this.nav.setRoot(RoleSelectPage)
     });
   }
 

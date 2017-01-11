@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
 
-/**
- * This data model object is used to store the pages of
- * the application to display on the menu.
- */
 export class Page {
 
   private _title: string;
   private _component: Component;
 
-  constructor(title: string, component: Component) {
-    this._title = title;
+  constructor(component: Component, title?: string) {
     this._component = component;
+    this._title = title;
   }
 
   public get title(): string {
