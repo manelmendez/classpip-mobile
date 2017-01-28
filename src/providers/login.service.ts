@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { AppConfig } from '../app/app.config';
 import { UtilsService } from './utils.service';
 import { Login } from '../model/login.model';
+import { Role } from '../model/role.model';
 import { LoginResponse } from '../model/login.response.model';
 
 @Injectable()
@@ -24,7 +25,22 @@ export class LoginService {
    */
   public login(login: Login): Observable<Response> {
 
-    return this.http.post(AppConfig.LOGIN_URL, login)
+    var url:string;
+    switch (this.utilsService.role) {
+      case Role.STUDENT:
+        url = AppConfig.STUDENT_LOGIN_URL;
+        break;
+      case Role.TEACHER:
+        url = AppConfig.TEACHER_LOGIN_URL;
+        break;
+      case Role.SCHOOLADMIN:
+        url = AppConfig.SCHOOLADMIN_LOGIN_URL;
+        break;
+      default:
+        break;
+    }
+
+    return this.http.post(url, login)
       .map(response => {
         this.currentUser = LoginResponse.toObject(response.json());
         return response;
@@ -42,7 +58,7 @@ export class LoginService {
     return this.currentUser;
   }
 
-  /** 
+  /**
    * This method executes a logout into the application, removes
    * the current logged user
    * @return {Observable<Boolean>} returns an observable with the result
@@ -53,7 +69,22 @@ export class LoginService {
     let headers: Headers = new Headers();
     let options: RequestOptions = new RequestOptions({ headers: this.setAuthorizationHeader(headers) });
 
-    return this.http.post(AppConfig.LOGOUT_URL, {}, options)
+    var url:string;
+    switch (this.utilsService.role) {
+      case Role.STUDENT:
+        url = AppConfig.STUDENT_LOGOUT_URL;
+        break;
+      case Role.TEACHER:
+        url = AppConfig.TEACHER_LOGOUT_URL;
+        break;
+      case Role.SCHOOLADMIN:
+        url = AppConfig.SCHOOLADMIN_LOGOUT_URL;
+        break;
+      default:
+        break;
+    }
+
+    return this.http.post(url, {}, options)
       .map(response => {
         this.currentUser = null;
         return true;

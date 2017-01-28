@@ -7,7 +7,7 @@
     <ion-col></ion-col>
   </ion-row>
   <ion-list>
-    <ion-item (click)="openPage(loginPage)">
+    <ion-item (click)="openPage(loginPage, role.TEACHER)">
       <ion-avatar item-left>
         <img src="assets/icon-teacher.svg">
       </ion-avatar>
@@ -26,7 +26,7 @@
         <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
     </ion-item>
-    <ion-item (click)="openPage(loginPage)">
+    <ion-item (click)="openPage(loginPage, role.SCHOOLADMIN)">
       <ion-avatar item-left>
         <img src="assets/icon-school-leader.svg">
       </ion-avatar>

@@ -6,11 +6,13 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { AppConfig } from '../app/app.config';
 import { ErrorResponse } from '../model/error.response.model';
+import { Role } from '../model/role.model';
 
 @Injectable()
 export class UtilsService {
 
   public loading: Loading;
+  private _role: Role;
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -32,7 +34,7 @@ export class UtilsService {
     this.loading.present();
   }
 
-  /** 
+  /**
    * Remove the current loading mask from the screem
    */
   public removeLoading(): void {
@@ -74,6 +76,9 @@ export class UtilsService {
       case 401:
         if (error.code === AppConfig.LOGIN_FAILED) {
           message = this.translateService.instant('ERROR.LOGIN_FAILED');
+        }
+        else if (error.code === AppConfig.LOGIN_FAILED_EMAIL_NOT_VERIFIED) {
+          message = this.translateService.instant('ERROR.LOGIN_FAILED_EMAIL_NOT_VERIFIED');
         } else {
           // Unauthorized request (login again)
           location.reload();
@@ -88,4 +93,13 @@ export class UtilsService {
     }
     return Observable.throw(message);
   }
+
+	public get role(): Role {
+		return this._role;
+	}
+
+	public set role(value: Role) {
+		this._role = value;
+	}
+
 }
