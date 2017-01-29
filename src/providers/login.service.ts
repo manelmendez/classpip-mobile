@@ -2,16 +2,12 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AppConfig } from '../app/app.config';
-import { UtilsService } from './utils.service';
-import { Login } from '../model/login.model';
-import { Role } from '../model/role.model';
-import { LoginResponse } from '../model/login.response.model';
+import { AppConfig } from '../app';
+import { UtilsService } from '../providers/utils.service';
+import { Credentials, Role, Login } from '../model';
 
 @Injectable()
 export class LoginService {
-
-  private currentUser: LoginResponse;
 
   constructor(
     public http: Http,
@@ -23,39 +19,31 @@ export class LoginService {
    * @param {Login} login Object with login credentials
    * @return {Observable<LoginResponse>} observable object with the login response
    */
-  public login(login: Login): Observable<Response> {
+  public login(credentials: Credentials): Observable<Response> {
 
-    var url:string;
+    var url: string;
     switch (this.utilsService.role) {
       case Role.STUDENT:
-        url = AppConfig.STUDENT_LOGIN_URL;
+        url = AppConfig.STUDENT_URL + AppConfig.LOGIN_URL;
         break;
       case Role.TEACHER:
-        url = AppConfig.TEACHER_LOGIN_URL;
+        url = AppConfig.TEACHER_URL + AppConfig.LOGIN_URL;
         break;
       case Role.SCHOOLADMIN:
-        url = AppConfig.SCHOOLADMIN_LOGIN_URL;
+        url = AppConfig.SCHOOLADMIN_URL + AppConfig.LOGIN_URL;
         break;
       default:
         break;
     }
 
-    return this.http.post(url, login)
+    return this.http.post(url, credentials)
       .map(response => {
-        this.currentUser = LoginResponse.toObject(response.json());
+        this.utilsService.currentUser = Login.toObject(response.json());
         return response;
       })
       .catch((error: Response) => this.utilsService.handleAPIError(error));
 
     //.catch(this.utilsService.handleAPIError);
-  }
-
-  /**
-   * Returns the current logged user stored in memory.
-   * @return {LoginResponse} Object with the user information
-   */
-  public getUserInfo(): LoginResponse {
-    return this.currentUser;
   }
 
   /**
@@ -66,19 +54,20 @@ export class LoginService {
    */
   public logout(): Observable<Response> {
 
-    let headers: Headers = new Headers();
-    let options: RequestOptions = new RequestOptions({ headers: this.setAuthorizationHeader(headers) });
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
 
-    var url:string;
+    var url: string;
     switch (this.utilsService.role) {
       case Role.STUDENT:
-        url = AppConfig.STUDENT_LOGOUT_URL;
+        url = AppConfig.STUDENT_URL + AppConfig.LOGOUT_URL;
         break;
       case Role.TEACHER:
-        url = AppConfig.TEACHER_LOGOUT_URL;
+        url = AppConfig.TEACHER_URL + AppConfig.LOGOUT_URL;
         break;
       case Role.SCHOOLADMIN:
-        url = AppConfig.SCHOOLADMIN_LOGOUT_URL;
+        url = AppConfig.SCHOOLADMIN_URL + AppConfig.LOGOUT_URL;
         break;
       default:
         break;
@@ -86,21 +75,10 @@ export class LoginService {
 
     return this.http.post(url, {}, options)
       .map(response => {
-        this.currentUser = null;
+        this.utilsService.currentUser = null;
         return true;
       })
       .catch((error: Response) => this.utilsService.handleAPIError(error));
-  }
-
-  /**
-   * This method appends the authorization header to the request
-   * @param {Headers} headers Headers object to fill with the Authorization token
-   * @return {Headers} Returns the headers object
-   */
-  private setAuthorizationHeader(headers: Headers): Headers {
-
-    headers.append(AppConfig.AUTH_HEADER, this.getUserInfo().id);
-    return headers;
   }
 
 }

@@ -1,20 +1,20 @@
 import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { RoleSelectPage } from './role-select';
+import { SchoolPage } from './school';
 
-let fixture: ComponentFixture <RoleSelectPage> = null;
+let fixture: ComponentFixture<SchoolPage> = null;
 /* tslint:disable */
 let instance: any = null;
 /* tslint:enable */
 
-describe('Pages: RoleSelect', () => {
+describe('Pages: SchoolPage', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([RoleSelectPage]).then(compiled => {
+  beforeEach(async(() => TestUtils.beforeEachCompiler([SchoolPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));
 
-  it('should create the RoleSelect page', async(() => {
+  it('should create the SchoolPage page', async(() => {
     expect(instance).toBeTruthy();
   }));
 });

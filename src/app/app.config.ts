@@ -1,15 +1,17 @@
-'use strict';
-
 export class AppConfig {
 
   // Server connection
-  public static get SERVER_URL(): string { return 'https://api.classpip.com'; }
-  public static get TEACHER_LOGIN_URL(): string { return this.SERVER_URL + '/api/teachers/login'; }
-  public static get TEACHER_LOGOUT_URL(): string { return this.SERVER_URL + '/api/teachers/logout'; }
-  public static get STUDENT_LOGIN_URL(): string { return this.SERVER_URL + '/api/students/login'; }
-  public static get STUDENT_LOGOUT_URL(): string { return this.SERVER_URL + '/api/students/logout'; }
-  public static get SCHOOLADMIN_LOGIN_URL(): string { return this.SERVER_URL + '/api/schooladministrators/login'; }
-  public static get SCHOOLADMIN_LOGOUT_URL(): string { return this.SERVER_URL + '/api/schooladministrators/logout'; }
+  // public static get SERVER_URL(): string { return 'https://api.classpip.com'; } // PRO
+  public static get SERVER_URL(): string { return 'http://192.168.1.103:3000'; } // DEV
+
+  public static get TEACHER_URL(): string { return this.SERVER_URL + '/api/teachers'; }
+  public static get STUDENT_URL(): string { return this.SERVER_URL + '/api/students'; }
+  public static get SCHOOLADMIN_URL(): string { return this.SERVER_URL + '/api/schooladministrators'; }
+
+  public static get LOGIN_URL(): string { return '/login'; }
+  public static get LOGOUT_URL(): string { return '/logout'; }
+
+  public static get SCHOOL_URL(): string { return '/school'; }
 
   public static get AUTH_HEADER(): string { return 'Authorization'; }
 

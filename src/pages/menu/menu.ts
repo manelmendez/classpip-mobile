@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Nav } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { RoleSelectPage } from '../role-select/role-select';
-import { HomePage } from '../home/home';
+import { UtilsService } from '../../providers/utils.service';
 import { LoginService } from '../../providers/login.service';
-import { Page } from '../../model/page.model';
+import { SchoolService } from '../../providers/school.service';
+import { RoleSelectPage, HomePage, SchoolPage } from '../../pages';
+import { Page, School } from '../../model';
 
 @Component({
   selector: 'page-menu',
@@ -15,16 +17,19 @@ export class MenuPage {
   @ViewChild(Nav) nav: Nav;
 
   public rootPage: Component;
-  public pages: Array<Page>;
+  public homePage: Page;
+  public schoolPage: Page;
 
   constructor(
-    public navCtrl: NavController,
+    public navController: NavController,
+    public translateService: TranslateService,
+    public utilsService: UtilsService,
+    public schoolService: SchoolService,
     private loginService: LoginService) {
 
     this.rootPage = HomePage;
-    this.pages = [
-      new Page(HomePage, 'Home')
-    ];
+    this.homePage = new Page(HomePage, this.translateService.instant('HOME.TITLE'));
+    this.schoolPage = new Page(SchoolPage, this.translateService.instant('SCHOOL.TITLE'));
   }
   /**
    * Method for opening a page
@@ -41,6 +46,23 @@ export class MenuPage {
     this.loginService.logout().subscribe(success => {
       this.nav.setRoot(RoleSelectPage)
     });
+  }
+
+  /**
+   * Method called from the home page to open the details of the
+   * school of the current user
+   * @param {School} school to open
+   */
+  public goToSchool(): void {
+
+    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.schoolService.getMySchool().subscribe(
+      ((value: School) => this.navController.push(SchoolPage, { school: value })),
+      error => {
+        this.utilsService.showAlert('ERROR', error);
+        this.utilsService.removeLoading();
+      });
   }
 
 }

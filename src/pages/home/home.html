@@ -3,9 +3,25 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>{{ 'HOME.TITLE' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-  {{user | json}}
+<ion-content>
+  <ion-refresher (ionRefresh)="getSchoolInfo($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- school -->
+  <ion-list no-lines>
+    <ion-item *ngIf="school" (click)="goToSchool()">
+      <ion-thumbnail item-left>
+        <img [src]="school.imageBig">
+      </ion-thumbnail>
+      <h2>{{school.name}}</h2>
+      <h3>{{school.address}}</h3>
+      <p>{{school.city}} {{school.zipCode}}</p>
+      <button ion-button clear item-right icon-only>
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -4,6 +4,10 @@
     "WAIT": "Por favor, espera...",
     "OK": "OK"
   },
+  "MENU": {
+    "TITLE": "Menu",
+    "LOGOUT": "Logout"
+  },
   "ROLE-SELECT": {
     "TEACHER": "Docente",
     "STUDENT": "Estudiante",
@@ -16,6 +20,12 @@
     "LOGIN": "ENTRAR",
     "FORGOT": "Olvidé mi contraseña",
     "REGISTER": "Necesito crear una nueva cuenta"
+  },
+  "HOME": {
+    "TITLE": "Home"
+  },
+  "SCHOOL": {
+    "TITLE": "Mi Escuela"
   },
   "ERROR": {
     "LOGIN_FAILED": "El nombre de usuario y/o la contraseña son inválidas.",

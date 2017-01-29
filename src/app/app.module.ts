@@ -4,24 +4,18 @@ import { Http } from '@angular/http';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 
 // application
-import { MyApp } from './app.component';
-import { AppConfig } from './app.config';
-
-// pages
-import { LoginPage } from '../pages/login/login';
-import { MenuPage } from '../pages/menu/menu';
-import { HomePage } from '../pages/home/home';
-import { RoleSelectPage } from '../pages/role-select/role-select';
-
-//services
-import { LoginService } from '../providers/login.service';
+import { MyApp, AppConfig } from './';
+import { LoginPage, MenuPage, HomePage, RoleSelectPage, SchoolPage } from '../pages';
 import { UtilsService } from '../providers/utils.service';
+import { LoginService } from '../providers/login.service';
+import { SchoolService } from '../providers/school.service';
 import { HockeyAppService } from '../providers/hockeyapp.service';
 
 // rxjs
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/finally';
 
 export function exportTranslateStaticLoader(http: Http) {
   return new TranslateStaticLoader(http, AppConfig.LANG_PATH, AppConfig.LANG_EXT);
@@ -34,7 +28,8 @@ export function exportTranslateStaticLoader(http: Http) {
     LoginPage,
     MenuPage,
     HomePage,
-    RoleSelectPage
+    RoleSelectPage,
+    SchoolPage
   ],
   imports: [
     TranslateModule.forRoot({
@@ -50,12 +45,14 @@ export function exportTranslateStaticLoader(http: Http) {
     LoginPage,
     MenuPage,
     HomePage,
-    RoleSelectPage
+    RoleSelectPage,
+    SchoolPage
   ],
   providers: [
-    LoginService,
     UtilsService,
-    HockeyAppService
+    LoginService,
+    HockeyAppService,
+    SchoolService
   ]
 })
 export class AppModule { }

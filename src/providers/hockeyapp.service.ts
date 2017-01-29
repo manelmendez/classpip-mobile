@@ -21,14 +21,12 @@ export class HockeyAppService {
         window['hockeyapp'].start(function () {
           window['hockeyapp'].checkForUpdate();
         }, function () {
-          this.utilsService.showAlert('ERROR', 'There is a problem starting HockeyApp for android')
           console.error('There is a problem starting HockeyApp for android');
         }, idAndroid);
       } else {
         window['hockeyapp'].start(function () {
           window['hockeyapp'].checkForUpdate();
         }, function () {
-          this.utilsService.showAlert('ERROR', 'There is a problem starting HockeyApp for iOS')
           console.error('There is a problem starting HockeyApp for iOS');
         }, idiOS);
       }

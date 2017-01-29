@@ -78,3 +78,12 @@ export class MenuMock {
     });
   }
 }
+
+export class NavParamsMock {
+  data = {
+  };
+
+  get(param) {
+    return this.data[param];
+  }
+}

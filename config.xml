@@ -106,6 +106,12 @@
   <plugin name="cordova-plugin-statusbar" spec="2.2.1" />
   <plugin name="ionic-plugin-keyboard" spec="2.2.1" />
   <plugin name="cordova-plugin-hockeyapp" spec="2.2.2" />
+  <plugin name="cordova-plugin-googlemaps" spec="1.4.0">
+    <variable name="API_KEY_FOR_ANDROID" value="AIzaSyBxuGj3Z0WcaZy-tlLPgBFzD4SUZny_KuE" />
+    <variable name="API_KEY_FOR_IOS" value="AIzaSyBr0u4hyYelOumyIPcPnx2rNteRmp-wgNQ" />
+    <variable name="NSLOCATIONWHENINUSEUSAGEDESCRIPTION" value="Show your location on the map" />
+    <variable name="NSLOCATIONALWAYSUSAGEDESCRIPTION" value="Trace your location on the map" />
+  </plugin>
   <engine name="android" spec="6.1.0" />
   <engine name="ios" spec="4.3.1" />
 </widget>

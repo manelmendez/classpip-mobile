@@ -4,10 +4,8 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { LoginService } from '../../providers/login.service';
 import { UtilsService } from '../../providers/utils.service';
-import { MenuPage } from '../menu/menu';
-import { Role } from '../../model/role.model';
-import { Login } from '../../model/login.model';
-import { Page } from '../../model/page.model';
+import { MenuPage } from '../../pages';
+import { Role, Page, Credentials } from '../../model';
 
 @Component({
   selector: 'page-login',
@@ -15,7 +13,7 @@ import { Page } from '../../model/page.model';
 })
 export class LoginPage {
 
-  public loginCredentials: Login = new Login();
+  public credentials: Credentials = new Credentials();
   private role: Role;
 
   constructor(
@@ -30,12 +28,12 @@ export class LoginPage {
       case Role.STUDENT:
         break;
       case Role.TEACHER:
-        this.loginCredentials.username = 'teacher-1';
-        this.loginCredentials.password = 'teacher-1';
+        this.credentials.username = 'teacher-1';
+        this.credentials.password = 'teacher-1';
         break;
       case Role.SCHOOLADMIN:
-        this.loginCredentials.username = 'school-admin-1';
-        this.loginCredentials.password = 'school-admin-1';
+        this.credentials.username = 'school-admin-1';
+        this.credentials.password = 'school-admin-1';
         break;
       default:
         console.error('There is no role defined for this: ', this.role);
@@ -51,9 +49,8 @@ export class LoginPage {
    */
   public login(): void {
     this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
-    this.loginService.login(this.loginCredentials).subscribe(
+    this.loginService.login(this.credentials).subscribe(
       response => {
-        this.utilsService.removeLoading();
         this.navController.setRoot(MenuPage)
       },
       error => {

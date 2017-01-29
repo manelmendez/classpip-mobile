@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Loading, LoadingController, AlertController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { AppConfig } from '../app/app.config';
-import { ErrorResponse } from '../model/error.response.model';
-import { Role } from '../model/role.model';
+import { AppConfig } from '../app';
+import { Error, Login, Role } from '../model';
 
 @Injectable()
 export class UtilsService {
 
   public loading: Loading;
   private _role: Role;
+  private _currentUser: Login;
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -26,7 +26,9 @@ export class UtilsService {
   public showLoading(message: string): void {
 
     // Remove the loading mask in case there is something
-    this.removeLoading();
+    if (this.loading) {
+      this.loading.dismiss().catch(() => { });
+    }
 
     this.loading = this.loadingCtrl.create({
       content: message
@@ -41,7 +43,8 @@ export class UtilsService {
 
     if (this.loading) {
       setTimeout(() => {
-        this.loading.dismiss();
+        this.loading.dismiss()
+          .catch(() => { });
       });
     }
   }
@@ -62,14 +65,26 @@ export class UtilsService {
   }
 
   /**
+   * This method appends the authorization header to the request
+   * @param {Headers} headers Headers object to fill with the Authorization token
+   * @return {Headers} Returns the headers object
+   */
+  public setAuthorizationHeader(headers: Headers, idUser: string): Headers {
+    headers.append(AppConfig.AUTH_HEADER, idUser);
+    return headers;
+  }
+
+  /**
    * This method handles the bad responses of the backend
    * @param {Response} response Object with the server response
    * @return {Observable<Response>} Response with the error message
    */
-  public handleAPIError(response: Response): Observable<Response> {
+  /* tslint:disable */
+  public handleAPIError(response: Response): Observable<any> {
+    /* tslint:enable */
 
     let message: string = '';
-    let error: ErrorResponse = ErrorResponse.toObject(response.json().error);
+    let error: Error = Error.toObject(response.json().error);
     console.error(error);
 
     switch (error.status) {
@@ -94,12 +109,25 @@ export class UtilsService {
     return Observable.throw(message);
   }
 
-	public get role(): Role {
-		return this._role;
-	}
+  /**
+   * Getters and Setters
+   * --------------------------------------------------------------------------
+   */
 
-	public set role(value: Role) {
-		this._role = value;
-	}
+  public get role(): Role {
+    return this._role;
+  }
+
+  public set role(value: Role) {
+    this._role = value;
+  }
+
+  public get currentUser(): Login {
+    return this._currentUser;
+  }
+
+  public set currentUser(value: Login) {
+    this._currentUser = value;
+  }
 
 }
