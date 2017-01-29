@@ -1,8 +1,8 @@
 export class AppConfig {
 
   // Server connection
-  // public static get SERVER_URL(): string { return 'https://api.classpip.com'; } // PRO
-  public static get SERVER_URL(): string { return 'http://192.168.1.103:3000'; } // DEV
+  public static get SERVER_URL(): string { return 'https://api.classpip.com'; } // PRO
+  // public static get SERVER_URL(): string { return 'http://192.168.1.103:3000'; } // DEV
 
   public static get TEACHER_URL(): string { return this.SERVER_URL + '/api/teachers'; }
   public static get STUDENT_URL(): string { return this.SERVER_URL + '/api/students'; }
@@ -10,8 +10,8 @@ export class AppConfig {
 
   public static get LOGIN_URL(): string { return '/login'; }
   public static get LOGOUT_URL(): string { return '/logout'; }
-
   public static get SCHOOL_URL(): string { return '/school'; }
+  public static get AVATAR_URL(): string { return '/avatar'; }
 
   public static get AUTH_HEADER(): string { return 'Authorization'; }
 

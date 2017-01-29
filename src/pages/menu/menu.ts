@@ -5,7 +5,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { UtilsService } from '../../providers/utils.service';
 import { LoginService } from '../../providers/login.service';
 import { SchoolService } from '../../providers/school.service';
-import { RoleSelectPage, HomePage, SchoolPage } from '../../pages';
+import { RoleSelectPage, HomePage, SchoolPage, ProfilePage } from '../../pages';
 import { Page, School } from '../../model';
 
 @Component({
@@ -49,6 +49,13 @@ export class MenuPage {
   }
 
   /**
+   * Method for displaying the profile page
+   */
+  public showProfile(): void {
+    this.navController.push(ProfilePage);
+  }
+
+  /**
    * Method called from the home page to open the details of the
    * school of the current user
    * @param {School} school to open
@@ -60,7 +67,7 @@ export class MenuPage {
     this.schoolService.getMySchool().subscribe(
       ((value: School) => this.navController.push(SchoolPage, { school: value })),
       error => {
-        this.utilsService.showAlert('ERROR', error);
+        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
         this.utilsService.removeLoading();
       });
   }

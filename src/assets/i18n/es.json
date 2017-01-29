@@ -6,6 +6,7 @@
   },
   "MENU": {
     "TITLE": "Menu",
+    "PROFILE": "Mi Perfil",
     "LOGOUT": "Logout"
   },
   "POPOVER": {
@@ -30,6 +31,24 @@
   },
   "SCHOOL": {
     "TITLE": "Mi Escuela"
+  },
+  "PROFILE": {
+    "TITLE": "Mi Perfil",
+    "ACCOUNT": "Cuenta",
+    "NAME": "Nombre",
+    "USERNAME": "Nombre de Usuario",
+    "EMAIL": "Correo Electrónico",
+    "CHANGEPASS": "Cambiar Contraseña",
+    "RESOURCES": "Recursos",
+    "HELP": "Ayuda",
+    "TERMS": "Privacidad y Términos",
+    "VERSION": "Versión de la app"
+  },
+  "TERMS": {
+    "TITLE": "Privacidad y Términos"
+  },
+  "HELP": {
+    "TITLE": "Ayuda"
   },
   "ERROR": {
     "LOGIN_FAILED": "El nombre de usuario y/o la contraseña son inválidas.",

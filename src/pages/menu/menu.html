@@ -9,6 +9,9 @@
       <button menuClose ion-item (click)="openPage(homePage)">
         {{homePage.title}}
       </button>
+      <button menuClose ion-item (click)="showProfile()">
+        {{ 'MENU.PROFILE' | translate }}
+      </button>
       <button menuClose ion-item (click)="goToSchool()">
         {{schoolPage.title}}
       </button>

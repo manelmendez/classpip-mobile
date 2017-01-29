@@ -112,6 +112,7 @@
     <variable name="NSLOCATIONWHENINUSEUSAGEDESCRIPTION" value="Show your location on the map" />
     <variable name="NSLOCATIONALWAYSUSAGEDESCRIPTION" value="Trace your location on the map" />
   </plugin>
+  <plugin name="cordova-plugin-app-version" spec="0.1.9" />
   <engine name="android" spec="6.1.0" />
   <engine name="ios" spec="4.3.1" />
 </widget>

@@ -5,11 +5,12 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-tra
 
 // application
 import { MyApp, AppConfig } from './';
-import { LoginPage, MenuPage, HomePage, RoleSelectPage, SchoolPage, PopoverPage } from '../pages';
+import { LoginPage, MenuPage, HomePage, RoleSelectPage, SchoolPage, PopoverPage, ProfilePage, TermsPage, HelpPage } from '../pages';
 import { UtilsService } from '../providers/utils.service';
 import { LoginService } from '../providers/login.service';
 import { SchoolService } from '../providers/school.service';
 import { HockeyAppService } from '../providers/hockeyapp.service';
+import { UserService } from '../providers/user.service';
 
 // rxjs
 import 'rxjs/add/operator/map';
@@ -30,7 +31,10 @@ export function exportTranslateStaticLoader(http: Http) {
     HomePage,
     RoleSelectPage,
     SchoolPage,
-    PopoverPage
+    PopoverPage,
+    ProfilePage,
+    TermsPage,
+    HelpPage
   ],
   imports: [
     TranslateModule.forRoot({
@@ -48,13 +52,17 @@ export function exportTranslateStaticLoader(http: Http) {
     HomePage,
     RoleSelectPage,
     SchoolPage,
-    PopoverPage
+    PopoverPage,
+    ProfilePage,
+    TermsPage,
+    HelpPage
   ],
   providers: [
     UtilsService,
     LoginService,
     HockeyAppService,
-    SchoolService
+    SchoolService,
+    UserService
   ]
 })
 export class AppModule { }

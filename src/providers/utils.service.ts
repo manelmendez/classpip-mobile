@@ -3,6 +3,8 @@ import { Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Loading, LoadingController, AlertController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AppVersion } from 'ionic-native';
+
 
 import { AppConfig } from '../app';
 import { Error, Login, Role } from '../model';
@@ -107,6 +109,15 @@ export class UtilsService {
         break;
     }
     return Observable.throw(message);
+  }
+
+  /**
+   * This method returns the application version
+   */
+  /* tslint:disable */
+  public getAppVersion(): Promise<any> {
+    /* tslint:enable */
+    return AppVersion.getVersionNumber();
   }
 
   /**

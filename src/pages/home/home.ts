@@ -51,7 +51,7 @@ export class HomePage {
       this.utilsService.removeLoading();
     }).subscribe(
       ((value: School) => this.school = value),
-      error => this.utilsService.showAlert('ERROR', error));
+      error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
   }
 
   /**
@@ -66,7 +66,7 @@ export class HomePage {
     this.schoolService.getMySchool().subscribe(
       ((value: School) => this.navController.push(SchoolPage, { school: value })),
       error => {
-        this.utilsService.showAlert('ERROR', error);
+        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
         this.utilsService.removeLoading();
       });
   }

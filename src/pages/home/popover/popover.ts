@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { LoginService } from '../../../providers/login.service';
-import { RoleSelectPage } from '../../../pages';
+import { RoleSelectPage, ProfilePage } from '../../../pages';
 
 @Component({
   selector: 'page-popover',
@@ -29,9 +29,18 @@ export class PopoverPage {
    * Method for calling the logout service
    */
   public logout(): void {
-    this.viewController.dismiss();
-    this.loginService.logout().subscribe(
-      success => this.navController.setRoot(RoleSelectPage),
-      error => location.reload());
+    this.viewController.dismiss().then(
+      value => this.loginService.logout().subscribe(
+        success => this.navController.setRoot(RoleSelectPage),
+        error => location.reload()));
+
+  }
+
+  /**
+   * Method for displaying the profile page
+   */
+  public showProfile(): void {
+    this.viewController.dismiss()
+      .then(value => this.navController.push(ProfilePage));
   }
 }
