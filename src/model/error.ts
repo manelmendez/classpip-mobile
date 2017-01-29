@@ -1,4 +1,4 @@
-export class ErrorResponse {
+export class Error {
 
   private _name: string;
   private _status: number;
@@ -15,9 +15,9 @@ export class ErrorResponse {
   }
 
   /* tslint:disable */
-  static toObject(object: any): ErrorResponse {
+  static toObject(object: any): Error {
     /* tslint:enable */
-    let result: ErrorResponse = new ErrorResponse();
+    let result: Error = new Error();
     if (object != null) {
       result.name = object.name;
       result.status = object.status;

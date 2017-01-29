@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.classpip.mobile" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.classpip.mobile" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Classpip</name>
   <description>Mobile Application for School Gamification</description>
   <author email="ferran.vila.conesa@gmail.com" href="http://www.ferranvila.com/">Ferran Vila</author>
@@ -31,7 +31,7 @@
   <platform name="ios">
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
-    <hook src="hooks/fix_xcode_schemes.rb" type="after_platform_add" />
+    <hook src="build/fix_xcode_schemes.rb" type="after_platform_add" />
     <icon height="57" src="resources/ios/icon/icon.png" width="57" />
     <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
     <icon height="40" src="resources/ios/icon/icon-40.png" width="40" />
@@ -99,13 +99,14 @@
   <preference name="StatusBarBackgroundColor" value="#CC000000" />
   <preference name="StatusBarStyle" value="lightcontent" />
   <preference name="SplashScreen" value="screen" />
-  <plugin name="cordova-plugin-device" spec="~1.1.3" />
-  <plugin name="cordova-plugin-console" spec="~1.0.4" />
-  <plugin name="cordova-plugin-whitelist" spec="~1.3.0" />
-  <plugin name="cordova-plugin-splashscreen" spec="~4.0.0" />
-  <plugin name="cordova-plugin-statusbar" spec="~2.2.0" />
-  <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
-  <plugin name="cordova-plugin-hockeyapp" spec="~2.2.2" />
-  <engine name="android" spec="~6.1.0" />
-  <engine name="ios" spec="~4.3.0" />
+  <plugin name="cordova-plugin-device" spec="1.1.4" />
+  <plugin name="cordova-plugin-console" spec="1.0.5" />
+  <plugin name="cordova-plugin-whitelist" spec="1.3.1" />
+  <plugin name="cordova-plugin-splashscreen" spec="4.0.1" />
+  <plugin name="cordova-plugin-statusbar" spec="2.2.1" />
+  <plugin name="ionic-plugin-keyboard" spec="2.2.1" />
+  <plugin name="cordova-plugin-hockeyapp" spec="2.2.2" />
+  <plugin name="cordova-plugin-app-version" spec="0.1.9" />
+  <engine name="android" spec="6.1.0" />
+  <engine name="ios" spec="4.3.1" />
 </widget>

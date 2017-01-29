@@ -4,8 +4,8 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { LoginService } from '../../providers/login.service';
 import { UtilsService } from '../../providers/utils.service';
-import { MenuPage } from '../menu/menu';
-import { Login } from '../../model/login.model';
+import { MenuPage } from '../../pages';
+import { Role, Page, Credentials } from '../../model';
 
 @Component({
   selector: 'page-login',
@@ -13,7 +13,8 @@ import { Login } from '../../model/login.model';
 })
 export class LoginPage {
 
-  public loginCredentials: Login = new Login();
+  public credentials: Credentials = new Credentials();
+  private role: Role;
 
   constructor(
     public navController: NavController,
@@ -21,6 +22,23 @@ export class LoginPage {
     public utilsService: UtilsService,
     public translateService: TranslateService,
     public menuController: MenuController) {
+
+    // TODO: remove this
+    switch (utilsService.role) {
+      case Role.STUDENT:
+        break;
+      case Role.TEACHER:
+        this.credentials.username = 'teacher-1';
+        this.credentials.password = 'teacher-1';
+        break;
+      case Role.SCHOOLADMIN:
+        this.credentials.username = 'school-admin-1';
+        this.credentials.password = 'school-admin-1';
+        break;
+      default:
+        console.error('There is no role defined for this: ', this.role);
+        break;
+    }
 
     this.menuController.enable(false);
   }
@@ -31,15 +49,23 @@ export class LoginPage {
    */
   public login(): void {
     this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
-    this.loginService.login(this.loginCredentials).subscribe(
+    this.loginService.login(this.credentials).subscribe(
       response => {
-        this.utilsService.removeLoading();
         this.navController.setRoot(MenuPage)
       },
       error => {
         this.utilsService.removeLoading();
         this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
       });
+  }
+
+  /**
+   * This method is used for navigate between pages. The page
+   * to go is passed by parameter
+   * @param {Page} page Page to display
+   */
+  public openPage(page: Page): void {
+    this.navController.push(page.component);
   }
 
 }

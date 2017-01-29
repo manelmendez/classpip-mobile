@@ -3,16 +3,16 @@ import { Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { LoginPage } from '../pages/login/login';
-import { AppConfig } from '../app/app.config';
 import { HockeyAppService } from '../providers/hockeyapp.service';
+import { RoleSelectPage } from '../pages';
+import { AppConfig } from './';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
 
-  rootPage = LoginPage;
+  rootPage = RoleSelectPage;
 
   constructor(
     public platform: Platform,

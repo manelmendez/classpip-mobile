@@ -1,8 +1,4 @@
-/**
- * This object is used to map the server response to
- * the login call.
- */
-export class LoginResponse {
+export class Login {
 
   private _id: string;
   private _ttl: number;
@@ -17,9 +13,9 @@ export class LoginResponse {
   }
 
   /* tslint:disable */
-  static toObject(object: any): LoginResponse {
+  static toObject(object: any): Login {
     /* tslint:enable */
-    let result: LoginResponse = new LoginResponse();
+    let result: Login = new Login();
     if (object != null) {
       result.id = object.id;
       result.ttl = object.ttl;

@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Loading, LoadingController, AlertController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AppVersion } from 'ionic-native';
 
-import { AppConfig } from '../app/app.config';
-import { ErrorResponse } from '../model/error.response.model';
+
+import { AppConfig } from '../app';
+import { Error, Login, Role } from '../model';
 
 @Injectable()
 export class UtilsService {
 
   public loading: Loading;
+  private _role: Role;
+  private _currentUser: Login;
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -24,7 +28,9 @@ export class UtilsService {
   public showLoading(message: string): void {
 
     // Remove the loading mask in case there is something
-    this.removeLoading();
+    if (this.loading) {
+      this.loading.dismiss().catch(() => { });
+    }
 
     this.loading = this.loadingCtrl.create({
       content: message
@@ -32,14 +38,15 @@ export class UtilsService {
     this.loading.present();
   }
 
-  /** 
+  /**
    * Remove the current loading mask from the screem
    */
   public removeLoading(): void {
 
     if (this.loading) {
       setTimeout(() => {
-        this.loading.dismiss();
+        this.loading.dismiss()
+          .catch(() => { });
       });
     }
   }
@@ -60,20 +67,35 @@ export class UtilsService {
   }
 
   /**
+   * This method appends the authorization header to the request
+   * @param {Headers} headers Headers object to fill with the Authorization token
+   * @return {Headers} Returns the headers object
+   */
+  public setAuthorizationHeader(headers: Headers, idUser: string): Headers {
+    headers.append(AppConfig.AUTH_HEADER, idUser);
+    return headers;
+  }
+
+  /**
    * This method handles the bad responses of the backend
    * @param {Response} response Object with the server response
    * @return {Observable<Response>} Response with the error message
    */
-  public handleAPIError(response: Response): Observable<Response> {
+  /* tslint:disable */
+  public handleAPIError(response: Response): Observable<any> {
+    /* tslint:enable */
 
     let message: string = '';
-    let error: ErrorResponse = ErrorResponse.toObject(response.json().error);
+    let error: Error = Error.toObject(response.json().error);
     console.error(error);
 
     switch (error.status) {
       case 401:
         if (error.code === AppConfig.LOGIN_FAILED) {
           message = this.translateService.instant('ERROR.LOGIN_FAILED');
+        }
+        else if (error.code === AppConfig.LOGIN_FAILED_EMAIL_NOT_VERIFIED) {
+          message = this.translateService.instant('ERROR.LOGIN_FAILED_EMAIL_NOT_VERIFIED');
         } else {
           // Unauthorized request (login again)
           location.reload();
@@ -88,4 +110,35 @@ export class UtilsService {
     }
     return Observable.throw(message);
   }
+
+  /**
+   * This method returns the application version
+   */
+  /* tslint:disable */
+  public getAppVersion(): Promise<any> {
+    /* tslint:enable */
+    return AppVersion.getVersionNumber();
+  }
+
+  /**
+   * Getters and Setters
+   * --------------------------------------------------------------------------
+   */
+
+  public get role(): Role {
+    return this._role;
+  }
+
+  public set role(value: Role) {
+    this._role = value;
+  }
+
+  public get currentUser(): Login {
+    return this._currentUser;
+  }
+
+  public set currentUser(value: Login) {
+    this._currentUser = value;
+  }
+
 }
