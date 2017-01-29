@@ -1,7 +1,7 @@
 {
   "name": "classpip",
   "description": "Mobile Application for School Gamification",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
