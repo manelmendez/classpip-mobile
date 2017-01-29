@@ -8,6 +8,10 @@
     "TITLE": "Menu",
     "LOGOUT": "Logout"
   },
+  "POPOVER": {
+    "PROFILE": "Mi Perfil",
+    "LOGOUT": "Logout"
+  },
   "ROLE-SELECT": {
     "TEACHER": "Docente",
     "STUDENT": "Estudiante",

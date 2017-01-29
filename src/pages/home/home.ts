@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { MenuController, Refresher, NavController } from 'ionic-angular';
+import { MenuController, Refresher, NavController, PopoverController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
 import { LoginService } from '../../providers/login.service';
 import { SchoolService } from '../../providers/school.service';
 import { School } from '../../model';
-import { SchoolPage } from '../../pages';
+import { SchoolPage, PopoverPage } from '../../pages';
 
 @Component({
   selector: 'page-home',
@@ -19,8 +19,9 @@ export class HomePage {
   constructor(
     public loginService: LoginService,
     public utilsService: UtilsService,
-    public translateService: TranslateService,
     public schoolService: SchoolService,
+    public translateService: TranslateService,
+    public popoverController: PopoverController,
     public menuController: MenuController,
     public navController: NavController) {
   }
@@ -68,5 +69,18 @@ export class HomePage {
         this.utilsService.showAlert('ERROR', error);
         this.utilsService.removeLoading();
       });
+  }
+
+  /**
+   * Thi method presents the more popover on the home
+   * page to perform some common methods into the application
+   */
+  public presentPopover(event: UIEvent): void {
+
+    let popover = this.popoverController.create(PopoverPage, { nav: this.navController });
+
+    popover.present({
+      ev: event
+    });
   }
 }

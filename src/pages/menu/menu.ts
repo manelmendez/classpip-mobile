@@ -43,9 +43,9 @@ export class MenuPage {
    * Method for calling the logout service
    */
   public logout(): void {
-    this.loginService.logout().subscribe(success => {
-      this.nav.setRoot(RoleSelectPage)
-    });
+    this.loginService.logout().subscribe(
+      success => this.nav.setRoot(RoleSelectPage),
+      error => location.reload());
   }
 
   /**

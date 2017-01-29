@@ -5,7 +5,7 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-tra
 
 // application
 import { MyApp, AppConfig } from './';
-import { LoginPage, MenuPage, HomePage, RoleSelectPage, SchoolPage } from '../pages';
+import { LoginPage, MenuPage, HomePage, RoleSelectPage, SchoolPage, PopoverPage } from '../pages';
 import { UtilsService } from '../providers/utils.service';
 import { LoginService } from '../providers/login.service';
 import { SchoolService } from '../providers/school.service';
@@ -29,7 +29,8 @@ export function exportTranslateStaticLoader(http: Http) {
     MenuPage,
     HomePage,
     RoleSelectPage,
-    SchoolPage
+    SchoolPage,
+    PopoverPage
   ],
   imports: [
     TranslateModule.forRoot({
@@ -46,7 +47,8 @@ export function exportTranslateStaticLoader(http: Http) {
     MenuPage,
     HomePage,
     RoleSelectPage,
-    SchoolPage
+    SchoolPage,
+    PopoverPage
   ],
   providers: [
     UtilsService,
