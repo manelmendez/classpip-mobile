@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavParams, Platform } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker } from 'ionic-native';
 
 import { UtilsService } from '../../providers/utils.service';
 import { School } from '../../model';
+
+declare var google;
 
 @Component({
   selector: 'page-school',
@@ -12,7 +13,12 @@ import { School } from '../../model';
 })
 export class SchoolPage {
 
-  public school: School;
+  @ViewChild('map') mapElement: ElementRef;
+  private school: School;
+  /* tslint:disable */
+  private map: any;
+  /* tslint:enable */
+
 
   constructor(
     public navParams: NavParams,
@@ -23,53 +29,33 @@ export class SchoolPage {
     this.school = this.navParams.data.school;
   }
 
-  /**
-   * Fires when the page appears on the screen.
-   * Used to get all the data needed in page
-   */
-  public ionViewDidEnter(): void {
-  }
-
-  /**
-   * Load map only after view is initialize
-   */
   public ngAfterViewInit(): void {
-    if (this.platform.is('cordova')) {
-      let map = new GoogleMap(document.getElementById('map'));
 
-      // listen to MAP_READY event
-      map.one(GoogleMapsEvent.MAP_READY).then(() => {
+    this.map = new google.maps.Map(
+      this.mapElement.nativeElement, {
+        center: new google.maps.LatLng(this.school.latitude, this.school.longitude),
+        zoom: 18,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true
+      });
 
-        this.utilsService.removeLoading();
+    // create the marker
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter()
+    });
 
-        // move the map's camera to position
-        map.moveCamera({
-          target: new GoogleMapsLatLng(this.school.latitude, this.school.longitude),
-          zoom: 18,
-          tilt: 30
-        }).then(() => {
+    // create the infowinfow
+    let content = '<b>' + this.school.name + '</b><br>' + this.school.address +
+      ' ' + this.school.zipCode + '<br>' + this.school.city + ' ' +
+      this.school.country;
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+    infoWindow.open(this.map, marker);
 
-          // add a marker on the school
-          map.addMarker({
-            position: new GoogleMapsLatLng(this.school.latitude, this.school.longitude),
-            title: this.school.name,
-            snippet: this.school.address + ' ' + this.school.zipCode + '\n' + this.school.city + ' ' + this.school.country
-          }).then((marker: GoogleMapsMarker) => {
-
-            // show the marker tooltip
-            marker.showInfoWindow();
-          }).catch((error) => {
-            this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
-          });
-        }).catch((error) => {
-          this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        });
-      }).catch((error) => {
-        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
-      })
-    } else {
-      this.utilsService.removeLoading();
-    }
+    this.utilsService.removeLoading();
   }
 
 }
