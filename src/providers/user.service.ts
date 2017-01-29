@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AppConfig } from '../app';
+import { AppConfig } from '../app/app.config';
 import { UtilsService } from './utils.service';
-import { Profile, Role, Avatar } from '../model';
+import { Profile } from '../model/profile';
+import { Role } from '../model/role';
+import { Avatar } from '../model/avatar';
 
 @Injectable()
 export class UserService {

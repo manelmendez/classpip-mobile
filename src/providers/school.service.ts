@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AppConfig } from '../app';
+import { AppConfig } from '../app/app.config';
 import { UtilsService } from './utils.service';
-import { School, Role } from '../model';
+import { School } from '../model/school';
+import { Role } from '../model/role';
 
 @Injectable()
 export class SchoolService {

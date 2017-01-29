@@ -6,8 +6,10 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AppVersion } from 'ionic-native';
 
 
-import { AppConfig } from '../app';
-import { Error, Login, Role } from '../model';
+import { AppConfig } from '../app/app.config';
+import { Error } from '../model/error';
+import { Login } from '../model/login';
+import { Role } from '../model/role';
 
 @Injectable()
 export class UtilsService {

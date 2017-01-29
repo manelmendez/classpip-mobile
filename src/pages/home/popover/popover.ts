@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { LoginService } from '../../../providers/login.service';
-import { RoleSelectPage, ProfilePage } from '../../../pages';
+import { RoleSelectPage } from '../../../pages/role-select/role-select';
+import { ProfilePage } from '../../../pages/profile/profile';
 
 @Component({
   selector: 'page-popover',

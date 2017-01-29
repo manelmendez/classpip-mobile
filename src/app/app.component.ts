@@ -4,8 +4,8 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { HockeyAppService } from '../providers/hockeyapp.service';
-import { RoleSelectPage } from '../pages';
-import { AppConfig } from './';
+import { RoleSelectPage } from '../pages/role-select/role-select';
+import { AppConfig } from './app.config';
 
 @Component({
   templateUrl: 'app.html'

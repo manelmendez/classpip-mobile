@@ -3,7 +3,7 @@ import { NavParams, Platform } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
-import { School } from '../../model';
+import { School } from '../../model/school';
 
 declare var google;
 

@@ -4,8 +4,21 @@ import { Http } from '@angular/http';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 
 // application
-import { MyApp, AppConfig } from './';
-import { LoginPage, MenuPage, HomePage, RoleSelectPage, SchoolPage, PopoverPage, ProfilePage, TermsPage, HelpPage } from '../pages';
+import { MyApp } from './app.component';
+import { AppConfig } from './app.config';
+
+// pages
+import { LoginPage } from '../pages/login/login';
+import { MenuPage } from '../pages/menu/menu';
+import { HomePage } from '../pages/home/home';
+import { RoleSelectPage } from '../pages/role-select/role-select';
+import { SchoolPage } from '../pages/school/school';
+import { PopoverPage } from '../pages/home/popover/popover';
+import { ProfilePage } from '../pages/profile/profile';
+import { TermsPage } from '../pages/profile/terms/terms';
+import { HelpPage } from '../pages/profile/help/help';
+
+// services
 import { UtilsService } from '../providers/utils.service';
 import { LoginService } from '../providers/login.service';
 import { SchoolService } from '../providers/school.service';

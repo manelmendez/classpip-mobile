@@ -5,8 +5,12 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { UtilsService } from '../../providers/utils.service';
 import { LoginService } from '../../providers/login.service';
 import { SchoolService } from '../../providers/school.service';
-import { RoleSelectPage, HomePage, SchoolPage, ProfilePage } from '../../pages';
-import { Page, School } from '../../model';
+import { RoleSelectPage } from '../../pages/role-select/role-select';
+import { HomePage } from '../../pages/home/home';
+import { SchoolPage } from '../../pages/school/school';
+import { ProfilePage } from '../../pages/profile/profile';
+import { Page } from '../../model/page';
+import { School } from '../../model/school';
 
 @Component({
   selector: 'page-menu',

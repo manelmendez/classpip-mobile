@@ -1,9 +1,0 @@
-export { HomePage } from './home/home';
-export { LoginPage } from './login/login';
-export { MenuPage } from './menu/menu';
-export { RoleSelectPage } from './role-select/role-select';
-export { SchoolPage } from './school/school';
-export { PopoverPage } from './home/popover/popover';
-export { ProfilePage } from './profile/profile';
-export { HelpPage } from './profile/help/help';
-export { TermsPage } from './profile/terms/terms';

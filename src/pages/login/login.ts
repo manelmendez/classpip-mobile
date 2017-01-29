@@ -4,8 +4,10 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { LoginService } from '../../providers/login.service';
 import { UtilsService } from '../../providers/utils.service';
-import { MenuPage } from '../../pages';
-import { Role, Page, Credentials } from '../../model';
+import { MenuPage } from '../../pages/menu/menu';
+import { Role } from '../../model/role';
+import { Page } from '../../model/page';
+import { Credentials } from '../../model/credentials';
 
 @Component({
   selector: 'page-login',

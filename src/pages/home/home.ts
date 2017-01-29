@@ -5,8 +5,9 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { UtilsService } from '../../providers/utils.service';
 import { LoginService } from '../../providers/login.service';
 import { SchoolService } from '../../providers/school.service';
-import { School } from '../../model';
-import { SchoolPage, PopoverPage } from '../../pages';
+import { School } from '../../model/school';
+import { SchoolPage } from '../../pages/school/school';
+import { PopoverPage } from '../../pages/home/popover/popover';
 
 @Component({
   selector: 'page-home',

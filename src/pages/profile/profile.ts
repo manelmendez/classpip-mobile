@@ -4,8 +4,10 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
 import { UserService } from '../../providers/user.service';
-import { Profile, Avatar } from '../../model';
-import { TermsPage, HelpPage } from '../../pages';
+import { Profile } from '../../model/profile';
+import { Avatar } from '../../model/avatar';
+import { TermsPage } from '../../pages/profile/terms/terms';
+import { HelpPage } from '../../pages/profile/help/help';
 
 @Component({
   selector: 'page-profile',
