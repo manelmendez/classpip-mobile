@@ -16,7 +16,6 @@ import { Credentials } from '../../model/credentials';
 export class LoginPage {
 
   public credentials: Credentials = new Credentials();
-  private role: Role;
 
   constructor(
     public navController: NavController,
@@ -38,7 +37,6 @@ export class LoginPage {
         this.credentials.password = 'school-admin-1';
         break;
       default:
-        console.error('There is no role defined for this: ', this.role);
         break;
     }
 

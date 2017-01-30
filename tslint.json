@@ -1,7 +1,6 @@
 {
   "rules": {
     "no-duplicate-variable": true,
-    "no-unused-variable": [true],
     "no-console": [true, "log"],
     "no-any": true
   },

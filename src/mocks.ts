@@ -81,6 +81,7 @@ export class MenuMock {
 
 export class NavParamsMock {
   data = {
+    school: 1
   };
 
   get(param) {
