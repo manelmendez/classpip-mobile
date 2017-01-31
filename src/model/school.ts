@@ -12,8 +12,16 @@ export class School {
   private _latitude: number;
   private _longitude: number;
   private _imageBig: string;
+  private _facebook: string;
+  private _twitter: string;
+  private _description: string;
+  private _website: string;
 
-  constructor(id?: string, name?: string, address?: string, image?: string, zipCode?: string, city?: string, country?: string, cif?: string, phone?: string, latitude?: number, longitude?: number, imageBig?: string) {
+  constructor(id?: string, name?: string, address?: string, image?: string,
+    zipCode?: string, city?: string, country?: string, cif?: string,
+    phone?: string, latitude?: number, longitude?: number, imageBig?: string,
+    facebook?: string, twitter?: string, description?: string,
+    website?: string) {
     this._id = id;
     this._name = name;
     this._address = address;
@@ -26,6 +34,10 @@ export class School {
     this._latitude = latitude;
     this._longitude = longitude;
     this._imageBig = imageBig;
+    this._facebook = facebook;
+    this._twitter = twitter;
+    this._description = description;
+    this._website = website;
   }
 
   /* tslint:disable */
@@ -45,6 +57,10 @@ export class School {
       result.latitude = object.latitude;
       result.longitude = object.longitude;
       result.imageBig = object.imageBig;
+      result.facebook = object.facebook;
+      result.twitter = object.twitter;
+      result.description = object.description;
+      result.website = object.website;
     }
     return result;
   }
@@ -143,6 +159,38 @@ export class School {
 
   public set imageBig(value: string) {
     this._imageBig = value;
+  }
+
+  public get facebook(): string {
+    return this._facebook;
+  }
+
+  public set facebook(value: string) {
+    this._facebook = value;
+  }
+
+  public get twitter(): string {
+    return this._twitter;
+  }
+
+  public set twitter(value: string) {
+    this._twitter = value;
+  }
+
+  public get description(): string {
+    return this._description;
+  }
+
+  public set description(value: string) {
+    this._description = value;
+  }
+
+  public get website(): string {
+    return this._website;
+  }
+
+  public set website(value: string) {
+    this._website = value;
   }
 
 }

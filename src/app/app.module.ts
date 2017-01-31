@@ -17,6 +17,8 @@ import { PopoverPage } from '../pages/home/popover/popover';
 import { ProfilePage } from '../pages/profile/profile';
 import { TermsPage } from '../pages/profile/terms/terms';
 import { HelpPage } from '../pages/profile/help/help';
+import { TeachersPage } from '../pages/teachers/teachers';
+import { TeacherPage } from '../pages/teachers/teacher/teacher';
 
 // services
 import { UtilsService } from '../providers/utils.service';
@@ -30,6 +32,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/observable/forkJoin';
 
 export function exportTranslateStaticLoader(http: Http) {
   return new TranslateStaticLoader(http, AppConfig.LANG_PATH, AppConfig.LANG_EXT);
@@ -47,7 +51,9 @@ export function exportTranslateStaticLoader(http: Http) {
     PopoverPage,
     ProfilePage,
     TermsPage,
-    HelpPage
+    HelpPage,
+    TeachersPage,
+    TeacherPage
   ],
   imports: [
     TranslateModule.forRoot({
@@ -68,7 +74,9 @@ export function exportTranslateStaticLoader(http: Http) {
     PopoverPage,
     ProfilePage,
     TermsPage,
-    HelpPage
+    HelpPage,
+    TeachersPage,
+    TeacherPage
   ],
   providers: [
     UtilsService,

@@ -35,6 +35,9 @@
     .item-wrapper:last-child .item-block {
       border-bottom: 0;
     }
+    .item-block:first-child {
+      border-top: 0;
+}
   }
   margin: -1px 0 0 0;
 }

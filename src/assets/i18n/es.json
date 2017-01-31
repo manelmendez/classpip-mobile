@@ -27,7 +27,12 @@
     "REGISTER": "Necesito crear una nueva cuenta"
   },
   "HOME": {
-    "TITLE": "Home"
+    "TITLE": "Home",
+    "TEACHERS": "Profesores",
+    "STUDENTS": "Estudiantes",
+    "FACEBOOK": "Facebook",
+    "TWITTER": "Twitter",
+    "WEBSITE": "Web"
   },
   "SCHOOL": {
     "TITLE": "Mi Escuela"
@@ -49,6 +54,14 @@
   },
   "HELP": {
     "TITLE": "Ayuda"
+  },
+  "TEACHERS": {
+    "TITLE": "Profesores"
+  },
+  "TEACHER": {
+    "NAME": "Nombre",
+    "USERNAME": "Nombre de Usuario",
+    "EMAIL": "Correo Electrónico"
   },
   "ERROR": {
     "LOGIN_FAILED": "El nombre de usuario y/o la contraseña son inválidas.",

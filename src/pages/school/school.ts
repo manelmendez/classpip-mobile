@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavParams, Platform } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
@@ -22,7 +22,6 @@ export class SchoolPage {
 
   constructor(
     public navParams: NavParams,
-    public platform: Platform,
     public translateService: TranslateService,
     public utilsService: UtilsService) {
 

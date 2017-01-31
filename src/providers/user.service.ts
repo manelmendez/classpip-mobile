@@ -26,20 +26,7 @@ export class UserService {
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
     });
 
-    var url: string;
-    switch (this.utilsService.role) {
-      case Role.STUDENT:
-        url = AppConfig.STUDENT_URL + '/' + this.utilsService.currentUser.userId;
-        break;
-      case Role.TEACHER:
-        url = AppConfig.TEACHER_URL + '/' + this.utilsService.currentUser.userId;
-        break;
-      case Role.SCHOOLADMIN:
-        url = AppConfig.SCHOOLADMIN_URL + '/' + this.utilsService.currentUser.userId;
-        break;
-      default:
-        break;
-    }
+    var url: string = this.utilsService.getMyUrl();
 
     return this.http.get(url, options)
       .map((response: Response, index: number) => Profile.toObject(response.json()))
@@ -57,20 +44,7 @@ export class UserService {
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
     });
 
-    var url: string;
-    switch (this.utilsService.role) {
-      case Role.STUDENT:
-        url = AppConfig.STUDENT_URL + '/' + this.utilsService.currentUser.userId + AppConfig.AVATAR_URL;
-        break;
-      case Role.TEACHER:
-        url = AppConfig.TEACHER_URL + '/' + this.utilsService.currentUser.userId + AppConfig.AVATAR_URL;
-        break;
-      case Role.SCHOOLADMIN:
-        url = AppConfig.SCHOOLADMIN_URL + '/' + this.utilsService.currentUser.userId + AppConfig.AVATAR_URL;
-        break;
-      default:
-        break;
-    }
+    var url: string = this.utilsService.getMyUrl() + AppConfig.AVATAR_URL;
 
     return this.http.get(url, options)
       .map((response: Response, index: number) => Avatar.toObject(response.json()))

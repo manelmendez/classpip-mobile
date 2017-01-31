@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
-import { MenuController, Refresher, NavController, PopoverController } from 'ionic-angular';
+import { MenuController, Refresher, NavController, PopoverController, Platform } from 'ionic-angular';
+import { CallNumber, InAppBrowser } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
 import { LoginService } from '../../providers/login.service';
 import { SchoolService } from '../../providers/school.service';
 import { School } from '../../model/school';
+import { Role } from '../../model/role';
+import { Teacher } from '../../model/teacher';
+import { Student } from '../../model/student';
 import { SchoolPage } from '../../pages/school/school';
 import { PopoverPage } from '../../pages/home/popover/popover';
+import { TeachersPage } from '../../pages/teachers/teachers';
 
 @Component({
   selector: 'page-home',
@@ -16,15 +21,22 @@ import { PopoverPage } from '../../pages/home/popover/popover';
 export class HomePage {
 
   public school: School;
+  public teachersCount: number;
+  public studentsCount: number;
+  public myRole: Role;
+  public role = Role;
 
   constructor(
     public loginService: LoginService,
     public utilsService: UtilsService,
     public schoolService: SchoolService,
+    public platform: Platform,
     public translateService: TranslateService,
     public popoverController: PopoverController,
     public menuController: MenuController,
     public navController: NavController) {
+
+    this.myRole = this.utilsService.role;
   }
 
   /**
@@ -47,18 +59,95 @@ export class HomePage {
    */
   private getSchoolInfo(refresher?: Refresher): void {
 
-    this.schoolService.getMySchool().finally(() => {
-      refresher ? refresher.complete() : null;
-      this.utilsService.removeLoading();
-    }).subscribe(
-      ((value: School) => this.school = value),
-      error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+    // if the user is the SCHOOLADMIN get more information abaout the school
+    // and the members
+    if (this.myRole === Role.SCHOOLADMIN) {
+
+      this.schoolService.getMySchool().subscribe(
+        ((value: School) => {
+          this.school = value;
+
+          this.schoolService.getMySchoolTeachersCount().subscribe(
+            ((value: number) => {
+              this.teachersCount = value;
+
+              this.schoolService.getMySchoolStudentsCount().finally(() => {
+                refresher ? refresher.complete() : null;
+                this.utilsService.removeLoading();
+              }).subscribe(
+                ((value: number) => this.studentsCount = value),
+                error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+            }),
+            error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+        }),
+        error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+
+    } else {
+
+      this.schoolService.getMySchool().finally(() => {
+        refresher ? refresher.complete() : null;
+        this.utilsService.removeLoading();
+      }).subscribe(
+        ((value: School) => this.school = value),
+        error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+    }
+  }
+
+  /**
+   * Method called from the home page to open the list of the
+   * teachers of the school of the current user
+   */
+  public goToTeachers(): void {
+
+    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.schoolService.getMySchoolTeachers().subscribe(
+      ((value: Array<Teacher>) => {
+        this.navController.push(TeachersPage, { teachers: value })
+      }),
+      error => {
+        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.utilsService.removeLoading();
+      });
+  }
+
+  /**
+   * Method called from the home page to open the list of the
+   * students of the school of the current user
+   */
+  public goToStudents(): void {
+    console.log('goToStudents');
+  }
+
+  /**
+   * Method called from the home page to open an external
+   * browsser with an url. USer for social links
+   * @param url {string} Url to open on an external browser
+   */
+  public openWebsite(url: string): void {
+    this.platform.ready().then(() => {
+      if (this.platform.is('cordova')) {
+        new InAppBrowser(url, '_system');
+      }
+    });
+  }
+
+  /**
+   * Method called from the home page to open the native
+   * phone screen to call a number
+   * @param number {string} Number to call with the native phone
+   */
+  public callNumber(number: string): void {
+    this.platform.ready().then(() => {
+      if (this.platform.is('cordova')) {
+        CallNumber.callNumber(number, false);
+      }
+    });
   }
 
   /**
    * Method called from the home page to open the details of the
    * school of the current user
-   * @param {School} school to open
    */
   public goToSchool(): void {
 
