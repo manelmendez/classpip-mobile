@@ -19,6 +19,8 @@ import { TermsPage } from '../pages/profile/terms/terms';
 import { HelpPage } from '../pages/profile/help/help';
 import { TeachersPage } from '../pages/teachers/teachers';
 import { TeacherPage } from '../pages/teachers/teacher/teacher';
+import { StudentsPage } from '../pages/students/students';
+import { StudentPage } from '../pages/students/student/student';
 
 // services
 import { UtilsService } from '../providers/utils.service';
@@ -53,7 +55,9 @@ export function exportTranslateStaticLoader(http: Http) {
     TermsPage,
     HelpPage,
     TeachersPage,
-    TeacherPage
+    TeacherPage,
+    StudentsPage,
+    StudentPage
   ],
   imports: [
     TranslateModule.forRoot({
@@ -76,7 +80,9 @@ export function exportTranslateStaticLoader(http: Http) {
     TermsPage,
     HelpPage,
     TeachersPage,
-    TeacherPage
+    TeacherPage,
+    StudentsPage,
+    StudentPage
   ],
   providers: [
     UtilsService,

@@ -13,6 +13,7 @@ import { Student } from '../../model/student';
 import { SchoolPage } from '../../pages/school/school';
 import { PopoverPage } from '../../pages/home/popover/popover';
 import { TeachersPage } from '../../pages/teachers/teachers';
+import { StudentsPage } from '../../pages/students/students';
 
 @Component({
   selector: 'page-home',
@@ -102,9 +103,7 @@ export class HomePage {
     this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.schoolService.getMySchoolTeachers().subscribe(
-      ((value: Array<Teacher>) => {
-        this.navController.push(TeachersPage, { teachers: value })
-      }),
+      ((value: Array<Teacher>) => this.navController.push(TeachersPage, { teachers: value })),
       error => {
         this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
         this.utilsService.removeLoading();
@@ -116,7 +115,15 @@ export class HomePage {
    * students of the school of the current user
    */
   public goToStudents(): void {
-    console.log('goToStudents');
+
+    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.schoolService.getMySchoolStudents().subscribe(
+      ((value: Array<Student>) => this.navController.push(StudentsPage, { students: value })),
+      error => {
+        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.utilsService.removeLoading();
+      });
   }
 
   /**

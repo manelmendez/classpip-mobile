@@ -59,32 +59,13 @@ export class SchoolService {
     return this.http.get(url, options)
       .flatMap((response: Response) =>
         Observable.forkJoin(Teacher.toObjectArray(response.json()).map(
-          teacher => this.http.get(AppConfig.AVATARS_URL + '/' + teacher.avatarId, options)
+          ((teacher: Teacher) => this.http.get(AppConfig.AVATARS_URL + '/' + teacher.avatarId, options)
             .map((response: Response, index: number) => {
               teacher.avatar = Avatar.toObject(response.json());
               return teacher;
             })
-        ))
+          )))
       ).catch((error: Response) => this.utilsService.handleAPIError(error));
-
-    /*return this.http.get(url, options)
-      .map((response: Response, index: number) => {
-        // get the avatars of the teachers
-        //for (let teacher of Teachers.toObject(response.json()).teacher) {
-        Observable.forkJoin(Teachers.toObject(response.json()).teachers.map(
-          teacher => this.http.get(AppConfig.AVATARS_URL + '/' + teacher.avatarId, options)
-            .map((response: Response, index: number) => {
-              console.log('avatar', response);
-              teacher.avatar = Avatar.toObject(response.json());
-              teachers.teachers.push(teacher);
-              teachers.count++;
-            })
-        )).subscribe(teachers => {
-          console.log('teachers', teachers);
-          return teachers;
-        });
-      })
-      .catch((error: Response) => this.utilsService.handleAPIError(error));*/
   }
 
   /**
@@ -101,8 +82,15 @@ export class SchoolService {
     var url: string = this.utilsService.getMySchoolUrl() + AppConfig.STUDENTS_URL;
 
     return this.http.get(url, options)
-      .map((response: Response, index: number) => Student.toObjectArray(response.json()))
-      .catch((error: Response) => this.utilsService.handleAPIError(error));
+      .flatMap((response: Response) =>
+        Observable.forkJoin(Student.toObjectArray(response.json()).map(
+          ((student: Student) => this.http.get(AppConfig.AVATARS_URL + '/' + student.avatarId, options)
+            .map((response: Response, index: number) => {
+              student.avatar = Avatar.toObject(response.json());
+              return student;
+            })
+          )))
+      ).catch((error: Response) => this.utilsService.handleAPIError(error));
   }
 
   /**

@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 
-import { Teacher } from '../../../model/teacher';
+import { Student } from '../../../model/student';
 
 @Component({
-  selector: 'page-teacher',
-  templateUrl: './teacher.html'
+  selector: 'page-student',
+  templateUrl: './student.html'
 })
-export class TeacherPage {
+export class StudentPage {
 
-  public teacher: Teacher;
+  public student: Student;
 
   constructor(
     public navParams: NavParams) {
 
-    this.teacher = this.navParams.data.teacher;
+    this.student = this.navParams.data.student;
   }
 
   /**

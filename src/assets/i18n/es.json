@@ -63,6 +63,14 @@
     "USERNAME": "Nombre de Usuario",
     "EMAIL": "Correo Electrónico"
   },
+  "STUDENTS": {
+    "TITLE": "Estudiantes"
+  },
+  "STUDENT": {
+    "NAME": "Nombre",
+    "USERNAME": "Nombre de Usuario",
+    "EMAIL": "Correo Electrónico"
+  },
   "ERROR": {
     "LOGIN_FAILED": "El nombre de usuario y/o la contraseña son inválidas.",
     "LOGIN_FAILED_EMAIL_NOT_VERIFIED": "Tu correo no ha sido verificado aún, por favor, revisa tu correo.",

@@ -4,16 +4,16 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
 import { SchoolService } from '../../providers/school.service';
-import { Teacher } from '../../model/teacher';
-import { TeacherPage } from './teacher/teacher';
+import { Student } from '../../model/student';
+import { StudentPage } from './student/student';
 
 @Component({
-  selector: 'page-teachers',
-  templateUrl: './teachers.html'
+  selector: 'page-students',
+  templateUrl: './students.html'
 })
-export class TeachersPage {
+export class StudentsPage {
 
-  public teachers: Array<Teacher>;
+  public students: Array<Student>;
 
   constructor(
     public navParams: NavParams,
@@ -22,7 +22,7 @@ export class TeachersPage {
     public schoolService: SchoolService,
     public translateService: TranslateService) {
 
-    this.teachers = this.navParams.data.teachers;
+    this.students = this.navParams.data.students;
   }
 
   /**
@@ -35,24 +35,24 @@ export class TeachersPage {
   }
 
   /**
-   * This method returns the teachers list of the
+   * This method returns the students list of the
    * current school
    * @param {Refresher} Refresher element
    */
-  private getTeachers(refresher?: Refresher): void {
+  private getStudents(refresher?: Refresher): void {
 
-    this.schoolService.getMySchoolTeachers().finally(() => {
+    this.schoolService.getMySchoolStudents().finally(() => {
       refresher ? refresher.complete() : null;
     }).subscribe(
-      ((value: Array<Teacher>) => this.teachers = value),
+      ((value: Array<Student>) => this.students = value),
       error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
   }
 
   /**
    * Method called from the home page to open the list of the
-   * teachers of the school of the current user
+   * students of the school of the current user
    */
-  public goToTeacherDetail(teacher: Teacher): void {
-    this.navController.push(TeacherPage, { teacher: teacher })
+  public goToStudentDetail(student: Student): void {
+    this.navController.push(StudentPage, { student: student })
   }
 }
