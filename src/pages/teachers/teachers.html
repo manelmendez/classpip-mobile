@@ -10,8 +10,8 @@
   <ion-refresher (ionRefresh)="getTeachers($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-list *ngFor="let teacher of teachers">
-    <ion-item (click)="goToTeacherDetail(teacher)">
+  <ion-list>
+    <ion-item *ngFor="let teacher of teachers" (click)="goToTeacherDetail(teacher)">
       <ion-thumbnail item-left>
         <img [src]="teacher.avatar.image">
       </ion-thumbnail>

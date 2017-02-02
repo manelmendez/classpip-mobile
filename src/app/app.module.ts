@@ -21,6 +21,7 @@ import { TeachersPage } from '../pages/teachers/teachers';
 import { TeacherPage } from '../pages/teachers/teacher/teacher';
 import { StudentsPage } from '../pages/students/students';
 import { StudentPage } from '../pages/students/student/student';
+import { GroupPage } from '../pages/group/group';
 
 // services
 import { UtilsService } from '../providers/utils.service';
@@ -28,6 +29,13 @@ import { LoginService } from '../providers/login.service';
 import { SchoolService } from '../providers/school.service';
 import { HockeyAppService } from '../providers/hockeyapp.service';
 import { UserService } from '../providers/user.service';
+import { GroupService } from '../providers/group.service';
+import { GradeService } from '../providers/grade.service';
+import { MatterService } from '../providers/matter.service';
+import { AvatarService } from '../providers/avatar.service';
+
+// pipes
+import { OrderByPipe } from '../pipes/orderBy.pipe';
 
 // rxjs
 import 'rxjs/add/operator/map';
@@ -57,7 +65,10 @@ export function exportTranslateStaticLoader(http: Http) {
     TeachersPage,
     TeacherPage,
     StudentsPage,
-    StudentPage
+    StudentPage,
+    GroupPage,
+    // pipes
+    OrderByPipe
   ],
   imports: [
     TranslateModule.forRoot({
@@ -82,14 +93,19 @@ export function exportTranslateStaticLoader(http: Http) {
     TeachersPage,
     TeacherPage,
     StudentsPage,
-    StudentPage
+    StudentPage,
+    GroupPage
   ],
   providers: [
     UtilsService,
     LoginService,
     HockeyAppService,
     SchoolService,
-    UserService
+    UserService,
+    GroupService,
+    GradeService,
+    MatterService,
+    AvatarService
   ]
 })
 export class AppModule { }

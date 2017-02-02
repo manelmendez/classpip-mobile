@@ -1,3 +1,5 @@
+import { Avatar } from './avatar'
+
 export class Profile {
 
   private _id: string;
@@ -5,13 +7,18 @@ export class Profile {
   private _name: string;
   private _surname: string;
   private _email: string;
+  private _avatarId: number;
+  private _avatar: Avatar;
 
-  constructor(id?: string, username?: string, name?: string, surname?: string, email?: string) {
+  constructor(id?: string, username?: string, name?: string, surname?: string,
+    email?: string, avatarId?: number, avatar?: Avatar) {
     this._id = id;
     this._username = username;
     this._name = name;
     this._surname = surname;
     this._email = email;
+    this._avatarId = avatarId;
+    this._avatar = avatar;
   }
 
   /* tslint:disable */
@@ -24,6 +31,7 @@ export class Profile {
       result.name = object.name;
       result.surname = object.surname;
       result.email = object.email;
+      result.avatarId = object.avatarId;
     }
     return result;
   }
@@ -66,6 +74,22 @@ export class Profile {
 
   public set email(value: string) {
     this._email = value;
+  }
+
+  public get avatarId(): number {
+    return this._avatarId;
+  }
+
+  public set avatarId(value: number) {
+    this._avatarId = value;
+  }
+
+  public get avatar(): Avatar {
+    return this._avatar;
+  }
+
+  public set avatar(value: Avatar) {
+    this._avatar = value;
   }
 
 }

@@ -6,14 +6,17 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { UtilsService } from '../../providers/utils.service';
 import { LoginService } from '../../providers/login.service';
 import { SchoolService } from '../../providers/school.service';
+import { GroupService } from '../../providers/group.service';
 import { School } from '../../model/school';
 import { Role } from '../../model/role';
+import { Group } from '../../model/group';
 import { Teacher } from '../../model/teacher';
 import { Student } from '../../model/student';
 import { SchoolPage } from '../../pages/school/school';
 import { PopoverPage } from '../../pages/home/popover/popover';
 import { TeachersPage } from '../../pages/teachers/teachers';
 import { StudentsPage } from '../../pages/students/students';
+import { GroupPage } from '../../pages/group/group';
 
 @Component({
   selector: 'page-home',
@@ -24,12 +27,15 @@ export class HomePage {
   public school: School;
   public teachersCount: number;
   public studentsCount: number;
+  public groups: Array<Group>;
+
   public myRole: Role;
   public role = Role;
 
   constructor(
     public loginService: LoginService,
     public utilsService: UtilsService,
+    public groupService: GroupService,
     public schoolService: SchoolService,
     public platform: Platform,
     public translateService: TranslateService,
@@ -49,7 +55,7 @@ export class HomePage {
     this.menuController.enable(true);
     this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
 
-    this.getSchoolInfo();
+    this.getHomeInfo();
   }
 
   /**
@@ -58,7 +64,7 @@ export class HomePage {
    * refresh event
    * @param {Refresher} Refresher element
    */
-  private getSchoolInfo(refresher?: Refresher): void {
+  private getHomeInfo(refresher?: Refresher): void {
 
     // if the user is the SCHOOLADMIN get more information abaout the school
     // and the members
@@ -83,7 +89,22 @@ export class HomePage {
         }),
         error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
 
-    } else {
+    } else if (this.myRole === Role.TEACHER) {
+
+      this.schoolService.getMySchool().finally(() => {
+        refresher ? refresher.complete() : null;
+        this.utilsService.removeLoading();
+      }).subscribe(
+        ((value: School) => {
+          this.school = value;
+
+          this.groupService.getMyGroups().subscribe(
+            ((value: Array<Group>) => this.groups = value),
+            error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+        }),
+        error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+
+    } else if (this.myRole === Role.STUDENT) {
 
       this.schoolService.getMySchool().finally(() => {
         refresher ? refresher.complete() : null;
@@ -120,6 +141,22 @@ export class HomePage {
 
     this.schoolService.getMySchoolStudents().subscribe(
       ((value: Array<Student>) => this.navController.push(StudentsPage, { students: value })),
+      error => {
+        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.utilsService.removeLoading();
+      });
+  }
+
+  /**
+  * Method called from the home page to open the list of the
+  * students of the group of the current user
+  */
+  public goToGroup(group: Group): void {
+
+    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.groupService.getMyGroupStudents(group.id).subscribe(
+      ((value: Array<Student>) => this.navController.push(GroupPage, { students: value, group: group })),
       error => {
         this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
         this.utilsService.removeLoading();

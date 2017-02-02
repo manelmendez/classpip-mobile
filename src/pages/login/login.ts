@@ -27,6 +27,8 @@ export class LoginPage {
     // TODO: remove this
     switch (utilsService.role) {
       case Role.STUDENT:
+        this.credentials.username = 'student-1';
+        this.credentials.password = 'student-1';
         break;
       case Role.TEACHER:
         this.credentials.username = 'teacher-1';

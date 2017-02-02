@@ -10,10 +10,10 @@
   <ion-refresher (ionRefresh)="getProfileInfo($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-row class="logo-row" *ngIf="avatar">
+  <ion-row class="logo-row" *ngIf="profile">
     <ion-col></ion-col>
     <ion-col width-67>
-      <img [src]="avatar.image" width="200px" height="200px" />
+      <img [src]="profile.avatar.image" width="200px" height="200px" />
     </ion-col>
     <ion-col></ion-col>
   </ion-row>
