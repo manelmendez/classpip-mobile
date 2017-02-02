@@ -2,16 +2,25 @@ export class AppConfig {
 
   // Server connection
   public static get SERVER_URL(): string { return 'https://api.classpip.com'; } // PRO
-  // public static get SERVER_URL(): string { return 'http://192.168.1.103:3000'; } // DEV
+  // public static get SERVER_URL(): string { return 'http://localhost:3000'; } // DEV
 
   public static get TEACHER_URL(): string { return this.SERVER_URL + '/api/teachers'; }
   public static get STUDENT_URL(): string { return this.SERVER_URL + '/api/students'; }
   public static get SCHOOLADMIN_URL(): string { return this.SERVER_URL + '/api/schooladministrators'; }
+  public static get SCHOOL_URL(): string { return this.SERVER_URL + '/api/schools'; }
+  public static get AVATARS_URL(): string { return this.SERVER_URL + '/api/avatars'; }
+  public static get MATTERS_URL(): string { return this.SERVER_URL + '/api/matters'; }
+  public static get GRADES_URL(): string { return this.SERVER_URL + '/api/grades'; }
+  public static get GROUP_URL(): string { return this.SERVER_URL + '/api/groups'; }
 
   public static get LOGIN_URL(): string { return '/login'; }
   public static get LOGOUT_URL(): string { return '/logout'; }
-  public static get SCHOOL_URL(): string { return '/school'; }
+  public static get MYSCHOOL_URL(): string { return '/school'; }
   public static get AVATAR_URL(): string { return '/avatar'; }
+  public static get TEACHERS_URL(): string { return '/teachers'; }
+  public static get STUDENTS_URL(): string { return '/students'; }
+  public static get COUNT_URL(): string { return '/count'; }
+  public static get GROUPS_URL(): string { return '/groups'; }
 
   public static get AUTH_HEADER(): string { return 'Authorization'; }
 

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.classpip.mobile" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.classpip.mobile" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Classpip</name>
   <description>Mobile Application for School Gamification</description>
   <author email="ferran.vila.conesa@gmail.com" href="http://www.ferranvila.com/">Ferran Vila</author>
@@ -107,6 +107,8 @@
   <plugin name="ionic-plugin-keyboard" spec="2.2.1" />
   <plugin name="cordova-plugin-hockeyapp" spec="2.2.2" />
   <plugin name="cordova-plugin-app-version" spec="0.1.9" />
+  <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
+  <plugin name="cordova-plugin-inappbrowser" spec="~1.6.1" />
   <engine name="android" spec="6.1.0" />
   <engine name="ios" spec="4.3.1" />
 </widget>

@@ -4,19 +4,46 @@ import { Http } from '@angular/http';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 
 // application
-import { MyApp, AppConfig } from './';
-import { LoginPage, MenuPage, HomePage, RoleSelectPage, SchoolPage, PopoverPage, ProfilePage, TermsPage, HelpPage } from '../pages';
+import { MyApp } from './app.component';
+import { AppConfig } from './app.config';
+
+// pages
+import { LoginPage } from '../pages/login/login';
+import { MenuPage } from '../pages/menu/menu';
+import { HomePage } from '../pages/home/home';
+import { RoleSelectPage } from '../pages/role-select/role-select';
+import { SchoolPage } from '../pages/school/school';
+import { PopoverPage } from '../pages/home/popover/popover';
+import { ProfilePage } from '../pages/profile/profile';
+import { TermsPage } from '../pages/profile/terms/terms';
+import { HelpPage } from '../pages/profile/help/help';
+import { TeachersPage } from '../pages/teachers/teachers';
+import { TeacherPage } from '../pages/teachers/teacher/teacher';
+import { StudentsPage } from '../pages/students/students';
+import { StudentPage } from '../pages/students/student/student';
+import { GroupPage } from '../pages/group/group';
+
+// services
 import { UtilsService } from '../providers/utils.service';
 import { LoginService } from '../providers/login.service';
 import { SchoolService } from '../providers/school.service';
 import { HockeyAppService } from '../providers/hockeyapp.service';
 import { UserService } from '../providers/user.service';
+import { GroupService } from '../providers/group.service';
+import { GradeService } from '../providers/grade.service';
+import { MatterService } from '../providers/matter.service';
+import { AvatarService } from '../providers/avatar.service';
+
+// pipes
+import { OrderByPipe } from '../pipes/orderBy.pipe';
 
 // rxjs
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/observable/forkJoin';
 
 export function exportTranslateStaticLoader(http: Http) {
   return new TranslateStaticLoader(http, AppConfig.LANG_PATH, AppConfig.LANG_EXT);
@@ -34,7 +61,14 @@ export function exportTranslateStaticLoader(http: Http) {
     PopoverPage,
     ProfilePage,
     TermsPage,
-    HelpPage
+    HelpPage,
+    TeachersPage,
+    TeacherPage,
+    StudentsPage,
+    StudentPage,
+    GroupPage,
+    // pipes
+    OrderByPipe
   ],
   imports: [
     TranslateModule.forRoot({
@@ -55,14 +89,23 @@ export function exportTranslateStaticLoader(http: Http) {
     PopoverPage,
     ProfilePage,
     TermsPage,
-    HelpPage
+    HelpPage,
+    TeachersPage,
+    TeacherPage,
+    StudentsPage,
+    StudentPage,
+    GroupPage
   ],
   providers: [
     UtilsService,
     LoginService,
     HockeyAppService,
     SchoolService,
-    UserService
+    UserService,
+    GroupService,
+    GradeService,
+    MatterService,
+    AvatarService
   ]
 })
 export class AppModule { }

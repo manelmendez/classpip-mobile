@@ -6,8 +6,11 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AppVersion } from 'ionic-native';
 
 
-import { AppConfig } from '../app';
-import { Error, Login, Role } from '../model';
+import { AppConfig } from '../app/app.config';
+import { Error } from '../model/error';
+import { Login } from '../model/login';
+import { Role } from '../model/role';
+import { School } from '../model/school';
 
 @Injectable()
 export class UtilsService {
@@ -15,11 +18,44 @@ export class UtilsService {
   public loading: Loading;
   private _role: Role;
   private _currentUser: Login;
+  private _currentSchool: School;
 
   constructor(
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public translateService: TranslateService) { }
+
+  /**
+   * This method construct the current user url depending on the role
+   * of the user
+   * @returns {string} generated url
+   */
+  public getMyUrl(): string {
+    var url: string;
+    switch (this.role) {
+      case Role.STUDENT:
+        url = AppConfig.STUDENT_URL + '/' + this.currentUser.userId;
+        break;
+      case Role.TEACHER:
+        url = AppConfig.TEACHER_URL + '/' + this.currentUser.userId;
+        break;
+      case Role.SCHOOLADMIN:
+        url = AppConfig.SCHOOLADMIN_URL + '/' + this.currentUser.userId;
+        break;
+      default:
+        break;
+    }
+    return url;
+  }
+
+  /**
+   * This method construct the current user url depending on the role
+   * of the user
+   * @returns {string} generated url
+   */
+  public getMySchoolUrl(): string {
+    return AppConfig.SCHOOL_URL + '/' + this.currentSchool.id;
+  }
 
   /**
    * Displays a loading mask into the screen
@@ -139,6 +175,14 @@ export class UtilsService {
 
   public set currentUser(value: Login) {
     this._currentUser = value;
+  }
+
+  public get currentSchool(): School {
+    return this._currentSchool;
+  }
+
+  public set currentSchool(value: School) {
+    this._currentSchool = value;
   }
 
 }

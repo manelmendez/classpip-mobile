@@ -11,7 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
 import {
   App, MenuController, NavController, NavParams, Platform, Config, Keyboard, Form,
-  IonicModule, LoadingController, AlertController, GestureController, DomController
+  IonicModule, LoadingController, AlertController, GestureController, DomController,
+  PopoverController
 } from 'ionic-angular';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate/ng2-translate';
 import { ConfigMock, NavParamsMock } from './mocks';
@@ -20,6 +21,7 @@ import { ConfigMock, NavParamsMock } from './mocks';
 import { UtilsService } from './providers/utils.service';
 import { LoginService } from './providers/login.service';
 import { SchoolService } from './providers/school.service';
+import { UserService } from './providers/user.service';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 /* tslint:disable */
@@ -78,12 +80,14 @@ export class TestUtils {
         App, Platform, Form, Keyboard, MenuController, NavController,
         LoadingController, AlertController, GestureController,
         TranslateService, TranslateLoader, TranslateParser, DomController,
-        { provide: Config, useClass: ConfigMock },
+        PopoverController,
         { provide: NavParams, useClass: NavParamsMock },
+        { provide: Config, useClass: ConfigMock },
         // services
         UtilsService,
         LoginService,
-        SchoolService
+        SchoolService,
+        UserService
       ],
       imports: [
         FormsModule,

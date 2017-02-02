@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AppConfig } from '../app';
+import { AppConfig } from '../app/app.config';
 import { UtilsService } from '../providers/utils.service';
-import { Credentials, Role, Login } from '../model';
+import { Credentials } from '../model/credentials';
+import { Role } from '../model/role';
+import { Login } from '../model/login';
 
 @Injectable()
 export class LoginService {

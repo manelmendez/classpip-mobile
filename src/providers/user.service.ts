@@ -2,15 +2,19 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AppConfig } from '../app';
+import { AppConfig } from '../app/app.config';
 import { UtilsService } from './utils.service';
-import { Profile, Role, Avatar } from '../model';
+import { AvatarService } from './avatar.service';
+import { Profile } from '../model/profile';
+import { Role } from '../model/role';
+import { Avatar } from '../model/avatar';
 
 @Injectable()
 export class UserService {
 
   constructor(
     public http: Http,
+    public avatarService: AvatarService,
     public utilsService: UtilsService) { }
 
   /**
@@ -20,28 +24,18 @@ export class UserService {
    */
   public getMyProfile(): Observable<Profile> {
 
-    let options: RequestOptions = new RequestOptions({
-      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    return Observable.create(observer => {
+      this.getProfile().subscribe(
+        profile => {
+          this.avatarService.getAvatar(profile.avatarId).subscribe(
+            avatar => {
+              profile.avatar = avatar;
+              observer.next(profile);
+              observer.complete();
+            }, error => observer.error(error))
+        }, error => observer.error(error)
+      )
     });
-
-    var url: string;
-    switch (this.utilsService.role) {
-      case Role.STUDENT:
-        url = AppConfig.STUDENT_URL + '/' + this.utilsService.currentUser.userId;
-        break;
-      case Role.TEACHER:
-        url = AppConfig.TEACHER_URL + '/' + this.utilsService.currentUser.userId;
-        break;
-      case Role.SCHOOLADMIN:
-        url = AppConfig.SCHOOLADMIN_URL + '/' + this.utilsService.currentUser.userId;
-        break;
-      default:
-        break;
-    }
-
-    return this.http.get(url, options)
-      .map((response: Response, index: number) => Profile.toObject(response.json()))
-      .catch((error: Response) => this.utilsService.handleAPIError(error));
   }
 
   /**
@@ -49,29 +43,16 @@ export class UserService {
    * in user on the platform
    * @return {Observable<Profile>} returns an observable with the profile
    */
-  public getMyAvatar(): Observable<Avatar> {
+  private getProfile(): Observable<Profile> {
 
     let options: RequestOptions = new RequestOptions({
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
     });
 
-    var url: string;
-    switch (this.utilsService.role) {
-      case Role.STUDENT:
-        url = AppConfig.STUDENT_URL + '/' + this.utilsService.currentUser.userId + AppConfig.AVATAR_URL;
-        break;
-      case Role.TEACHER:
-        url = AppConfig.TEACHER_URL + '/' + this.utilsService.currentUser.userId + AppConfig.AVATAR_URL;
-        break;
-      case Role.SCHOOLADMIN:
-        url = AppConfig.SCHOOLADMIN_URL + '/' + this.utilsService.currentUser.userId + AppConfig.AVATAR_URL;
-        break;
-      default:
-        break;
-    }
+    var url: string = this.utilsService.getMyUrl();
 
     return this.http.get(url, options)
-      .map((response: Response, index: number) => Avatar.toObject(response.json()))
+      .map((response: Response, index: number) => Profile.toObject(response.json()))
       .catch((error: Response) => this.utilsService.handleAPIError(error));
   }
 

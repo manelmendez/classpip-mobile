@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 
 import { UtilsService } from '../../providers/utils.service';
-import { Page, Role } from '../../model';
-import { LoginPage } from '../../pages';
+import { Page } from '../../model/page';
+import { Role } from '../../model/role';
+import { LoginPage } from '../../pages/login/login';
 
 @Component({
   selector: 'page-role-select',

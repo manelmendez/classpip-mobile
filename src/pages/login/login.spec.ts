@@ -7,7 +7,7 @@ let fixture: ComponentFixture <LoginPage> = null;
 let instance: any = null;
 /* tslint:enable */
 
-describe('Pages: Login', () => {
+/*describe('Pages: Login', () => {
 
   beforeEach(async(() => TestUtils.beforeEachCompiler([LoginPage]).then(compiled => {
     fixture = compiled.fixture;
@@ -17,4 +17,4 @@ describe('Pages: Login', () => {
   it('should create the login page', async(() => {
     expect(instance).toBeTruthy();
   }));
-});
+});*/

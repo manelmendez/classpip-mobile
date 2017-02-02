@@ -4,8 +4,10 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { LoginService } from '../../providers/login.service';
 import { UtilsService } from '../../providers/utils.service';
-import { MenuPage } from '../../pages';
-import { Role, Page, Credentials } from '../../model';
+import { MenuPage } from '../../pages/menu/menu';
+import { Role } from '../../model/role';
+import { Page } from '../../model/page';
+import { Credentials } from '../../model/credentials';
 
 @Component({
   selector: 'page-login',
@@ -14,7 +16,6 @@ import { Role, Page, Credentials } from '../../model';
 export class LoginPage {
 
   public credentials: Credentials = new Credentials();
-  private role: Role;
 
   constructor(
     public navController: NavController,
@@ -26,6 +27,8 @@ export class LoginPage {
     // TODO: remove this
     switch (utilsService.role) {
       case Role.STUDENT:
+        this.credentials.username = 'student-1';
+        this.credentials.password = 'student-1';
         break;
       case Role.TEACHER:
         this.credentials.username = 'teacher-1';
@@ -36,7 +39,6 @@ export class LoginPage {
         this.credentials.password = 'school-admin-1';
         break;
       default:
-        console.error('There is no role defined for this: ', this.role);
         break;
     }
 

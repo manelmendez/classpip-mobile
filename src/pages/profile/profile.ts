@@ -4,8 +4,11 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
 import { UserService } from '../../providers/user.service';
-import { Profile, Avatar } from '../../model';
-import { TermsPage, HelpPage } from '../../pages';
+import { AvatarService } from '../../providers/avatar.service';
+import { Profile } from '../../model/profile';
+import { Avatar } from '../../model/avatar';
+import { TermsPage } from '../../pages/profile/terms/terms';
+import { HelpPage } from '../../pages/profile/help/help';
 
 @Component({
   selector: 'page-profile',
@@ -14,12 +17,12 @@ import { TermsPage, HelpPage } from '../../pages';
 export class ProfilePage {
 
   public profile: Profile;
-  public avatar: Avatar;
   public appVersion: string;
 
   constructor(
     public utilsService: UtilsService,
     public userService: UserService,
+    public avatarService: AvatarService,
     public platform: Platform,
     public navController: NavController,
     public translateService: TranslateService,
@@ -58,20 +61,11 @@ export class ProfilePage {
    */
   private getProfileInfo(refresher?: Refresher): void {
 
-    this.userService.getMyProfile().subscribe(
-      ((value: Profile) => {
-        this.profile = value;
-
-        // Get the avatar
-        this.userService.getMyAvatar().finally(() => {
-          refresher ? refresher.complete() : null;
-          this.utilsService.removeLoading();
-        }).subscribe(
-          ((value: Avatar) => {
-            this.avatar = value
-          }),
-          error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
-      }),
+    this.userService.getMyProfile().finally(() => {
+      refresher ? refresher.complete() : null;
+      this.utilsService.removeLoading();
+    }).subscribe(
+      ((value: Profile) => this.profile = value),
       error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
   }
 

@@ -6,7 +6,7 @@
 # Artifact information
 APP_NAME=classpip
 DISPLAY_NAME=Classpip
-APP_VERSION=1.0.2
+APP_VERSION=1.0.3
 OUTPUT_DIR=${PWD}
 ARCHIVE=${OUTPUT_DIR}/${APP_NAME}-${APP_VERSION}.xcarchive
 IPA=${OUTPUT_DIR}/${APP_NAME}-${APP_VERSION}.ipa
