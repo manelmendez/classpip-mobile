@@ -5,7 +5,7 @@
 
 # Artifact information
 APP_NAME=classpip
-APP_VERSION=1.0.2
+APP_VERSION=1.0.3
 APK_NAME=${APP_NAME}-${APP_VERSION}.apk
 OUTPUT_APK=${PWD}/${APK_NAME}
 
