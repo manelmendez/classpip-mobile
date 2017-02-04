@@ -17,14 +17,8 @@ import {
   LoadingController, AlertController, PopoverController, NavParams
 } from 'ionic-angular';
 import { TranslateService, TranslateLoader, TranslateParser, TranslateModule } from 'ng2-translate/ng2-translate';
-import { UtilsService } from './providers/utils.service';
-import { LoginService } from './providers/login.service';
-import { GroupService } from './providers/group.service';
-import { SchoolService } from './providers/school.service';
-import { AvatarService } from './providers/avatar.service';
-import { GradeService } from './providers/grade.service';
-import { MatterService } from './providers/matter.service';
-import { UserService } from './providers/user.service';
+import { IonicService } from './providers/ionic.service';
+import { UtilsModule } from 'classpip-utils';
 import { ConfigMock, PlatformMock, MenuMock, NavParamsMock } from './mocks';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
@@ -86,18 +80,12 @@ export class TestUtils {
         TranslateLoader,
         TranslateParser,
         // custom services
-        UtilsService,
-        GroupService,
-        SchoolService,
-        AvatarService,
-        GradeService,
-        MatterService,
-        LoginService,
-        UserService
+        IonicService
       ],
       imports: [
         FormsModule,
         IonicModule,
+        UtilsModule,
         ReactiveFormsModule,
         TranslateModule.forRoot()
       ],

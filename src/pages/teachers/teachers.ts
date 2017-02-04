@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { Refresher, Platform, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { UtilsService } from '../../providers/utils.service';
-import { SchoolService } from '../../providers/school.service';
-import { Teacher } from '../../model/teacher';
+import { SchoolService, Teacher } from 'classpip-utils';
+import { IonicService } from '../../providers/ionic.service';
 import { TeacherPage } from './teacher/teacher';
 
 @Component({
@@ -18,7 +17,7 @@ export class TeachersPage {
   constructor(
     public navParams: NavParams,
     public navController: NavController,
-    public utilsService: UtilsService,
+    public ionicService: IonicService,
     public schoolService: SchoolService,
     public translateService: TranslateService) {
 
@@ -31,7 +30,7 @@ export class TeachersPage {
    */
   public ionViewDidEnter(): void {
 
-    this.utilsService.removeLoading();
+    this.ionicService.removeLoading();
   }
 
   /**
@@ -45,7 +44,7 @@ export class TeachersPage {
       refresher ? refresher.complete() : null;
     }).subscribe(
       ((value: Array<Teacher>) => this.teachers = value),
-      error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+      error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
   }
 
   /**

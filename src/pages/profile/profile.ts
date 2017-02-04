@@ -2,11 +2,8 @@ import { Component } from '@angular/core';
 import { MenuController, Refresher, Platform, NavController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { UtilsService } from '../../providers/utils.service';
-import { UserService } from '../../providers/user.service';
-import { AvatarService } from '../../providers/avatar.service';
-import { Profile } from '../../model/profile';
-import { Avatar } from '../../model/avatar';
+import { UserService, AvatarService, Profile, Avatar } from 'classpip-utils';
+import { IonicService } from '../../providers/ionic.service';
 import { TermsPage } from '../../pages/profile/terms/terms';
 import { HelpPage } from '../../pages/profile/help/help';
 
@@ -20,7 +17,7 @@ export class ProfilePage {
   public appVersion: string;
 
   constructor(
-    public utilsService: UtilsService,
+    public ionicService: IonicService,
     public userService: UserService,
     public avatarService: AvatarService,
     public platform: Platform,
@@ -36,7 +33,7 @@ export class ProfilePage {
   public ionViewDidEnter(): void {
 
     this.menuController.enable(true);
-    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.getProfileInfo();
 
@@ -44,9 +41,9 @@ export class ProfilePage {
 
       // Get the application version
       if (this.platform.is('cordova')) {
-        this.utilsService.getAppVersion()
+        this.ionicService.getAppVersion()
           .then((response) => this.appVersion = response)
-          .catch((error) => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+          .catch((error) => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
       } else {
         this.appVersion = 'x.x.x';
       }
@@ -63,10 +60,10 @@ export class ProfilePage {
 
     this.userService.getMyProfile().finally(() => {
       refresher ? refresher.complete() : null;
-      this.utilsService.removeLoading();
+      this.ionicService.removeLoading();
     }).subscribe(
       ((value: Profile) => this.profile = value),
-      error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+      error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
   }
 
   /**

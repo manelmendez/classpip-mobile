@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 
-import { Student } from '../../../model/student';
+import { Student } from 'classpip-utils';
 
 @Component({
   selector: 'page-student',
