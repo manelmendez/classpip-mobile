@@ -17,14 +17,15 @@ export class PopoverPage {
     public loginService: LoginService,
     public navParams: NavParams,
     public viewController: ViewController) {
-    this.navController = this.navParams.data.nav;
   }
 
   /**
    * Fires when the page appears on the screen.
    * Used to get all the data needed in page
    */
-  public ionViewDidEnter(): void { }
+  public ionViewDidEnter(): void {
+    this.navController = this.navParams.data.nav;
+  }
 
   /**
    * Method for calling the logout service

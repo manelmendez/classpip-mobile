@@ -1,20 +1,20 @@
 import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { HomePage } from './home';
+import { GroupPage } from './group';
 
-let fixture: ComponentFixture<HomePage> = null;
+let fixture: ComponentFixture<GroupPage> = null;
 /* tslint:disable */
 let instance: any = null;
 /* tslint:enable */
 
-/*describe('Pages: HomePage', () => {
+describe('Pages: GroupPage', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([HomePage]).then(compiled => {
+  beforeEach(async(() => TestUtils.beforeEachCompiler([GroupPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));
 
-  it('should create the home page', async(() => {
+  it('should create the GroupPage', async(() => {
     expect(instance).toBeTruthy();
   }));
-});*/
+});

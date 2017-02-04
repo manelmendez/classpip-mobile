@@ -19,6 +19,9 @@ module.exports = function (config) {
     preprocessors: {
       './src/test.ts': ['angular-cli']
     },
+    mime: {
+      'text/x-typescript': ['ts', 'tsx']
+    },
     remapIstanbulReporter: {
       reports: {
         html: 'coverage',
@@ -37,9 +40,6 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['PhantomJS'],
-    singleRun: false,
-    mime: {
-      'text/x-typescript': ['ts', 'tsx']
-    } // https://github.com/lathonez/clicker/issues/178
+    singleRun: false
   });
 };

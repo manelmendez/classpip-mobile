@@ -7,14 +7,14 @@ let fixture: ComponentFixture<ProfilePage> = null;
 let instance: any = null;
 /* tslint:enable */
 
-/*describe('Pages: ProfilePage', () => {
+describe('Pages: ProfilePage', () => {
 
   beforeEach(async(() => TestUtils.beforeEachCompiler([ProfilePage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));
 
-  it('should create the Profile page', async(() => {
+  it('should create the ProfilePage', async(() => {
     expect(instance).toBeTruthy();
   }));
-});*/
+});
