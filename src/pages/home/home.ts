@@ -4,7 +4,6 @@ import { CallNumber, InAppBrowser } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
-import { LoginService } from '../../providers/login.service';
 import { SchoolService } from '../../providers/school.service';
 import { GroupService } from '../../providers/group.service';
 import { School } from '../../model/school';
@@ -33,7 +32,6 @@ export class HomePage {
   public role = Role;
 
   constructor(
-    public loginService: LoginService,
     public utilsService: UtilsService,
     public groupService: GroupService,
     public schoolService: SchoolService,
@@ -42,8 +40,6 @@ export class HomePage {
     public popoverController: PopoverController,
     public menuController: MenuController,
     public navController: NavController) {
-
-    this.myRole = this.utilsService.role;
   }
 
   /**
@@ -54,6 +50,8 @@ export class HomePage {
 
     this.menuController.enable(true);
     this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.myRole = this.utilsService.role;
 
     this.getHomeInfo();
   }

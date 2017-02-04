@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { UtilsService } from '../../providers/utils.service';
 import { Page } from '../../model/page';
@@ -18,6 +19,7 @@ export class RoleSelectPage {
   constructor(
     public menuController: MenuController,
     public navController: NavController,
+    public translateService: TranslateService,
     public utilsService: UtilsService) {
 
     this.menuController.enable(false);

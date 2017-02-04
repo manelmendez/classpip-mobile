@@ -1,3 +1,5 @@
+// This file is required by karma.conf.js and loads recursively all the .spec and framework files
+/* tslint:disable */
 import './polyfills.ts';
 
 import 'zone.js/dist/long-stack-trace-zone';
@@ -8,60 +10,50 @@ import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TestBed } from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
+import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import {
-  App, MenuController, NavController, NavParams, Platform, Config, Keyboard, Form,
-  IonicModule, LoadingController, AlertController, GestureController, DomController,
-  PopoverController
+  App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController,
+  LoadingController, AlertController, PopoverController, NavParams
 } from 'ionic-angular';
-import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate/ng2-translate';
-import { ConfigMock, NavParamsMock } from './mocks';
-
-// services
+import { TranslateService, TranslateLoader, TranslateParser, TranslateModule } from 'ng2-translate/ng2-translate';
 import { UtilsService } from './providers/utils.service';
 import { LoginService } from './providers/login.service';
+import { GroupService } from './providers/group.service';
 import { SchoolService } from './providers/school.service';
+import { AvatarService } from './providers/avatar.service';
+import { GradeService } from './providers/grade.service';
+import { MatterService } from './providers/matter.service';
 import { UserService } from './providers/user.service';
+import { ConfigMock, PlatformMock, MenuMock, NavParamsMock } from './mocks';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
-/* tslint:disable */
 declare var __karma__: any;
 declare var require: any;
-/* tslint:enable */
 
 // Prevent Karma from running prematurely.
-/* tslint:disable */
-__karma__.loaded = function (): any { /* no op */ };
-/* tslint:enable */
+__karma__.loaded = function (): void {
+  // noop
+};
 
-Promise.all([
-  System.import('@angular/core/testing'),
-  System.import('@angular/platform-browser-dynamic/testing'),
-])
-  // First, initialize the Angular testing environment.
-  .then(([testing, testingBrowser]) => {
-    testing.getTestBed().initTestEnvironment(
-      testingBrowser.BrowserDynamicTestingModule,
-      testingBrowser.platformBrowserDynamicTesting()
-    );
-  })
-  // Then we find all the tests.
-  .then(() => require.context('./', true, /\.spec\.ts/))
-  // And load the modules.
-  .then(context => context.keys().map(context))
-  // Finally, start Karma to run the tests.
-  .then(__karma__.start, __karma__.error);
+// First, initialize the Angular testing environment.
+getTestBed().initTestEnvironment(
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting(),
+);
+// Then we find all the tests.
+const context: any = require.context('./', true, /\.spec\.ts$/);
+// And load the modules.
+context.keys().map(context);
+// Finally, start Karma to run the tests.
+__karma__.start();
 
 export class TestUtils {
 
-  /* tslint:disable */
   public static beforeEachCompiler(components: Array<any>): Promise<{ fixture: any, instance: any }> {
-    /* tslint:enable */
     return TestUtils.configureIonicTestingModule(components)
       .compileComponents().then(() => {
-        /* tslint:disable */
         let fixture: any = TestBed.createComponent(components[0]);
-        /* tslint:enable */
         return {
           fixture: fixture,
           instance: fixture.debugElement.componentInstance,
@@ -69,47 +61,58 @@ export class TestUtils {
       });
   }
 
-  /* tslint:disable */
   public static configureIonicTestingModule(components: Array<any>): typeof TestBed {
-    /* tslint:enable */
     return TestBed.configureTestingModule({
       declarations: [
-        ...components
+        ...components,
       ],
       providers: [
-        App, Platform, Form, Keyboard, MenuController, NavController,
-        LoadingController, AlertController, GestureController,
-        TranslateService, TranslateLoader, TranslateParser, DomController,
+        // angular-ionic
+        App,
+        Form,
+        Keyboard,
+        DomController,
+        { provide: MenuController, useClass: MenuMock },
+        NavController,
+        GestureController,
+        LoadingController,
+        AlertController,
         PopoverController,
         { provide: NavParams, useClass: NavParamsMock },
+        { provide: Platform, useClass: PlatformMock },
         { provide: Config, useClass: ConfigMock },
-        // services
+        // translate
+        TranslateService,
+        TranslateLoader,
+        TranslateParser,
+        // custom services
         UtilsService,
-        LoginService,
+        GroupService,
         SchoolService,
+        AvatarService,
+        GradeService,
+        MatterService,
+        LoginService,
         UserService
       ],
       imports: [
         FormsModule,
         IonicModule,
         ReactiveFormsModule,
-        TranslateModule,
+        TranslateModule.forRoot()
       ],
     });
   }
 
   // http://stackoverflow.com/questions/2705583/how-to-simulate-a-click-with-javascript
-  /* tslint:disable */
   public static eventFire(el: any, etype: string): void {
-    /* tslint:enable */
     if (el.fireEvent) {
       el.fireEvent('on' + etype);
     } else {
-      /* tslint:disable */
       let evObj: any = document.createEvent('Events');
-      /* tslint:enable */
       evObj.initEvent(etype, true, false);
       el.dispatchEvent(evObj);
     }
   }
 }
+/* tslint:enable */
