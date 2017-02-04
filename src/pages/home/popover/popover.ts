@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 
-import { LoginService } from '../../../providers/login.service';
+import { LoginService } from 'classpip-utils';
 import { RoleSelectPage } from '../../../pages/role-select/role-select';
 import { ProfilePage } from '../../../pages/profile/profile';
 

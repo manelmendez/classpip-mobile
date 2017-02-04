@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
-import { UtilsService } from './utils.service';
-
 @Injectable()
 export class HockeyAppService {
 
   constructor(
-    public platform: Platform,
-    public utilsService: UtilsService) {}
+    public platform: Platform) {}
 
   /**
    * Method for checking Hockeyapp updates

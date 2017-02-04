@@ -2,12 +2,10 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { LoginService } from '../../providers/login.service';
-import { UtilsService } from '../../providers/utils.service';
+import { LoginService, UtilsService, Role, Credentials } from 'classpip-utils';
+import { IonicService } from '../../providers/ionic.service';
 import { MenuPage } from '../../pages/menu/menu';
-import { Role } from '../../model/role';
 import { Page } from '../../model/page';
-import { Credentials } from '../../model/credentials';
 
 @Component({
   selector: 'page-login',
@@ -20,6 +18,7 @@ export class LoginPage {
   constructor(
     public navController: NavController,
     public loginService: LoginService,
+    public ionicService: IonicService,
     public utilsService: UtilsService,
     public translateService: TranslateService,
     public menuController: MenuController) {
@@ -50,14 +49,14 @@ export class LoginPage {
    * against the public services
    */
   public login(): void {
-    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
     this.loginService.login(this.credentials).subscribe(
       response => {
         this.navController.setRoot(MenuPage)
       },
       error => {
-        this.utilsService.removeLoading();
-        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.ionicService.removeLoading();
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
       });
   }
 

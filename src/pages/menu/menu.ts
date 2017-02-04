@@ -2,15 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, Nav } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { UtilsService } from '../../providers/utils.service';
-import { LoginService } from '../../providers/login.service';
-import { SchoolService } from '../../providers/school.service';
+import { UtilsService, LoginService, SchoolService, School } from 'classpip-utils';
+import { IonicService } from '../../providers/ionic.service';
 import { RoleSelectPage } from '../../pages/role-select/role-select';
 import { HomePage } from '../../pages/home/home';
 import { SchoolPage } from '../../pages/school/school';
 import { ProfilePage } from '../../pages/profile/profile';
 import { Page } from '../../model/page';
-import { School } from '../../model/school';
 
 @Component({
   selector: 'page-menu',
@@ -28,6 +26,7 @@ export class MenuPage {
     public navController: NavController,
     public translateService: TranslateService,
     public utilsService: UtilsService,
+    public ionicService: IonicService,
     public schoolService: SchoolService,
     private loginService: LoginService) {
 
@@ -66,13 +65,13 @@ export class MenuPage {
    */
   public goToSchool(): void {
 
-    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.schoolService.getMySchool().subscribe(
       ((value: School) => this.navController.push(SchoolPage, { school: value })),
       error => {
-        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        this.utilsService.removeLoading();
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.ionicService.removeLoading();
       });
   }
 

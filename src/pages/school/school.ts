@@ -2,8 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { UtilsService } from '../../providers/utils.service';
-import { School } from '../../model/school';
+import { School } from 'classpip-utils';
+import { IonicService } from '../../providers/ionic.service';
 
 declare var google;
 
@@ -23,7 +23,7 @@ export class SchoolPage {
   constructor(
     public navParams: NavParams,
     public translateService: TranslateService,
-    public utilsService: UtilsService) {
+    public ionicService: IonicService) {
 
     this.school = this.navParams.data.school;
   }
@@ -54,7 +54,7 @@ export class SchoolPage {
     });
     infoWindow.open(this.map, marker);
 
-    this.utilsService.removeLoading();
+    this.ionicService.removeLoading();
   }
 
 }

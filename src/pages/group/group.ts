@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { Refresher, Platform, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { UtilsService } from '../../providers/utils.service';
-import { GroupService } from '../../providers/group.service';
-import { Student } from '../../model/student';
-import { Group } from '../../model/group';
+import { IonicService } from '../../providers/ionic.service';
+import { GroupService, Group, Student } from 'classpip-utils';
 import { StudentPage } from '../students/student/student';
 
 @Component({
@@ -22,7 +20,7 @@ export class GroupPage {
   constructor(
     public navParams: NavParams,
     public navController: NavController,
-    public utilsService: UtilsService,
+    public ionicService: IonicService,
     public groupService: GroupService,
     public translateService: TranslateService) {
 
@@ -38,7 +36,7 @@ export class GroupPage {
   public ionViewDidEnter(): void {
 
     this.prepareGrid();
-    this.utilsService.removeLoading();
+    this.ionicService.removeLoading();
   }
 
   /**
@@ -52,7 +50,7 @@ export class GroupPage {
       refresher ? refresher.complete() : null;
     }).subscribe(
       ((value: Array<Student>) => this.prepareGrid()),
-      error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+      error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
   }
 
   /**

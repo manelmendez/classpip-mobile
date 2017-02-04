@@ -44,7 +44,7 @@
     </ion-item>
   </ion-list>
   <ion-list>
-    <ion-item *ngFor="let group of groups | orderByPipe" (click)="goToGroup(group)">
+    <ion-item *ngFor="let group of groups | orderByIdPipe" (click)="goToGroup(group)">
       <h2 text-uppercase>{{ group.name }}</h2>
       <h3>{{ group.grade.name }} - {{ group.matter.name }}</h3>
       <button ion-button clear item-right icon-only>

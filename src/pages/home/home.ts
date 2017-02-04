@@ -3,14 +3,8 @@ import { MenuController, Refresher, NavController, PopoverController, Platform }
 import { CallNumber, InAppBrowser } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { UtilsService } from '../../providers/utils.service';
-import { SchoolService } from '../../providers/school.service';
-import { GroupService } from '../../providers/group.service';
-import { School } from '../../model/school';
-import { Role } from '../../model/role';
-import { Group } from '../../model/group';
-import { Teacher } from '../../model/teacher';
-import { Student } from '../../model/student';
+import { IonicService } from '../../providers/ionic.service';
+import { UtilsService, SchoolService, GroupService, Role, Group, Teacher, Student, School } from 'classpip-utils';
 import { SchoolPage } from '../../pages/school/school';
 import { PopoverPage } from '../../pages/home/popover/popover';
 import { TeachersPage } from '../../pages/teachers/teachers';
@@ -32,6 +26,7 @@ export class HomePage {
   public role = Role;
 
   constructor(
+    public ionicService: IonicService,
     public utilsService: UtilsService,
     public groupService: GroupService,
     public schoolService: SchoolService,
@@ -49,7 +44,7 @@ export class HomePage {
   public ionViewDidEnter(): void {
 
     this.menuController.enable(true);
-    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.myRole = this.utilsService.role;
 
@@ -78,38 +73,38 @@ export class HomePage {
 
               this.schoolService.getMySchoolStudentsCount().finally(() => {
                 refresher ? refresher.complete() : null;
-                this.utilsService.removeLoading();
+                this.ionicService.removeLoading();
               }).subscribe(
                 ((value: number) => this.studentsCount = value),
-                error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+                error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
             }),
-            error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+            error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
         }),
-        error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+        error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
 
     } else if (this.myRole === Role.TEACHER) {
 
       this.schoolService.getMySchool().finally(() => {
         refresher ? refresher.complete() : null;
-        this.utilsService.removeLoading();
+        this.ionicService.removeLoading();
       }).subscribe(
         ((value: School) => {
           this.school = value;
 
           this.groupService.getMyGroups().subscribe(
             ((value: Array<Group>) => this.groups = value),
-            error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+            error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
         }),
-        error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+        error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
 
     } else if (this.myRole === Role.STUDENT) {
 
       this.schoolService.getMySchool().finally(() => {
         refresher ? refresher.complete() : null;
-        this.utilsService.removeLoading();
+        this.ionicService.removeLoading();
       }).subscribe(
         ((value: School) => this.school = value),
-        error => this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error));
+        error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
     }
   }
 
@@ -119,13 +114,13 @@ export class HomePage {
    */
   public goToTeachers(): void {
 
-    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.schoolService.getMySchoolTeachers().subscribe(
       ((value: Array<Teacher>) => this.navController.push(TeachersPage, { teachers: value })),
       error => {
-        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        this.utilsService.removeLoading();
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.ionicService.removeLoading();
       });
   }
 
@@ -135,13 +130,13 @@ export class HomePage {
    */
   public goToStudents(): void {
 
-    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.schoolService.getMySchoolStudents().subscribe(
       ((value: Array<Student>) => this.navController.push(StudentsPage, { students: value })),
       error => {
-        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        this.utilsService.removeLoading();
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.ionicService.removeLoading();
       });
   }
 
@@ -151,13 +146,13 @@ export class HomePage {
   */
   public goToGroup(group: Group): void {
 
-    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.groupService.getMyGroupStudents(group.id).subscribe(
       ((value: Array<Student>) => this.navController.push(GroupPage, { students: value, group: group })),
       error => {
-        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        this.utilsService.removeLoading();
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.ionicService.removeLoading();
       });
   }
 
@@ -193,13 +188,13 @@ export class HomePage {
    */
   public goToSchool(): void {
 
-    this.utilsService.showLoading(this.translateService.instant('APP.WAIT'));
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.schoolService.getMySchool().subscribe(
       ((value: School) => this.navController.push(SchoolPage, { school: value })),
       error => {
-        this.utilsService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        this.utilsService.removeLoading();
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        this.ionicService.removeLoading();
       });
   }
 
