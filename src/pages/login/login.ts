@@ -2,10 +2,13 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { LoginService, UtilsService, Role, Credentials } from 'classpip-utils';
 import { IonicService } from '../../providers/ionic.service';
+import { LoginService } from '../../providers/login.service';
+import { UtilsService } from '../../providers/utils.service';
 import { MenuPage } from '../../pages/menu/menu';
 import { Page } from '../../model/page';
+import { Role } from '../../model/role';
+import { Credentials } from '../../model/credentials';
 
 @Component({
   selector: 'page-login',

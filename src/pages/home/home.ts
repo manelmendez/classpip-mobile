@@ -4,7 +4,14 @@ import { CallNumber, InAppBrowser } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { IonicService } from '../../providers/ionic.service';
-import { UtilsService, SchoolService, GroupService, Role, Group, Teacher, Student, School } from 'classpip-utils';
+import { UtilsService } from '../../providers/utils.service';
+import { SchoolService } from '../../providers/school.service';
+import { GroupService } from '../../providers/group.service';
+import { Role } from '../../model/role';
+import { Group } from '../../model/group';
+import { Teacher } from '../../model/teacher';
+import { Student } from '../../model/student';
+import { School } from '../../model/school';
 import { SchoolPage } from '../../pages/school/school';
 import { PopoverPage } from '../../pages/home/popover/popover';
 import { TeachersPage } from '../../pages/teachers/teachers';
