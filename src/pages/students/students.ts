@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { Refresher, Platform, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { SchoolService, Student } from 'classpip-utils';
 import { IonicService } from '../../providers/ionic.service';
+import { SchoolService } from '../../providers/school.service';
 import { StudentPage } from './student/student';
+import { Student } from '../../model/student';
 
 @Component({
   selector: 'page-students',

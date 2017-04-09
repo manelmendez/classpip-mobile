@@ -23,12 +23,22 @@ import { StudentsPage } from '../pages/students/students';
 import { StudentPage } from '../pages/students/student/student';
 import { GroupPage } from '../pages/group/group';
 
+// pipes
+import { OrderByIdPipe } from '../pipes/order-by-id.pipe';
+import { OrderByNamePipe } from '../pipes/order-by-name.pipe';
+import { OrderBySurnamePipe } from '../pipes/order-by-surname.pipe';
+
 // services
 import { IonicService } from '../providers/ionic.service';
 import { HockeyAppService } from '../providers/hockeyapp.service';
-
-// modules
-import { UtilsModule } from 'classpip-utils'
+import { AvatarService } from '../providers/avatar.service';
+import { GradeService } from '../providers/grade.service';
+import { GroupService } from '../providers/group.service';
+import { LoginService } from '../providers/login.service';
+import { MatterService } from '../providers/matter.service';
+import { SchoolService } from '../providers/school.service';
+import { UserService } from '../providers/user.service';
+import { UtilsService } from '../providers/utils.service';
 
 // rxjs
 import 'rxjs/add/operator/map';
@@ -59,7 +69,11 @@ export function exportTranslateStaticLoader(http: Http) {
     TeacherPage,
     StudentsPage,
     StudentPage,
-    GroupPage
+    GroupPage,
+    // pipes
+    OrderByIdPipe,
+    OrderByNamePipe,
+    OrderBySurnamePipe
   ],
   imports: [
     TranslateModule.forRoot({
@@ -67,7 +81,6 @@ export function exportTranslateStaticLoader(http: Http) {
       useFactory: exportTranslateStaticLoader,
       deps: [Http]
     }),
-    UtilsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -90,7 +103,15 @@ export function exportTranslateStaticLoader(http: Http) {
   ],
   providers: [
     IonicService,
-    HockeyAppService
+    HockeyAppService,
+    AvatarService,
+    GradeService,
+    GroupService,
+    LoginService,
+    MatterService,
+    SchoolService,
+    UserService,
+    UtilsService,
   ]
 })
 export class AppModule { }
