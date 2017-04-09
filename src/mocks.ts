@@ -103,7 +103,7 @@ export class NavParamsMock {
   }
 }
 
-import { Role } from 'classpip-utils';
+import { Role } from './model/Role';
 export class UtilsServiceMock {
   private _role: Role;
   public get role(): Role {

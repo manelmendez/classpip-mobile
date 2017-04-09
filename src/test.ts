@@ -18,7 +18,6 @@ import {
 } from 'ionic-angular';
 import { TranslateService, TranslateLoader, TranslateParser, TranslateModule } from 'ng2-translate/ng2-translate';
 import { IonicService } from './providers/ionic.service';
-import { UtilsModule } from 'classpip-utils';
 import { ConfigMock, PlatformMock, MenuMock, NavParamsMock } from './mocks';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
@@ -85,7 +84,6 @@ export class TestUtils {
       imports: [
         FormsModule,
         IonicModule,
-        UtilsModule,
         ReactiveFormsModule,
         TranslateModule.forRoot()
       ],

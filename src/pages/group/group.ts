@@ -3,7 +3,9 @@ import { Refresher, Platform, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { IonicService } from '../../providers/ionic.service';
-import { GroupService, Group, Student } from 'classpip-utils';
+import { GroupService } from '../../providers/group.service';
+import { Group } from '../../model/group';
+import { Student } from '../../model/student';
 import { StudentPage } from '../students/student/student';
 
 @Component({

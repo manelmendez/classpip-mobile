@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Refresher, Platform, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { SchoolService, Teacher } from 'classpip-utils';
 import { IonicService } from '../../providers/ionic.service';
+import { SchoolService } from '../../providers/school.service';
+import { Teacher } from '../../model/teacher';
 import { TeacherPage } from './teacher/teacher';
 
 @Component({

@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { UtilsService, Role } from 'classpip-utils';
+import { UtilsService } from '../../providers/utils.service';
 import { Page } from '../../model/page';
+import { Role } from '../../model/role';
 import { LoginPage } from '../../pages/login/login';
 
 @Component({

@@ -2,10 +2,13 @@ import { Component } from '@angular/core';
 import { MenuController, Refresher, Platform, NavController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { UserService, AvatarService, Profile, Avatar } from 'classpip-utils';
 import { IonicService } from '../../providers/ionic.service';
+import { UserService } from '../../providers/user.service';
+import { AvatarService } from '../../providers/avatar.service';
 import { TermsPage } from '../../pages/profile/terms/terms';
 import { HelpPage } from '../../pages/profile/help/help';
+import { Profile } from '../../model/profile';
+import { Avatar } from '../../model/avatar';
 
 @Component({
   selector: 'page-profile',
