@@ -6,10 +6,12 @@ import { IonicService } from '../../providers/ionic.service';
 import { UtilsService } from '../../providers/utils.service';
 import { LoginService } from '../../providers/login.service';
 import { SchoolService } from '../../providers/school.service';
+import {CollectionService} from "../../providers/collection.service";
 import { RoleSelectPage } from '../../pages/role-select/role-select';
 import { HomePage } from '../../pages/home/home';
 import { SchoolPage } from '../../pages/school/school';
 import { ProfilePage } from '../../pages/profile/profile';
+import {CollectionTpage} from "../collection/collection-teacher/collection-teacher";
 import { Page } from '../../model/page';
 import { School } from '../../model/school';
 
@@ -24,6 +26,7 @@ export class MenuPage {
   public rootPage: Component;
   public homePage: Page;
   public schoolPage: Page;
+  public collectionTpage: Page;
 
   constructor(
     public navController: NavController,
@@ -31,11 +34,13 @@ export class MenuPage {
     public utilsService: UtilsService,
     public ionicService: IonicService,
     public schoolService: SchoolService,
+    public collectionService: CollectionService,
     private loginService: LoginService) {
 
     this.rootPage = HomePage;
     this.homePage = new Page(HomePage, this.translateService.instant('HOME.TITLE'));
     this.schoolPage = new Page(SchoolPage, this.translateService.instant('SCHOOL.TITLE'));
+    this.collectionTpage = new Page(CollectionTpage, this.translateService.instant('COLLECTION.TITLE'));
   }
   /**
    * Method for opening a page
@@ -77,5 +82,10 @@ export class MenuPage {
         this.ionicService.removeLoading();
       });
   }
-
+  /**
+   * Method for displaying the collection page
+   */
+  public showCollection(): void {
+    this.navController.push(CollectionTpage);
+  }
 }
