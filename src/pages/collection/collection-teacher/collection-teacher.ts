@@ -7,7 +7,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { IonicService } from '../../providers/ionic.service';
 import { School } from '../../model/school';
-import { Collection } from "../../../model/collection";
+import { Collection } from "../../../model/collectionCards";
 
 declare var google;
 
