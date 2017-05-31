@@ -14,7 +14,7 @@ describe('Pages: ProfilePage', () => {
     instance = compiled.instance;
   })));
 
-  it('should create-collection the ProfilePage', async(() => {
+  it('should create the ProfilePage', async(() => {
     expect(instance).toBeTruthy();
   }));
 });
