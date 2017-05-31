@@ -14,7 +14,7 @@ describe('Pages: HelpPage', () => {
     instance = compiled.instance;
   })));
 
-  it('should create-collection the HelpPage', async(() => {
+  it('should create the HelpPage', async(() => {
     expect(instance).toBeTruthy();
   }));
 });
