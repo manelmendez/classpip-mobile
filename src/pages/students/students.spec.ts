@@ -14,7 +14,7 @@ describe('Pages: StudentsPage', () => {
     instance = compiled.instance;
   })));
 
-  it('should create-collection the StudentsPage', async(() => {
+  it('should create the StudentsPage', async(() => {
     expect(instance).toBeTruthy();
   }));
 });
