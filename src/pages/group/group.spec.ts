@@ -14,7 +14,7 @@ describe('Pages: GroupPage', () => {
     instance = compiled.instance;
   })));
 
-  it('should create the GroupPage', async(() => {
+  it('should create-collection the GroupPage', async(() => {
     expect(instance).toBeTruthy();
   }));
 });

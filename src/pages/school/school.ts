@@ -38,14 +38,14 @@ export class SchoolPage {
         disableDefaultUI: true
       });
 
-    // create the marker
+    // create-collection the marker
     let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: this.map.getCenter()
     });
 
-    // create the infowinfow
+    // create-collection the infowinfow
     let content = '<b>' + this.school.name + '</b><br>' + this.school.address +
       ' ' + this.school.zipCode + '<br>' + this.school.city + ' ' +
       this.school.country;

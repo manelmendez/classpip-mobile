@@ -14,7 +14,7 @@ describe('Pages: LoginPage', () => {
     instance = compiled.instance;
   })));
 
-  it('should create the LoginPage', async(() => {
+  it('should create-collection the LoginPage', async(() => {
     expect(instance).toBeTruthy();
   }));
 });

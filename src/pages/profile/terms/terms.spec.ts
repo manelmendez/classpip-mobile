@@ -14,7 +14,7 @@ describe('Pages: TermsPage', () => {
     instance = compiled.instance;
   })));
 
-  it('should create the TermsPage', async(() => {
+  it('should create-collection the TermsPage', async(() => {
     expect(instance).toBeTruthy();
   }));
 });
