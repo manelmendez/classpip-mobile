@@ -78,5 +78,12 @@
   },
   "COLLECTION": {
     "TITLE": "Mis Colecciones"
+  },
+  "CREATE-COLLECTION": {
+    "TITLE": "Crear colección",
+    "NAME": "Nombre de la nueva colección",
+    "NUM": "Número de cartas de la nueva colección",
+    "IMAGE": "Imagen de portada para la colección",
+    "CREATE": "CREAR"
   }
 }
