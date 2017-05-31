@@ -14,7 +14,7 @@ describe('Pages: RoleSelectPage', () => {
     instance = compiled.instance;
   })));
 
-  it('should create-collection the RoleSelectPage', async(() => {
+  it('should create the RoleSelectPage', async(() => {
     expect(instance).toBeTruthy();
   }));
 });
