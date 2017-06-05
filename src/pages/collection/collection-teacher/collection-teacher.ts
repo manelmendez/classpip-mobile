@@ -2,14 +2,18 @@
  * Created by manel on 3/5/17.
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavParams } from 'ionic-angular';
+import {NavController, NavParams} from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { IonicService } from '../../providers/ionic.service';
+import { CollectionService } from "../../providers/collection.service";
 import { School } from '../../model/school';
 import { CollectionCard } from "../../../model/collectionCard";
+import { CollectionCreate } from "../collection-teacher/create-collection/create-collection";
+import { Page } from "../../../model/page";
 
 declare var google;
+
 
 @Component({
   selector: 'page-collection-teacher',
@@ -19,5 +23,20 @@ export class CollectionTpage {
 
   @ViewChild('map') mapElement: ElementRef;
   private collectionCard: CollectionCard;
+  public collectionCreate: Page;
+  constructor(
+    public translateService: TranslateService,
+    public navController: NavController) {
+
+    this.collectionCreate = new Page(CollectionCreate, this.translateService.instant('CREATE-COLLECTION.TITLE'));
+  }
+  /**
+   * Method called to open the page to create-collection
+   * new collections
+   */
+
+  public goToCreate(): void {
+    this.navController.push(CollectionCreate);
+  }
 
 }

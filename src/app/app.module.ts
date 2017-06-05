@@ -22,6 +22,8 @@ import { TeacherPage } from '../pages/teachers/teacher/teacher';
 import { StudentsPage } from '../pages/students/students';
 import { StudentPage } from '../pages/students/student/student';
 import { GroupPage } from '../pages/group/group';
+import { CollectionTpage } from "../pages/collection/collection-teacher/collection-teacher";
+import { CollectionCreate } from "../pages/collection/collection-teacher/create-collection/create-collection";
 
 // pipes
 import { OrderByIdPipe } from '../pipes/order-by-id.pipe';
@@ -39,6 +41,7 @@ import { MatterService } from '../providers/matter.service';
 import { SchoolService } from '../providers/school.service';
 import { UserService } from '../providers/user.service';
 import { UtilsService } from '../providers/utils.service';
+import { CollectionService } from "../providers/collection.service";
 
 // rxjs
 import 'rxjs/add/operator/map';
@@ -47,8 +50,6 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/forkJoin';
-import {CollectionTpage} from "../pages/collection/collection-teacher/collection-teacher";
-import {CollectionService} from "../providers/collection.service";
 
 export function exportTranslateStaticLoader(http: Http) {
   return new TranslateStaticLoader(http, AppConfig.LANG_PATH, AppConfig.LANG_EXT);
@@ -73,6 +74,7 @@ export function exportTranslateStaticLoader(http: Http) {
     StudentPage,
     GroupPage,
     CollectionTpage,
+    CollectionCreate,
     // pipes
     OrderByIdPipe,
     OrderByNamePipe,
@@ -103,7 +105,8 @@ export function exportTranslateStaticLoader(http: Http) {
     StudentsPage,
     StudentPage,
     GroupPage,
-    CollectionTpage
+    CollectionTpage,
+    CollectionCreate
   ],
   providers: [
     IonicService,
