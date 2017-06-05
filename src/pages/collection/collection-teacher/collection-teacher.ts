@@ -8,7 +8,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { IonicService } from '../../providers/ionic.service';
 import { CollectionService } from "../../providers/collection.service";
 import { School } from '../../model/school';
-import { Collection } from "../../../model/collection";
+import { CollectionCard } from "../../../model/collectionCard";
 import { CollectionCreate } from "../collection-teacher/create-collection/create-collection";
 import { Page } from "../../../model/page";
 
@@ -22,7 +22,7 @@ declare var google;
 export class CollectionTpage {
 
   @ViewChild('map') mapElement: ElementRef;
-  private collection: Collection;
+  private collectionCard: CollectionCard;
   public collectionCreate: Page;
   constructor(
     public translateService: TranslateService,

@@ -2,7 +2,9 @@ export class AppConfig {
 
   // Server connection
   //public static get SERVER_URL(): string { return 'https://api.classpip.com'; } // PRO
-  public static get SERVER_URL(): string { return 'http://localhost:3000'; } // DEV
+  //public static get SERVER_URL(): string { return 'http://localhost:3000'; } // DEV
+  public static get SERVER_URL(): string { return 'http://192.168.50.95:3000'; } // WIFI
+
 
   public static get TEACHER_URL(): string { return this.SERVER_URL + '/api/teachers'; }
   public static get STUDENT_URL(): string { return this.SERVER_URL + '/api/students'; }

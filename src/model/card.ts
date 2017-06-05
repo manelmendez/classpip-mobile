@@ -4,15 +4,17 @@
 export class Card {
 
   private _id: string;
+  private _name: string;
   private _image: string;
-  private _collection: string;
+  private _collectionId: string;
   private _ratio: string;
   private _rank: string;
 
-  constructor(id?: string, image?: string, collection?: string, ratio?: string, rank?: string) {
+  constructor(id?: string, name?: string, image?: string, collectionId?: string, ratio?: string, rank?: string) {
     this._id = id;
+    this._name = name;
     this._image = image;
-    this._collection = collection;
+    this._collectionId = collectionId;
     this._ratio = ratio;
     this._rank = rank;
   }
@@ -23,8 +25,9 @@ export class Card {
     let result: Card = new Card();
     if (object != null) {
       result.id = object.id;
+      result.name = object.name;
       result.image = object.image;
-      result.collection = object.collection;
+      result.collectionId = object.collectionId;
       result.ratio = object.ratio;
       result.rank = object.rank;
     }
@@ -39,6 +42,14 @@ export class Card {
     this._id = value;
   }
 
+  get name(): string {
+    return this._name;
+  }
+
+  set name(value: string) {
+    this._name = value;
+  }
+
   get image(): string {
     return this._image;
   }
@@ -47,12 +58,12 @@ export class Card {
     this._image = value;
   }
 
-  get collection(): string {
-    return this._collection;
+  get collectionId(): string {
+    return this._collectionId;
   }
 
-  set collection(value: string) {
-    this._collection = value;
+  set collectionId(value: string) {
+    this._collectionId = value;
   }
 
   get ratio(): string {
