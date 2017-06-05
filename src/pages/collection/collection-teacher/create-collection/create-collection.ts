@@ -7,7 +7,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { IonicService } from '../../providers/ionic.service';
 import { School } from '../../model/school';
-import { Collection } from "../../../../model/collection";
+import { CollectionCard } from "../../../../model/collectionCard";
 
 declare var google;
 
@@ -18,5 +18,5 @@ declare var google;
 export class CollectionCreate {
 
   @ViewChild('map') mapElement: ElementRef;
-  private collection: Collection;
+  private collectionCard: CollectionCard;
 }
