@@ -1,7 +1,7 @@
 /**
  * Created by manel on 27/4/17.
  */
-export class CollectionCards {
+export class CollectionCard {
 
   private _id: string;
   private _name: string;
@@ -18,9 +18,9 @@ export class CollectionCards {
   }
 
   /* tslint:disable */
-  static toObject(object: any): CollectionCards {
+  static toObject(object: any): CollectionCard {
     /* tslint:enable */
-    let result: CollectionCards = new CollectionCards();
+    let result: CollectionCard = new CollectionCard();
     if (object != null) {
       result.id = object.id;
       result.name = object.name;
