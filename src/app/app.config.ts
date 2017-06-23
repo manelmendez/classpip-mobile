@@ -23,6 +23,8 @@ export class AppConfig {
   public static get STUDENTS_URL(): string { return '/students'; }
   public static get COUNT_URL(): string { return '/count'; }
   public static get GROUPS_URL(): string { return '/groups'; }
+  public static get COLLECTIONS_URL(): string { return '/collectionCards'; }
+
 
   public static get AUTH_HEADER(): string { return 'Authorization'; }
 

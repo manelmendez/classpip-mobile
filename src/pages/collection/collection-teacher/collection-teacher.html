@@ -7,7 +7,21 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <div #map id="map" class="map"></div>
+  <ion-refresher (ionRefresh)="getCollections($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let collectionCard of collectionCards" (click)="goToCollectionDetail(collectionCard)">
+      <ion-thumbnail item-left>
+        <img [src]="collectionCard.image">
+      </ion-thumbnail>
+      <h2>{{ collectionCard.name }} {{ collectionCard.num }}</h2>
+      <h3>{{ collectionCard.createdBy }}</h3>
+      <button ion-button clear item-right icon-only>
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
   <button ion-button round class="createButton" (click)="goToCreate()">Crear nueva</button>
 </ion-content>
 

@@ -30,7 +30,17 @@ export class CollectionCard {
     }
     return result;
   }
-
+  /* tslint:disable */
+  static toObjectArray(object: any): Array<CollectionCard> {
+    /* tslint:enable */
+    let resultArray: Array<CollectionCard> = new Array<CollectionCard>();
+    if (object != null) {
+      for (let i = 0; i < object.length; i++) {
+        resultArray.push(CollectionCard.toObject(object[i]));
+      }
+    }
+    return resultArray;
+  }
   get id(): string {
     return this._id;
   }
