@@ -2,14 +2,15 @@
  * Created by manel on 3/5/17.
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import { Refresher, NavParams, NavController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { IonicService } from '../../providers/ionic.service';
-import { CollectionService } from "../../providers/collection.service";
-import { School } from '../../model/school';
-import { CollectionCreate } from "../collection-teacher/create-collection/create-collection";
-import { Page } from "../../../model/page";
+import {Page} from "../../../model/page";
+import {CollectionService} from "../../../providers/collection.service";
+import {CollectionCreate} from "./create-collection/create-collection";
+import {CollectionCard} from "../../../model/collectionCard";
+import {IonicService} from "../../../providers/ionic.service";
+
 
 declare var google;
 
@@ -22,17 +23,44 @@ export class CollectionTpage {
 
   @ViewChild('map') mapElement: ElementRef;
   public collectionCreate: Page;
+  public collectionCards: Array<CollectionCard>;
   constructor(
+    public navParams: NavParams,
     public translateService: TranslateService,
+    public collectionService: CollectionService,
+    public ionicService: IonicService,
     public navController: NavController) {
 
     this.collectionCreate = new Page(CollectionCreate, this.translateService.instant('CREATE-COLLECTION.TITLE'));
+    this.collectionCards = this.navParams.data.collectionCards;
+
   }
+
+  /**
+   * This method returns the collection list of the
+   * current teacher
+   * @param {Refresher} Refresher element
+   */
+  private getCollections(refresher?: Refresher): void {
+    this.collectionService.getMyCollections().finally(() => {
+      refresher ? refresher.complete() : null;
+    }).subscribe(
+      ((value: Array<CollectionCard>) => this.collectionCards = value),
+      error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
+  }
+
+  /**
+   * Method called from the home page to open the list of the
+   * teachers of the school of the current user
+   */
+  public goToCollectionDetail(collectionCard: CollectionCard): void {
+    this.navController.push(CollectionTpage, { collectionCard: collectionCard })
+  }
+
   /**
    * Method called to open the page to create-collection
    * new collections
    */
-
   public goToCreate(): void {
     this.navController.push(CollectionCreate);
   }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Nav } from 'ionic-angular';
+import {NavController, Nav, NavParams} from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { IonicService } from '../../providers/ionic.service';
@@ -14,6 +14,7 @@ import { ProfilePage } from '../../pages/profile/profile';
 import {CollectionTpage} from "../collection/collection-teacher/collection-teacher";
 import { Page } from '../../model/page';
 import { School } from '../../model/school';
+import {CollectionCard} from "../../model/collectionCard";
 
 @Component({
   selector: 'page-menu',
@@ -27,8 +28,9 @@ export class MenuPage {
   public homePage: Page;
   public schoolPage: Page;
   public collectionTpage: Page;
-
+  public collectionCards: Array<CollectionCard>;
   constructor(
+    public navParams: NavParams,
     public navController: NavController,
     public translateService: TranslateService,
     public utilsService: UtilsService,
@@ -41,6 +43,7 @@ export class MenuPage {
     this.homePage = new Page(HomePage, this.translateService.instant('HOME.TITLE'));
     this.schoolPage = new Page(SchoolPage, this.translateService.instant('SCHOOL.TITLE'));
     this.collectionTpage = new Page(CollectionTpage, this.translateService.instant('COLLECTION.TITLE'));
+    this.collectionCards = this.navParams.data.collectionCards;
   }
   /**
    * Method for opening a page
@@ -79,13 +82,21 @@ export class MenuPage {
       ((value: School) => this.navController.push(SchoolPage, { school: value })),
       error => {
         this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        this.ionicService.removeLoading();
       });
+    this.ionicService.removeLoading();
+
   }
   /**
    * Method for displaying the collection page
    */
   public showCollection(): void {
-    this.navController.push(CollectionTpage);
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.collectionService.getMyCollections().subscribe(
+      ((value: Array<CollectionCard>)=> this.navController.push(CollectionTpage, { collectionCards: value })),
+      error => {
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+      });
+    this.ionicService.removeLoading();
   }
 }

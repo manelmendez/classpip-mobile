@@ -9,6 +9,7 @@ import { IonicService } from '../../providers/ionic.service';
 import { School } from '../../model/school';
 import { CollectionCard } from "../../../../model/collectionCard";
 import { UtilsService } from "../../../../providers/utils.service";
+import { Camera } from 'ionic-native';
 
 declare var google;
 
@@ -20,6 +21,7 @@ export class CollectionCreate {
 
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
+  public base64Image: string;
 
   constructor(
     public navController: NavController,
@@ -29,5 +31,17 @@ export class CollectionCreate {
   }
   public createCollection(): void {
     alert(this.collectionCard.name+' / '+this.collectionCard.num+' / '+this.collectionCard.image);
+  }
+  public takePicture(){
+    Camera.getPicture({
+      destinationType: Camera.DestinationType.DATA_URL,
+      targetWidth: 1000,
+      targetHeight: 1000
+    }).then((imageData) => {
+      // imageData is a base64 encoded string
+      this.base64Image = "data:image/jpeg;base64," + imageData;
+    }, (err) => {
+      console.log(err);
+    });
   }
 }
