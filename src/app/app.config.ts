@@ -26,6 +26,7 @@ export class AppConfig {
   public static get COLLECTIONS_URL(): string { return '/collectionCards'; }
 
 
+
   public static get AUTH_HEADER(): string { return 'Authorization'; }
 
   // Errors
