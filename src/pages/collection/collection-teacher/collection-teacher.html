@@ -11,7 +11,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-item *ngFor="let collectionCard of collectionCards" (click)="goToCollectionDetail(collectionCard)">
+    <ion-item *ngFor="let collectionCard of collectionCards" (click)="goToCollectionDetail()">
       <ion-thumbnail item-left>
         <img [src]="collectionCard.image">
       </ion-thumbnail>

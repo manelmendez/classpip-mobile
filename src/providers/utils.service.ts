@@ -40,6 +40,13 @@ export class UtilsService {
     }
     return url;
   }
+  /**
+   * This method construct the current API url
+   * @returns {string} generated url
+   */
+  public getMyApiUrl(): string {
+    return AppConfig.API_URL;
+  }
 
   /**
    * This method construct the current user url depending on the role

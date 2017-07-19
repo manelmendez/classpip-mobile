@@ -10,6 +10,8 @@ import {CollectionService} from "../../../providers/collection.service";
 import {CollectionCreate} from "./create-collection/create-collection";
 import {CollectionCard} from "../../../model/collectionCard";
 import {IonicService} from "../../../providers/ionic.service";
+import {CollectionTeacherDetail} from "./collection-teacher-detail/collection-teacher-detail";
+import {Card} from "../../../model/card";
 
 
 declare var google;
@@ -24,6 +26,8 @@ export class CollectionTpage {
   @ViewChild('map') mapElement: ElementRef;
   public collectionCreate: Page;
   public collectionCards: Array<CollectionCard>;
+  public cards: Array<Card>;
+
   constructor(
     public navParams: NavParams,
     public translateService: TranslateService,
@@ -33,6 +37,7 @@ export class CollectionTpage {
 
     this.collectionCreate = new Page(CollectionCreate, this.translateService.instant('CREATE-COLLECTION.TITLE'));
     this.collectionCards = this.navParams.data.collectionCards;
+    this.cards = this.navParams.data.cards;
 
   }
 
@@ -50,11 +55,21 @@ export class CollectionTpage {
   }
 
   /**
-   * Method called from the home page to open the list of the
-   * teachers of the school of the current user
+   * Method called from the collections page to open the list of the
+   * cards of the current collection
    */
-  public goToCollectionDetail(collectionCard: CollectionCard): void {
-    this.navController.push(CollectionTpage, { collectionCard: collectionCard })
+  public goToCollectionDetail(): void {
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.collectionService.getCollectionDetails().subscribe(
+      ((value: Array<Card>)=> this.navController.push(CollectionTeacherDetail, { cards: value })),
+      error => {
+        console.log(this.cards);
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+      });
+
+
+    this.ionicService.removeLoading();
   }
 
   /**

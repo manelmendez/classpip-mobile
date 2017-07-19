@@ -33,7 +33,17 @@ export class Card {
     }
     return result;
   }
-
+  /* tslint:disable */
+  static toObjectArray(object: any): Array<Card> {
+    /* tslint:enable */
+    let resultArray: Array<Card> = new Array<Card>();
+    if (object != null) {
+      for (let i = 0; i < object.length; i++) {
+        resultArray.push(Card.toObject(object[i]));
+      }
+    }
+    return resultArray;
+  }
   get id(): string {
     return this._id;
   }

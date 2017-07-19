@@ -24,6 +24,7 @@ import { StudentPage } from '../pages/students/student/student';
 import { GroupPage } from '../pages/group/group';
 import { CollectionTpage } from "../pages/collection/collection-teacher/collection-teacher";
 import { CollectionCreate } from "../pages/collection/collection-teacher/create-collection/create-collection";
+import { CollectionTeacherDetail } from "../pages/collection/collection-teacher/collection-teacher-detail/collection-teacher-detail";
 
 // pipes
 import { OrderByIdPipe } from '../pipes/order-by-id.pipe';
@@ -75,6 +76,7 @@ export function exportTranslateStaticLoader(http: Http) {
     GroupPage,
     CollectionTpage,
     CollectionCreate,
+    CollectionTeacherDetail,
     // pipes
     OrderByIdPipe,
     OrderByNamePipe,
@@ -106,7 +108,8 @@ export function exportTranslateStaticLoader(http: Http) {
     StudentPage,
     GroupPage,
     CollectionTpage,
-    CollectionCreate
+    CollectionCreate,
+    CollectionTeacherDetail
   ],
   providers: [
     IonicService,

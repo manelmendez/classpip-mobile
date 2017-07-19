@@ -5,7 +5,7 @@ export class AppConfig {
   public static get SERVER_URL(): string { return 'http://localhost:3000'; } // DEV
   //public static get SERVER_URL(): string { return 'http://192.168.1.135:3000'; } // WIFI
 
-
+  public static get API_URL(): string { return this.SERVER_URL + '/api'; }
   public static get TEACHER_URL(): string { return this.SERVER_URL + '/api/teachers'; }
   public static get STUDENT_URL(): string { return this.SERVER_URL + '/api/students'; }
   public static get SCHOOLADMIN_URL(): string { return this.SERVER_URL + '/api/schooladministrators'; }
