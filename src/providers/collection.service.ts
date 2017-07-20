@@ -41,14 +41,14 @@ export class CollectionService {
    * This method returns the list of cards of a certain collectionCard
    * @return {Card} returns an array of Cards
    */
-  public getCollectionDetails(): Observable<Array<Card>> {
+  public getCollectionDetails(id): Observable<Array<Card>> {
     var count = 0;
 
     let options: RequestOptions = new RequestOptions({
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
     });
 
-    let url: string = this.utilsService.getMyApiUrl() + AppConfig.COLLECTIONS_URL +"/1/cards";
+    let url: string = this.utilsService.getMyApiUrl() + AppConfig.COLLECTIONS_URL +"/"+id+"/cards";
     console.log(url);
 
     return this.http.get(url, options)
