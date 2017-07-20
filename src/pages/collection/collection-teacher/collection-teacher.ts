@@ -26,7 +26,6 @@ export class CollectionTpage {
   @ViewChild('map') mapElement: ElementRef;
   public collectionCreate: Page;
   public collectionCards: Array<CollectionCard>;
-  public cards: Array<Card>;
 
   constructor(
     public navParams: NavParams,
@@ -37,7 +36,6 @@ export class CollectionTpage {
 
     this.collectionCreate = new Page(CollectionCreate, this.translateService.instant('CREATE-COLLECTION.TITLE'));
     this.collectionCards = this.navParams.data.collectionCards;
-    this.cards = this.navParams.data.cards;
 
   }
 
@@ -58,13 +56,12 @@ export class CollectionTpage {
    * Method called from the collections page to open the list of the
    * cards of the current collection
    */
-  public goToCollectionDetail(): void {
+  public goToCollectionDetail(id): void {
     this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
-    this.collectionService.getCollectionDetails().subscribe(
-      ((value: Array<Card>)=> this.navController.push(CollectionTeacherDetail, { cards: value })),
+    this.collectionService.getCollectionDetails(id).subscribe(
+      ((value: Array<Card>)=> this.navController.push(CollectionTeacherDetail, { cards: value, id: id })),
       error => {
-        console.log(this.cards);
         this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
       });
 

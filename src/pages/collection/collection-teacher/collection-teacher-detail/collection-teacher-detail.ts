@@ -21,7 +21,7 @@ export class CollectionTeacherDetail {
 
   @ViewChild('map') mapElement: ElementRef;
   public cards: Array<Card>;
-
+  public id: string;
   constructor(
     public navParams: NavParams,
     public translateService: TranslateService,
@@ -30,7 +30,7 @@ export class CollectionTeacherDetail {
     public navController: NavController) {
 
     this.cards = this.navParams.data.cards;
-
+    this.id = this.navParams.data.id;
   }
 
   /**
@@ -39,7 +39,7 @@ export class CollectionTeacherDetail {
    * @param {Refresher} Refresher element
    */
   private getCollectionDetail(refresher?: Refresher): void {
-    this.collectionService.getCollectionDetails().finally(() => {
+    this.collectionService.getCollectionDetails(this.id).finally(() => {
       refresher ? refresher.complete() : null;
     }).subscribe(
       ((value: Array<Card>) => this.cards = value),
