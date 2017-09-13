@@ -12,6 +12,7 @@ import { HomePage } from '../../pages/home/home';
 import { SchoolPage } from '../../pages/school/school';
 import { ProfilePage } from '../../pages/profile/profile';
 import {CollectionTpage} from "../collection/collection-teacher/collection-teacher";
+import {CollectionSpage} from "../collection/collection-student/collection-student";
 import { Page } from '../../model/page';
 import { School } from '../../model/school';
 import {CollectionCard} from "../../model/collectionCard";
@@ -28,6 +29,7 @@ export class MenuPage {
   public homePage: Page;
   public schoolPage: Page;
   public collectionTpage: Page;
+  public collectionSpage: Page;
   public collectionCards: Array<CollectionCard>;
   constructor(
     public navParams: NavParams,
@@ -43,6 +45,7 @@ export class MenuPage {
     this.homePage = new Page(HomePage, this.translateService.instant('HOME.TITLE'));
     this.schoolPage = new Page(SchoolPage, this.translateService.instant('SCHOOL.TITLE'));
     this.collectionTpage = new Page(CollectionTpage, this.translateService.instant('COLLECTION.TITLE'));
+    this.collectionSpage = new Page(CollectionSpage, this.translateService.instant('COLLECTION.TITLE'));
     this.collectionCards = this.navParams.data.collectionCards;
   }
   /**
@@ -91,12 +94,25 @@ export class MenuPage {
    */
   public showCollection(): void {
     this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
+    var regexp = /teachers/gi;
+    if(this.utilsService.getMyUrl().search(regexp) >= 0) {
 
-    this.collectionService.getMyCollections().subscribe(
-      ((value: Array<CollectionCard>)=> this.navController.push(CollectionTpage, { collectionCards: value })),
-      error => {
-        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
-      });
+      this.collectionService.getMyCollections().subscribe(
+        ((value: Array<CollectionCard>)=> this.navController.push(CollectionTpage, { collectionCards: value })),
+        error => {
+          this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        });
+
+    } else {
+
+      this.collectionService.getMyCollections().subscribe(
+        ((value: Array<CollectionCard>)=> this.navController.push(CollectionSpage, { collectionCards: value })),
+        error => {
+          this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        });
+
+    }
+
     this.ionicService.removeLoading();
   }
 }

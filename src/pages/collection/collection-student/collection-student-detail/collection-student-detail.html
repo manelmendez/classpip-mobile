@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{"COLLECTION.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="getCollectionDetail($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let card of cards">
+      <ion-thumbnail item-left>
+        <img [src]="card.image">
+      </ion-thumbnail>
+      <h2>{{ card.name }}</h2>
+      <h3>{{ card.rank }}</h3>
+    </ion-item>
+  </ion-list>
+</ion-content>
