@@ -55,4 +55,31 @@ export class CollectionService {
       .map((response: Response, index: number) => Card.toObjectArray(response.json()));
 
   }
+  public postCollection(name, num, image){
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(headers, this.utilsService.currentUser.id)
+    });
+    alert(JSON.stringify(headers));
+    /*let options = new RequestOptions({
+      headers: headers
+    });*/
+    let body = JSON.stringify({
+      name:name,
+      num:num,
+      image:image,
+      createdBy:this.utilsService.currentUser.id
+    });
+
+
+    let url: string = AppConfig.SERVER_URL + AppConfig.COLLECTIONS_URL;
+    return this.http.post(url,body,options)
+      .map(response => {
+        alert(response);
+        return response.json()
+      })
+      .catch((error: Response) => this.utilsService.handleAPIError(error));
+  }
 }

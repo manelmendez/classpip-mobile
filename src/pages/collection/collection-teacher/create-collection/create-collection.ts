@@ -12,10 +12,12 @@ import { IonicService } from '../../providers/ionic.service';
 import { School } from '../../model/school';
 import { CollectionCard } from "../../../../model/collectionCard";
 import { UtilsService } from "../../../../providers/utils.service";
+import { CollectionService } from "../../../../providers/collection.service";
 import { Camera } from "@ionic-native/camera";
 import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { File } from "@ionic-native/file";
 import { FilePath } from "@ionic-native/file-path";
+import {AppConfig} from "../../../../app/app.config";
 
 declare var google;
 declare var cordova;
@@ -36,6 +38,7 @@ export class CollectionCreate {
   constructor(
     public navController: NavController,
     public utilsService: UtilsService,
+    public collectionService: CollectionService,
     public translateService: TranslateService,
     private camera: Camera,
     private transfer: Transfer,
@@ -48,8 +51,15 @@ export class CollectionCreate {
 
   }
   public createCollection(): void {
-    alert(this.collectionCard.name+' / '+this.collectionCard.num+' / '+this.collectionCard.image);
+    this.uploadImage();
   }
+
+  /**
+   *
+   * Modal that appears when clicking image input
+   * Let user select between 2 sources {Library, Camera}
+   *
+   */
   public presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Select Image Source',
@@ -74,6 +84,11 @@ export class CollectionCreate {
     });
     actionSheet.present();
   }
+
+  /**
+   * Take picture and select camera options
+   * @param sourceType
+   */
   public takePicture(sourceType) {
     // Create options for the Camera Dialog
     var options = {
@@ -114,11 +129,16 @@ export class CollectionCreate {
   private copyFileToLocalDir(namePath, currentName, newFileName) {
     this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
       this.lastImage = newFileName;
+      this.collectionCard.image=this.lastImage;
     }, error => {
       this.presentToast('Error while storing file.');
     });
   }
 
+  /**
+   * create toast messages
+   * @param text
+   */
   private presentToast(text) {
     let toast = this.toastCtrl.create({
       message: text,
@@ -128,12 +148,66 @@ export class CollectionCreate {
     toast.present();
   }
 
-// Always get the accurate path to your apps folder
+  /**
+   * Upload image to server
+   *
+   */
+  public uploadImage() {
+    // Returned String
+    var imagePath= new String();
+
+    // Destination URL
+    var url = AppConfig.SERVER_URL+"/upload";
+    // File for Upload
+    var targetPath = this.pathForImage(this.lastImage);
+
+    // File name only
+    var filename = this.lastImage;
+
+    var options = {
+      fileKey: "file",
+      fileName: filename,
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      params : {'fileName': filename}
+    };
+
+    const fileTransfer: TransferObject = this.transfer.create();
+
+    this.loading = this.loadingCtrl.create({
+      content: 'Uploading...',
+    });
+    this.loading.present();
+
+    // Use the FileTransfer to upload the image
+    fileTransfer.upload(targetPath, url, options).then(data => {
+      this.loading.dismissAll();
+      this.presentToast('Image succesful uploaded.');
+      imagePath = data.response;
+      var dbpath = AppConfig.SERVER_URL+imagePath;
+      this.postNewCollection(dbpath);
+    }, err => {
+      this.loading.dismissAll();
+      this.presentToast('Error while uploading file.');
+    });
+  }
+  // Always get the accurate path to your apps folder
   public pathForImage(img) {
     if (img === null) {
       return '';
     } else {
       return cordova.file.dataDirectory + img;
     }
+  }
+
+  /**
+   * This method send the new collection to
+   * server and save it on DB
+   * @param {Refresher} Refresher element
+   */
+  private postNewCollection(dbpath): void {
+    this.collectionService.postCollection(this.collectionCard.name,this.collectionCard.num,dbpath).finally(() => {
+
+    });
   }
 }
