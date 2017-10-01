@@ -8,7 +8,6 @@ import {
 } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { IonicService } from '../../providers/ionic.service';
 import { School } from '../../model/school';
 import { CollectionCard } from "../../../../model/collectionCard";
 import { UtilsService } from "../../../../providers/utils.service";
@@ -18,6 +17,9 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { File } from "@ionic-native/file";
 import { FilePath } from "@ionic-native/file-path";
 import {AppConfig} from "../../../../app/app.config";
+import {IonicService} from "../../../../providers/ionic.service";
+import {CollectionSpage} from "../../collection-student/collection-student";
+import {MenuPage} from "../../../menu/menu";
 
 declare var google;
 declare var cordova;
@@ -31,6 +33,7 @@ export class CollectionCreate {
 
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
+  public collectionToPost: CollectionCard = new CollectionCard();
   public base64Image: string;
   lastImage: string = null;
   loading: Loading;
@@ -40,6 +43,7 @@ export class CollectionCreate {
     public utilsService: UtilsService,
     public collectionService: CollectionService,
     public translateService: TranslateService,
+    public ionicService: IonicService,
     private camera: Camera,
     private transfer: Transfer,
     private file: File,
@@ -182,7 +186,6 @@ export class CollectionCreate {
     // Use the FileTransfer to upload the image
     fileTransfer.upload(targetPath, url, options).then(data => {
       this.loading.dismissAll();
-      this.presentToast('Image succesful uploaded.');
       imagePath = data.response;
       var dbpath = AppConfig.SERVER_URL+imagePath;
       this.postNewCollection(dbpath);
@@ -206,8 +209,18 @@ export class CollectionCreate {
    * @param {Refresher} Refresher element
    */
   private postNewCollection(dbpath): void {
-    this.collectionService.postCollection(this.collectionCard.name,this.collectionCard.num,dbpath).finally(() => {
-
-    });
+    this.collectionToPost.name=this.collectionCard.name;
+    this.collectionToPost.num=this.collectionCard.num;
+    this.collectionToPost.image=dbpath;
+    this.collectionToPost.createdBy=this.utilsService.currentUser.userId.toString();
+    this.collectionService.postCollection(this.collectionToPost).subscribe(
+      response => {
+        this.presentToast('Collection created successfuly');
+        this.navController.setRoot(MenuPage);
+      },
+      error => {
+        this.ionicService.removeLoading();
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+      });
   }
 }

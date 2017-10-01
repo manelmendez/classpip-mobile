@@ -55,31 +55,30 @@ export class CollectionService {
       .map((response: Response, index: number) => Card.toObjectArray(response.json()));
 
   }
-  public postCollection(name, num, image){
-    let headers = new Headers({
-      'Content-Type': 'application/json'
-    });
+
+  /**
+   * This method saves the new Collection on DB
+   * @param {CollectionCard} collectionCard
+   * @returns {Observable<any>}
+   */
+  public postCollection(collectionCard: CollectionCard){
+
     let options: RequestOptions = new RequestOptions({
-      headers: this.utilsService.setAuthorizationHeader(headers, this.utilsService.currentUser.id)
-    });
-    alert(JSON.stringify(headers));
-    /*let options = new RequestOptions({
-      headers: headers
-    });*/
-    let body = JSON.stringify({
-      name:name,
-      num:num,
-      image:image,
-      createdBy:this.utilsService.currentUser.id
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
     });
 
+    let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL;
+    let body = {
+      "name": collectionCard.name,
+      "num": collectionCard.num,
+      "image": collectionCard.image,
+      "createdBy": collectionCard.createdBy
+    };
 
-    let url: string = AppConfig.SERVER_URL + AppConfig.COLLECTIONS_URL;
     return this.http.post(url,body,options)
       .map(response => {
-        alert(response);
         return response.json()
       })
-      .catch((error: Response) => this.utilsService.handleAPIError(error));
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
   }
 }
