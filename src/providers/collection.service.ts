@@ -55,4 +55,30 @@ export class CollectionService {
       .map((response: Response, index: number) => Card.toObjectArray(response.json()));
 
   }
+
+  /**
+   * This method saves the new Collection on DB
+   * @param {CollectionCard} collectionCard
+   * @returns {Observable<any>}
+   */
+  public postCollection(collectionCard: CollectionCard){
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL;
+    let body = {
+      "name": collectionCard.name,
+      "num": collectionCard.num,
+      "image": collectionCard.image,
+      "createdBy": collectionCard.createdBy
+    };
+
+    return this.http.post(url,body,options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
 }
