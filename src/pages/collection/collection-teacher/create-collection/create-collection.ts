@@ -20,6 +20,8 @@ import {AppConfig} from "../../../../app/app.config";
 import {IonicService} from "../../../../providers/ionic.service";
 import {CollectionSpage} from "../../collection-student/collection-student";
 import {MenuPage} from "../../../menu/menu";
+import {UserService} from "../../../../providers/user.service";
+import {Profile} from "../../../../model/profile";
 
 declare var google;
 declare var cordova;
@@ -37,6 +39,8 @@ export class CollectionCreate {
   public base64Image: string;
   lastImage: string = null;
   loading: Loading;
+  public profile: Profile;
+
 
   constructor(
     public navController: NavController,
@@ -44,6 +48,7 @@ export class CollectionCreate {
     public collectionService: CollectionService,
     public translateService: TranslateService,
     public ionicService: IonicService,
+    public userService: UserService,
     private camera: Camera,
     private transfer: Transfer,
     private file: File,
@@ -212,8 +217,11 @@ export class CollectionCreate {
     this.collectionToPost.name=this.collectionCard.name;
     this.collectionToPost.num=this.collectionCard.num;
     this.collectionToPost.image=dbpath;
-    this.collectionToPost.createdBy=this.utilsService.currentUser.userId.toString();
-    this.collectionService.postCollection(this.collectionToPost).subscribe(
+    this.userService.getMyProfile().subscribe(
+      ((value: Profile) => this.profile = value),
+    );
+    this.collectionToPost.createdBy = this.profile.username;
+      this.collectionService.postCollection(this.collectionToPost).subscribe(
       response => {
         this.presentToast('Collection created successfuly');
         this.navController.setRoot(MenuPage);
