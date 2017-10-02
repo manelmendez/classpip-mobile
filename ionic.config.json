@@ -1,6 +1,11 @@
 {
   "name": "classpip",
   "app_id": "com.classpip.mobile",
-  "v2": true,
-  "typescript": true
+  "integrations": {
+    "gulp": {}
+  },
+  "type": "ionic-angular",
+  "gulp": {
+    "enabled": false
+  }
 }
