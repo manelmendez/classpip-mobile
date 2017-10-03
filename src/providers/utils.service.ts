@@ -8,6 +8,7 @@ import { Error } from '../model/error';
 import { Login } from '../model/login';
 import { Role } from '../model/role';
 import { School } from '../model/school';
+import {ToastController} from "ionic-angular";
 
 @Injectable()
 export class UtilsService {
@@ -16,7 +17,10 @@ export class UtilsService {
   private _currentUser: Login;
   private _currentSchool: School;
 
-  constructor(public translateService: TranslateService) { }
+  constructor(public translateService: TranslateService,
+              public toastCtrl: ToastController) {
+
+  }
 
   /**
    * This method construct the current user url depending on the role
@@ -104,6 +108,19 @@ export class UtilsService {
         break;
     }
     return Observable.throw(message);
+  }
+
+  /**
+   * create toast messages
+   * @param text
+   */
+  public presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 
   /**

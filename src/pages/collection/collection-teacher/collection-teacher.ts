@@ -2,19 +2,21 @@
  * Created by manel on 3/5/17.
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Refresher, NavParams, NavController } from 'ionic-angular';
+import {Refresher, NavParams, NavController, ActionSheetController} from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import {Page} from "../../../model/page";
 import {CollectionService} from "../../../providers/collection.service";
+import {GroupService} from "../../../providers/group.service";
 import {CollectionCreate} from "./create-collection/create-collection";
 import {CollectionCard} from "../../../model/collectionCard";
 import {IonicService} from "../../../providers/ionic.service";
 import {CollectionTeacherDetail} from "./collection-teacher-detail/collection-teacher-detail";
 import {Card} from "../../../model/card";
+import {CollectionAssign} from "./assign-collection/assign-collection";
+import {Group} from "../../../model/group";
 
 
-declare var google;
+declare let google;
 
 
 @Component({
@@ -24,17 +26,18 @@ declare var google;
 export class CollectionTpage {
 
   @ViewChild('map') mapElement: ElementRef;
-  public collectionCreate: Page;
   public collectionCards: Array<CollectionCard>;
 
   constructor(
     public navParams: NavParams,
     public translateService: TranslateService,
     public collectionService: CollectionService,
+    public groupService: GroupService,
     public ionicService: IonicService,
-    public navController: NavController) {
+    public navController: NavController,
+    public actionSheetCtrl: ActionSheetController
+  ) {
 
-    this.collectionCreate = new Page(CollectionCreate, this.translateService.instant('CREATE-COLLECTION.TITLE'));
     this.collectionCards = this.navParams.data.collectionCards;
 
   }
@@ -42,8 +45,9 @@ export class CollectionTpage {
   /**
    * This method returns the collection list of the
    * current teacher
-   * @param {Refresher} Refresher element
+   * @param {Refresher} refresher Refresher
    */
+
   private getCollections(refresher?: Refresher): void {
     this.collectionService.getMyCollections().finally(() => {
       refresher ? refresher.complete() : null;
@@ -55,6 +59,8 @@ export class CollectionTpage {
   /**
    * Method called from the collections page to open the list of the
    * cards of the current collection
+   *
+   * @param id
    */
   public goToCollectionDetail(id): void {
     this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
@@ -77,4 +83,51 @@ export class CollectionTpage {
     this.navController.push(CollectionCreate);
   }
 
+  /**
+   * Method called from the collections page to open the list of the
+   * cards of the current collection
+   */
+  public goToAssignCollection(id): void {
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.groupService.getMyGroups().subscribe(
+      ((value: Array<Group>)=> this.navController.push(CollectionAssign, { groups: value, id: id })),
+      error => {
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+      });
+
+
+    this.ionicService.removeLoading();
+  }
+
+  public onHold(id){
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select Action',
+      buttons: [
+        {
+          text: 'Delete',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Assign to group',
+          handler: () => {
+            this.goToAssignCollection(id);
+          }
+        },
+        {
+          text: 'Edit',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
+  }
 }

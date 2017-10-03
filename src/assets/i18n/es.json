@@ -85,5 +85,8 @@
     "NUM": "Número de cartas de la nueva colección",
     "IMAGE": "Imagen de portada para la colección",
     "CREATE": "CREAR"
+  },
+  "COLLECTION-ASSIGN": {
+    "TITLE": "Asignar a grupo"
   }
 }
