@@ -4,7 +4,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
   ActionSheetController, Loading, LoadingController, NavController,
-  Platform, ToastController
+  Platform
 } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
@@ -53,8 +53,7 @@ export class CollectionCreate {
     private filePath: FilePath,
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform,
-    public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController) {
+    public loadingCtrl: LoadingController) {
 
   }
   public createCollection(): void {
@@ -121,7 +120,7 @@ export class CollectionCreate {
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
-      this.presentToast('Error while selecting image : '+ err);
+      this.utilsService.presentToast('Error while selecting image : '+ err);
     });
   }
   // Create a new name for the image
@@ -139,21 +138,8 @@ export class CollectionCreate {
       this.lastImage = newFileName;
       this.collectionCard.image=this.lastImage;
     }, error => {
-      this.presentToast('Error while storing file: '+ error);
+      this.utilsService.presentToast('Error while storing file: '+ error);
     });
-  }
-
-  /**
-   * create toast messages
-   * @param text
-   */
-  private presentToast(text) {
-    let toast = this.toastCtrl.create({
-      message: text,
-      duration: 3000,
-      position: 'top'
-    });
-    toast.present();
   }
 
   /**
@@ -195,7 +181,7 @@ export class CollectionCreate {
       this.postNewCollection(dbpath);
     }, err => {
       this.loading.dismissAll();
-      this.presentToast('Error while uploading file: '+ err);
+      this.utilsService.presentToast('Error while uploading file: '+ err);
     });
   }
   // Always get the accurate path to your apps folder
@@ -222,7 +208,7 @@ export class CollectionCreate {
     this.collectionToPost.createdBy = this.profile.username;
       this.collectionService.postCollection(this.collectionToPost).subscribe(
       response => {
-        this.presentToast('Collection created successfuly');
+        this.utilsService.presentToast('Collection created successfuly');
         this.navController.setRoot(MenuPage);
       },
       error => {

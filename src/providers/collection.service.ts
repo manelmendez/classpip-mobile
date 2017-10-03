@@ -5,8 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { UtilsService } from './utils.service';
 import {CollectionCard} from "../model/collectionCard";
 import {AppConfig} from "../app/app.config";
-import {Student} from "../model/student";
-import {Avatar} from "../model/avatar";
 import {Card} from "../model/card";
 
 
@@ -24,7 +22,6 @@ export class CollectionService {
    * @return {CollectionCard} returns an array of collectionCards
    */
   public getMyCollections(): Observable<Array<CollectionCard>> {
-    var count = 0;
 
     let options: RequestOptions = new RequestOptions({
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
@@ -42,7 +39,6 @@ export class CollectionService {
    * @return {Card} returns an array of Cards
    */
   public getCollectionDetails(id): Observable<Array<Card>> {
-    var count = 0;
 
     let options: RequestOptions = new RequestOptions({
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
@@ -76,6 +72,19 @@ export class CollectionService {
     };
 
     return this.http.post(url,body,options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
+
+  public assignCollection(collectionId, groupId) {
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+    let url: string = AppConfig.COLLECTION_URL+'/'+collectionId+AppConfig.GROUPS_URL+'/rel/'+groupId;
+
+    return this.http.put(url,options)
       .map(response => {
         return response.json()
       })
