@@ -3,7 +3,7 @@
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
-  ActionSheetController, Loading, LoadingController, MenuController, NavController, NavParams,
+  ActionSheetController, Loading, LoadingController, NavController,
   Platform, ToastController
 } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -18,13 +18,12 @@ import { File } from "@ionic-native/file";
 import { FilePath } from "@ionic-native/file-path";
 import {AppConfig} from "../../../../app/app.config";
 import {IonicService} from "../../../../providers/ionic.service";
-import {CollectionSpage} from "../../collection-student/collection-student";
 import {MenuPage} from "../../../menu/menu";
 import {UserService} from "../../../../providers/user.service";
 import {Profile} from "../../../../model/profile";
 
-declare var google;
-declare var cordova;
+declare let google;
+declare let cordova;
 
 
 @Component({
@@ -36,7 +35,6 @@ export class CollectionCreate {
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
   public collectionToPost: CollectionCard = new CollectionCard();
-  public base64Image: string;
   lastImage: string = null;
   loading: Loading;
   public profile: Profile;
@@ -100,7 +98,7 @@ export class CollectionCreate {
    */
   public takePicture(sourceType) {
     // Create options for the Camera Dialog
-    var options = {
+    let options = {
       quality: 100,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
@@ -118,29 +116,30 @@ export class CollectionCreate {
             this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
           });
       } else {
-        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        let currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        let correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
-      this.presentToast('Error while selecting image.');
+      this.presentToast('Error while selecting image : '+ err);
     });
   }
   // Create a new name for the image
   private createFileName() {
-    var d = new Date(),
-      n = d.getTime(),
-      newFileName =  n + ".jpg";
-    return newFileName;
+    let d = new Date(),
+        n = d.getTime();
+
+    return n + ".jpg";
   }
 
 // Copy the image to a local folder
   private copyFileToLocalDir(namePath, currentName, newFileName) {
-    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName)
+      .then(success => {
       this.lastImage = newFileName;
       this.collectionCard.image=this.lastImage;
     }, error => {
-      this.presentToast('Error while storing file.');
+      this.presentToast('Error while storing file: '+ error);
     });
   }
 
@@ -163,17 +162,17 @@ export class CollectionCreate {
    */
   public uploadImage() {
     // Returned String
-    var imagePath= new String();
+    let imagePath= new String();
 
     // Destination URL
-    var url = AppConfig.SERVER_URL+"/upload";
+    let url = AppConfig.SERVER_URL+"/upload";
     // File for Upload
-    var targetPath = this.pathForImage(this.lastImage);
+    let targetPath = this.pathForImage(this.lastImage);
 
     // File name only
-    var filename = this.lastImage;
+    let filename = this.lastImage;
 
-    var options = {
+    let options = {
       fileKey: "file",
       fileName: filename,
       chunkedMode: false,
@@ -192,11 +191,11 @@ export class CollectionCreate {
     fileTransfer.upload(targetPath, url, options).then(data => {
       this.loading.dismissAll();
       imagePath = data.response;
-      var dbpath = AppConfig.SERVER_URL+imagePath;
+      let dbpath = AppConfig.SERVER_URL+imagePath;
       this.postNewCollection(dbpath);
     }, err => {
       this.loading.dismissAll();
-      this.presentToast('Error while uploading file.');
+      this.presentToast('Error while uploading file: '+ err);
     });
   }
   // Always get the accurate path to your apps folder
@@ -211,7 +210,7 @@ export class CollectionCreate {
   /**
    * This method send the new collection to
    * server and save it on DB
-   * @param {Refresher} Refresher element
+   * @param dbpath
    */
   private postNewCollection(dbpath): void {
     this.collectionToPost.name=this.collectionCard.name;
