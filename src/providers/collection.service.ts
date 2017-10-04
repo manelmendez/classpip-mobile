@@ -141,4 +141,25 @@ export class CollectionService {
       })
       .catch ((error : Response) => this.utilsService.handleAPIError(error));
   }
+
+  public editCollection(collectionCard: CollectionCard){
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL  + '/' + collectionCard.id;
+    let body = {
+      "name": collectionCard.name,
+      "image": collectionCard.image,
+      "num": collectionCard.num,
+      "createdBy": collectionCard.createdBy
+    };
+
+    return this.http.put(url, body, options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
 }

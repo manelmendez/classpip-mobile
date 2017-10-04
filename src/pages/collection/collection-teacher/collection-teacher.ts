@@ -18,6 +18,7 @@ import {UtilsService} from "../../../providers/utils.service";
 import {Profile} from "../../../model/profile";
 import {UserService} from "../../../providers/user.service";
 import {MenuPage} from "../../menu/menu";
+import {CollectionEdit} from "./edit-collection/edit-collection";
 
 
 declare let google;
@@ -186,6 +187,9 @@ export class CollectionTpage {
     }
   }
 
+  public goToEditCollection(collectionCard) {
+    this.navController.push(CollectionEdit, {collectionCard:collectionCard});
+  }
 
 
   public onHold(collectionCard){
@@ -207,7 +211,15 @@ export class CollectionTpage {
         {
           text: 'Edit',
           handler: () => {
-
+            this.userService.getMyProfile().subscribe(
+              ((value: Profile) => this.profile = value),
+            );
+            if(collectionCard.createdBy===this.profile.username){
+              this.goToEditCollection(collectionCard);
+            }
+            else {
+              this.utilsService.presentToast('No puedes editar esta colección porque no ha sido creada por ti')
+            }
           }
         },
         {

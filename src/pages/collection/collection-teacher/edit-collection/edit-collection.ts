@@ -3,7 +3,8 @@
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
-  ActionSheetController, Loading, LoadingController, NavController,
+  ActionSheetController,
+  Loading, LoadingController, NavController, NavParams,
   Platform
 } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -11,26 +12,28 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { School } from '../../model/school';
 import { CollectionCard } from "../../../../model/collectionCard";
 import { UtilsService } from "../../../../providers/utils.service";
-import { CollectionService } from "../../../../providers/collection.service";
 import { Camera } from "@ionic-native/camera";
 import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { File } from "@ionic-native/file";
 import { FilePath } from "@ionic-native/file-path";
-import {AppConfig} from "../../../../app/app.config";
+import { CollectionService } from "../../../../providers/collection.service";
 import {IonicService} from "../../../../providers/ionic.service";
+import {Profile} from "../../../../model/profile";
+import {Group} from "../../../../model/group";
+import {AppConfig} from "../../../../app/app.config";
 import {MenuPage} from "../../../menu/menu";
 import {UserService} from "../../../../providers/user.service";
-import {Profile} from "../../../../model/profile";
+import {error} from "util";
 
 declare let google;
 declare let cordova;
 
 
 @Component({
-  selector: 'page-create-collection',
-  templateUrl: './create-collection.html'
+  selector: 'page-edit-collection',
+  templateUrl: './edit-collection.html'
 })
-export class CollectionCreate {
+export class CollectionEdit {
 
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
@@ -38,9 +41,12 @@ export class CollectionCreate {
   lastImage: string = null;
   loading: Loading;
   public profile: Profile;
+  public groups: Array<Group>;
+  oldImage: string = null;
 
 
   constructor(
+    public navParams: NavParams,
     public navController: NavController,
     public utilsService: UtilsService,
     public collectionService: CollectionService,
@@ -53,11 +59,26 @@ export class CollectionCreate {
     private filePath: FilePath,
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform,
-    public loadingCtrl: LoadingController) {
-
+    public loadingCtrl: LoadingController
+    ) {
+    this.collectionCard = this.navParams.data.collectionCard;
+    this.oldImage = this.collectionCard.image;
   }
-  public createCollection(): void {
-    this.uploadImage();
+
+  public editCollection(): void {
+    if(this.oldImage===this.collectionCard.image){
+      alert (this.oldImage);
+      let dbpath = this.oldImage;
+      try{
+        this.putNewCollection(dbpath);
+      }
+      catch(error){
+        alert(error);
+      }
+    }
+    else{
+      this.uploadImage();
+    }
   }
 
   /**
@@ -124,22 +145,22 @@ export class CollectionCreate {
     });
   }
   // Create a new name for the image
-  private createFileName() {
+  public createFileName() {
     let d = new Date(),
-        n = d.getTime();
+      n = d.getTime();
 
     return n + ".jpg";
   }
 
 // Copy the image to a local folder
-  private copyFileToLocalDir(namePath, currentName, newFileName) {
+  public copyFileToLocalDir(namePath, currentName, newFileName) {
     this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName)
       .then(success => {
-      this.lastImage = newFileName;
-      this.collectionCard.image=this.lastImage;
-    }, error => {
-      this.utilsService.presentToast('Error while storing file: '+ error);
-    });
+        this.lastImage = newFileName;
+        this.collectionCard.image=this.lastImage;
+      }, error => {
+        this.utilsService.presentToast('Error while storing file: '+ error);
+      });
   }
 
   /**
@@ -178,7 +199,7 @@ export class CollectionCreate {
       this.loading.dismissAll();
       imagePath = data.response;
       let dbpath = AppConfig.SERVER_URL+imagePath;
-      this.postNewCollection(dbpath);
+      this.putNewCollection(dbpath);
     }, err => {
       this.loading.dismissAll();
       this.utilsService.presentToast('Error while uploading file: '+ err);
@@ -198,15 +219,16 @@ export class CollectionCreate {
    * server and save it on DB
    * @param dbpath
    */
-  private postNewCollection(dbpath): void {
+  public putNewCollection(dbpath): void {
     this.collectionToPost.name=this.collectionCard.name;
     this.collectionToPost.num=this.collectionCard.num;
     this.collectionToPost.image=dbpath;
+    this.collectionToPost.id=this.collectionCard.id;
     this.userService.getMyProfile().finally(() => {
       this.collectionToPost.createdBy = this.profile.username;
-      this.collectionService.postCollection(this.collectionToPost).subscribe(
+      this.collectionService.editCollection(this.collectionToPost).subscribe(
         response => {
-          this.utilsService.presentToast('Collection created successfully');
+          this.utilsService.presentToast('Collection edited successfully');
           this.navController.setRoot(MenuPage);
         },
         error => {
@@ -217,4 +239,5 @@ export class CollectionCreate {
       ((value: Profile) => this.profile = value)
     );
   }
+
 }
