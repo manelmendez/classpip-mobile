@@ -16,6 +16,7 @@ import {CollectionSpage} from "../collection/collection-student/collection-stude
 import { Page } from '../../model/page';
 import { School } from '../../model/school';
 import {CollectionCard} from "../../model/collectionCard";
+import {Role} from "../../model/role";
 
 @Component({
   selector: 'page-menu',
@@ -94,9 +95,9 @@ export class MenuPage {
    */
   public showCollection(): void {
     this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
-    var regexp = /teachers/gi;
-    if(this.utilsService.getMyUrl().search(regexp) >= 0) {
-
+    //var regexp = /teachers/gi;
+    //if(this.utilsService.getMyUrl().search(regexp) >= 0) {
+    if(this.utilsService.role === Role.TEACHER) {
       this.collectionService.getMyCollections().subscribe(
         ((value: Array<CollectionCard>)=> this.navController.push(CollectionTpage, { collectionCards: value })),
         error => {

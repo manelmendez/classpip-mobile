@@ -88,5 +88,12 @@
   },
   "COLLECTION-ASSIGN": {
     "TITLE": "Asignar a grupo"
+  },
+  "EDIT-COLLECTION": {
+    "TITLE": "Editar colección",
+    "NAME": "Nombre de la colección",
+    "NUM": "Número de cartas de la colección",
+    "IMAGE": "Imagen de portada de la colección",
+    "EDIT": "EDITAR"
   }
 }
