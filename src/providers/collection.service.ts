@@ -78,6 +78,13 @@ export class CollectionService {
       .catch ((error : Response) => this.utilsService.handleAPIError(error));
   }
 
+  /**
+   * Method to assign a collection of cards to a group of users
+   *
+   * @param collectionId
+   * @param groupId
+   * @returns {Observable<any>}
+   */
   public assignCollection(collectionId, groupId) {
     let options: RequestOptions = new RequestOptions({
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
@@ -85,6 +92,50 @@ export class CollectionService {
     let url: string = AppConfig.COLLECTION_URL+'/'+collectionId+AppConfig.GROUPS_URL+'/rel/'+groupId;
 
     return this.http.put(url,options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
+
+  /**
+   * Method to delete a collection created by user
+   *
+   * @param collectionId
+   * @returns {Observable<any>}
+   */
+  public deleteCollection(collectionId){
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL + '/' + collectionId;
+
+
+    return this.http.delete(url,options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
+
+  /**
+   * Method to delete the relation between collection and user
+   *
+   * @param collectionId
+   * @returns {Observable<any>}
+   */
+  public deleteCollectionRelation(collectionId){
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL + '/rel/' + collectionId;
+
+
+    return this.http.delete(url,options)
       .map(response => {
         return response.json()
       })

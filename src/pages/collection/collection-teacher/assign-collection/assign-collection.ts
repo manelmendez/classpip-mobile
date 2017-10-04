@@ -3,8 +3,8 @@
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
-  ActionSheetController, Loading, LoadingController, NavController, NavParams,
-  Platform, ToastController
+  Loading, NavController, NavParams,
+  Platform
 } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
@@ -12,12 +12,7 @@ import { School } from '../../model/school';
 import { CollectionCard } from "../../../../model/collectionCard";
 import { UtilsService } from "../../../../providers/utils.service";
 import { CollectionService } from "../../../../providers/collection.service";
-import { Camera } from "@ionic-native/camera";
-import { Transfer, TransferObject } from '@ionic-native/transfer';
-import { File } from "@ionic-native/file";
-import { FilePath } from "@ionic-native/file-path";
 import {IonicService} from "../../../../providers/ionic.service";
-import {UserService} from "../../../../providers/user.service";
 import {Profile} from "../../../../model/profile";
 import {Group} from "../../../../model/group";
 
