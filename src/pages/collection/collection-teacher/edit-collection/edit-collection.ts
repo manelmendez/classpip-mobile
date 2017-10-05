@@ -2,11 +2,7 @@
  * Created by manel on 31/5/17.
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import {
-  ActionSheetController,
-  Loading, NavController, NavParams,
-  Platform
-} from 'ionic-angular';
+import { ActionSheetController, NavController, NavParams, Platform } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { School } from '../../model/school';
@@ -14,12 +10,12 @@ import { CollectionCard } from "../../../../model/collectionCard";
 import { UtilsService } from "../../../../providers/utils.service";
 import { Camera } from "@ionic-native/camera";
 import { CollectionService } from "../../../../providers/collection.service";
-import {IonicService} from "../../../../providers/ionic.service";
-import {Profile} from "../../../../model/profile";
-import {Group} from "../../../../model/group";
-import {MenuPage} from "../../../menu/menu";
-import {UserService} from "../../../../providers/user.service";
-import {UploadImageService} from "../../../../providers/uploadImage.service";
+import { IonicService } from "../../../../providers/ionic.service";
+import { Profile } from "../../../../model/profile";
+import { Group } from "../../../../model/group";
+import { MenuPage } from "../../../menu/menu";
+import { UserService } from "../../../../providers/user.service";
+import { UploadImageService } from "../../../../providers/uploadImage.service";
 
 declare let google;
 declare let cordova;
@@ -34,7 +30,6 @@ export class CollectionEdit {
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
   public collectionToPost: CollectionCard = new CollectionCard();
-  loading: Loading;
   public profile: Profile;
   public groups: Array<Group>;
   oldImage: string = null;
@@ -70,6 +65,7 @@ export class CollectionEdit {
     }
     else{
       this.uploadImageService.uploadImage(this.collectionCard.image);
+      this.putNewCollection(this.collectionCard.image);
     }
   }
 
@@ -86,7 +82,7 @@ export class CollectionEdit {
         {
           text: 'Load from Library',
           handler: () => {
-            this.collectionCard.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY)
+            this.collectionCard.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
           }
         },
         {
@@ -122,7 +118,6 @@ export class CollectionEdit {
           this.navController.setRoot(MenuPage);
         },
         error => {
-          this.ionicService.removeLoading();
           this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
         });
     }).subscribe(

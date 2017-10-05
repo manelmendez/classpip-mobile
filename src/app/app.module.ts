@@ -52,6 +52,7 @@ import { SchoolService } from '../providers/school.service';
 import { UserService } from '../providers/user.service';
 import { UtilsService } from '../providers/utils.service';
 import { CollectionService } from "../providers/collection.service";
+import { UploadImageService } from "../providers/uploadImage.service";
 
 // rxjs
 import 'rxjs/add/operator/map';
@@ -140,6 +141,7 @@ export function exportTranslateStaticLoader(http: Http) {
     UserService,
     UtilsService,
     CollectionService,
+    UploadImageService,
     File,
     Transfer,
     Camera,

@@ -1,21 +1,20 @@
 
-import {Injectable} from "@angular/core";
-import {AppConfig} from "../app/app.config";
+import { Injectable } from "@angular/core";
+import { AppConfig } from "../app/app.config";
 
 import { Camera } from "@ionic-native/camera";
 import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { File } from "@ionic-native/file";
 import { FilePath } from "@ionic-native/file-path";
-import {UtilsService} from "./utils.service";
-import {Loading, LoadingController, Platform} from "ionic-angular";
+import { UtilsService } from "./utils.service";
+import { Platform } from "ionic-angular";
+import {Observable} from "rxjs/Observable";
 
 declare let cordova;
 
 
 @Injectable()
 export class UploadImageService {
-
-  loading: Loading;
 
   constructor(
     private camera: Camera,
@@ -24,7 +23,6 @@ export class UploadImageService {
     private file: File,
     private filePath: FilePath,
     public platform: Platform,
-    public loadingCtrl: LoadingController
   ) {
 
   }
@@ -60,7 +58,8 @@ export class UploadImageService {
         this.copyFileToLocalDir(correctPath, currentName, imageFileName);
       }
     }, (err) => {
-      this.utilsService.presentToast('Error while selecting image : '+ err);
+      this.utilsService.presentToast('Error while selecting image : ' + err);
+      imageFileName = "";
     });
     return imageFileName;
   }
@@ -119,17 +118,10 @@ export class UploadImageService {
 
     const fileTransfer: TransferObject = this.transfer.create();
 
-    this.loading = this.loadingCtrl.create({
-      content: 'Uploading...',
-    });
-    this.loading.present();
-
     // Use the FileTransfer to upload the image
     fileTransfer.upload(targetPath, url, options).then(data => {
-      this.loading.dismissAll();
       imagePath = data.response;
     }, err => {
-      this.loading.dismissAll();
       this.utilsService.presentToast('Error while uploading file: '+ err);
     });
   }

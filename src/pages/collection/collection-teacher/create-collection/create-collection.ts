@@ -3,7 +3,7 @@
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
-  ActionSheetController, Loading, NavController,
+  ActionSheetController, NavController,
   Platform
 } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -32,7 +32,6 @@ export class CollectionCreate {
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
   public collectionToPost: CollectionCard = new CollectionCard();
-  loading: Loading;
   public profile: Profile;
 
 
@@ -51,6 +50,7 @@ export class CollectionCreate {
   }
   public createCollection(): void {
     this.uploadImageService.uploadImage(this.collectionCard.image);
+    this.postNewCollection(this.collectionCard.image);
   }
 
   /**
@@ -60,30 +60,29 @@ export class CollectionCreate {
    *
    */
   public presentActionSheet() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Select Image Source',
-      buttons: [
-        {
-          text: 'Load from Library',
-          handler: () => {
-            this.collectionCard.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Select Image Source',
+        buttons: [
+          {
+            text: 'Load from Library',
+            handler: () => {
+              this.uploadImageService.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY)
+            }
+          },
+          {
+            text: 'Use Camera',
+            handler: () => {
+              this.collectionCard.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.CAMERA)
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel'
           }
-        },
-        {
-          text: 'Use Camera',
-          handler: () => {
-            this.collectionCard.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.CAMERA);
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        }
-      ]
-    });
-    actionSheet.present();
+        ]
+      });
+      actionSheet.present();
   }
-
   /**
    * This method send the new collection to
    * server and save it on DB
