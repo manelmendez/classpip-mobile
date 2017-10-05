@@ -66,7 +66,7 @@ export class CollectionCreate {
           {
             text: 'Load from Library',
             handler: () => {
-              this.uploadImageService.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY)
+              this.collectionCard.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY)
             }
           },
           {
