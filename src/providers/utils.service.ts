@@ -117,7 +117,7 @@ export class UtilsService {
   public presentToast(text) {
     let toast = this.toastCtrl.create({
       message: text,
-      duration: 3000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();

@@ -198,6 +198,7 @@ export class CollectionTpage {
       buttons: [
         {
           text: 'Delete',
+          role: 'destructive',
           handler: () => {
             this.selectDelete(collectionCard);
           }
