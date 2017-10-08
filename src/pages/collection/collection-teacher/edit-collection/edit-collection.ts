@@ -16,6 +16,7 @@ import { Group } from "../../../../model/group";
 import { MenuPage } from "../../../menu/menu";
 import { UserService } from "../../../../providers/user.service";
 import { UploadImageService } from "../../../../providers/uploadImage.service";
+import {CollectionTpage} from "../collection-teacher";
 
 declare let google;
 declare let cordova;
@@ -115,8 +116,9 @@ export class CollectionEdit {
       this.collectionService.editCollection(this.collectionToPost).subscribe(
         response => {
           this.utilsService.presentToast('Collection edited successfully');
-          this.navController.setRoot(MenuPage);
-        },
+          this.navController.setRoot(MenuPage).then(()=>{
+            this.navController.push(CollectionTpage);
+          });        },
         error => {
           this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
         });

@@ -19,6 +19,9 @@ import {Profile} from "../../../model/profile";
 import {UserService} from "../../../providers/user.service";
 import {MenuPage} from "../../menu/menu";
 import {CollectionEdit} from "./edit-collection/edit-collection";
+import {CollectionsAssigned} from "./assigned-collections/assigned-collections";
+import {MatterService} from "../../../providers/matter.service";
+import {GradeService} from "../../../providers/grade.service";
 
 
 declare let google;
@@ -32,6 +35,8 @@ export class CollectionTpage {
 
   @ViewChild('map') mapElement: ElementRef;
   public collectionCards: Array<CollectionCard>;
+  public assignedGroups: Array<Group>;
+  public allGroups: Array<Group>;
   public boolean: boolean;
   public profile: Profile;
 
@@ -42,13 +47,25 @@ export class CollectionTpage {
     public collectionService: CollectionService,
     public userService: UserService,
     public groupService: GroupService,
+    public gradeService: GradeService,
+    public matterService: MatterService,
     public ionicService: IonicService,
     public navController: NavController,
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController
   ) {
 
-    this.collectionCards = this.navParams.data.collectionCards;
+  }
+
+  /**
+   * Fires when the page appears on the screen.
+   * Used to get all the data needed in page
+   */
+  public ionViewDidEnter(): void {
+
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.getCollections();
   }
 
   /**
@@ -60,6 +77,7 @@ export class CollectionTpage {
   private getCollections(refresher?: Refresher): void {
     this.collectionService.getMyCollections().finally(() => {
       refresher ? refresher.complete() : null;
+      this.ionicService.removeLoading();
     }).subscribe(
       ((value: Array<CollectionCard>) => this.collectionCards = value),
       error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
@@ -95,20 +113,69 @@ export class CollectionTpage {
   /**
    * Method called from the collections page to open the list of the
    * cards of the current collection
+   *
+   * @param collectionId
    */
   public goToAssignCollection(collectionId): void {
-    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
+    //first of all, get all previous assigned groups to that collection
+    this.collectionService.getAssignedGroups(collectionId).finally(()=>{
+      //compare that assigned groups with all groups to show only the NON assigned groups
+      this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
+      let groupArray = Array<Group>();
+      this.groupService.getMyGroups().subscribe(
+        ((value: Array<Group>) =>  {
+          this.allGroups = value;
+          for (let i=0;i<this.allGroups.length;i++) {
+            let exists: boolean = false;
+            for (let j = 0; j < this.assignedGroups.length; j++) {
+              if (this.allGroups[i].id === this.assignedGroups[j].id) {
+                exists = true;
+                break;
+              }
+            }
+            if (!exists) {
+              groupArray.push(this.allGroups[i]);
+            }
+          }
+          this.navController.push(CollectionAssign, { groups: groupArray, id: collectionId })
+        }),
+        error => {
+          this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        });
+      this.ionicService.removeLoading();
+    }).subscribe(
+      ((value: Array<Group>) => this.assignedGroups = value),
+      error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error)
+    );
 
-    this.groupService.getMyGroups().subscribe(
-      ((value: Array<Group>)=> this.navController.push(CollectionAssign, { groups: value, id: collectionId })),
-      error => {
-        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
-      });
-
-
-    this.ionicService.removeLoading();
   }
 
+  public goToAssignedCollections(collectionId): void {
+    let groupArray = Array<Group>();
+    //first of all, get all previous assigned groups to that collection
+    this.collectionService.getAssignedGroups(collectionId).finally(()=>{
+      //now get all parameters inside group
+      this.assignedGroups.forEach(group => {
+        this.gradeService.getGrade(group.gradeId).subscribe(
+          grade => {
+            group.grade = grade;
+            this.matterService.getMatter(group.matterId).subscribe(
+              matter => {
+                group.matter = matter;
+                groupArray.push(group);
+                if (groupArray.length === this.assignedGroups.length) {
+                  this.navController.push(CollectionsAssigned, { groups: groupArray, id: collectionId })
+                }
+              })
+          })
+      });
+    }).subscribe(
+      ((value: Array<Group>) => {
+        this.assignedGroups=value;
+      }),
+        error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error)
+    );
+  }
 
   public selectDelete(collectionCard): void {
     this.userService.getMyProfile().subscribe(
@@ -194,37 +261,44 @@ export class CollectionTpage {
 
   public onHold(collectionCard){
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Select Action',
+      title: 'Selecciona la acción',
       buttons: [
         {
-          text: 'Delete',
+          text: 'Borrar',
           role: 'destructive',
           handler: () => {
             this.selectDelete(collectionCard);
           }
         },
         {
-          text: 'Assign to group',
+          text: 'Asignar a un grupo',
           handler: () => {
             this.goToAssignCollection(collectionCard.id);
           }
         },
         {
-          text: 'Edit',
+          text: 'Gestionar grupos asignados',
           handler: () => {
-            this.userService.getMyProfile().subscribe(
-              ((value: Profile) => this.profile = value),
-            );
-            if(collectionCard.createdBy===this.profile.username){
-              this.goToEditCollection(collectionCard);
-            }
-            else {
-              this.utilsService.presentToast('No puedes editar esta colección porque no ha sido creada por ti')
-            }
+            this.goToAssignedCollections(collectionCard.id);
           }
         },
         {
-          text: 'Cancel',
+          text: 'Editar',
+          handler: () => {
+            this.userService.getMyProfile().finally(()=>{
+              if(collectionCard.createdBy===this.profile.username){
+                this.goToEditCollection(collectionCard);
+              }
+              else {
+                this.utilsService.presentToast('No puedes editar esta colección porque no ha sido creada por ti')
+              }
+            }).subscribe(
+              ((value: Profile) => this.profile = value),
+            );
+          }
+        },
+        {
+          text: 'Cancelar',
           role: 'cancel'
         }
       ]

@@ -3,6 +3,7 @@
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
+  AlertController,
   Loading, NavController, NavParams,
   Platform
 } from 'ionic-angular';
@@ -15,18 +16,18 @@ import { CollectionService } from "../../../../providers/collection.service";
 import {IonicService} from "../../../../providers/ionic.service";
 import {Profile} from "../../../../model/profile";
 import {Group} from "../../../../model/group";
-import {CollectionTpage} from "../collection-teacher";
 import {MenuPage} from "../../../menu/menu";
+import {CollectionTpage} from "../collection-teacher";
 
 declare let google;
 declare let cordova;
 
 
 @Component({
-  selector: 'page-assign-collection',
-  templateUrl: './assign-collection.html'
+  selector: 'page-assigned-collections',
+  templateUrl: './assigned-collections.html'
 })
-export class CollectionAssign {
+export class CollectionsAssigned {
 
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
@@ -37,6 +38,7 @@ export class CollectionAssign {
   constructor(
     public navParams: NavParams,
     public navController: NavController,
+    public alertCtrl: AlertController,
     public utilsService: UtilsService,
     public collectionService: CollectionService,
     public translateService: TranslateService,
@@ -48,17 +50,36 @@ export class CollectionAssign {
     this.groups = this.navParams.data.groups;
   }
 
-  public assignGroup(collectionId, groupId) {
-    this.collectionService.assignCollection(collectionId, groupId).subscribe(
-      response => {
-        this.utilsService.presentToast('Collection assigned to group successfuly');
-        this.navController.setRoot(MenuPage).then(()=>{
-          this.navController.push(CollectionTpage);
-        });
-      },
-      error => {
-        this.ionicService.removeLoading();
-        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
-      });
+  public unassignGroup(collectionId, groupId) {
+    let confirm = this.alertCtrl.create({
+      title: 'Cancelar la asignación',
+      message: 'Si aceptas cancelas la asignación de la colección a este grupo, estás de acuerdo?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.collectionService.deleteAssignedGroup(collectionId, groupId).subscribe(
+              response => {
+                this.utilsService.presentToast('Delete assigned group successfuly');
+                this.navController.setRoot(MenuPage).then(()=>{
+                  this.navController.push(CollectionTpage);
+                });
+              },
+              error => {
+                this.ionicService.removeLoading();
+                this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+              });
+          }
+        }
+      ]
+    });
+    confirm.present();
+
   }
 }

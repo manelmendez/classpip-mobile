@@ -95,5 +95,8 @@
     "NUM": "Número de cartas de la colección",
     "IMAGE": "Imagen de portada de la colección",
     "EDIT": "EDITAR"
+  },
+  "COLLECTIONS-ASSIGNED": {
+    "TITLE": "Grupos asignados"
   }
 }

@@ -18,6 +18,7 @@ import {MenuPage} from "../../../menu/menu";
 import {UserService} from "../../../../providers/user.service";
 import {Profile} from "../../../../model/profile";
 import {UploadImageService} from "../../../../providers/uploadImage.service";
+import {CollectionTpage} from "../collection-teacher";
 
 declare let google;
 declare let cordova;
@@ -97,7 +98,9 @@ export class CollectionCreate {
       this.collectionService.postCollection(this.collectionToPost).subscribe(
         response => {
           this.utilsService.presentToast('Collection created successfully');
-          this.navController.setRoot(MenuPage);
+          this.navController.setRoot(MenuPage).then(()=>{
+            this.navController.push(CollectionTpage);
+          });
         },
         error => {
           this.ionicService.removeLoading();

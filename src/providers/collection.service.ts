@@ -6,6 +6,7 @@ import { UtilsService } from './utils.service';
 import {CollectionCard} from "../model/collectionCard";
 import {AppConfig} from "../app/app.config";
 import {Card} from "../model/card";
+import {Group} from "../model/group";
 
 
 @Injectable()
@@ -157,6 +158,34 @@ export class CollectionService {
     };
 
     return this.http.put(url, body, options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
+
+  public getAssignedGroups(collectionId) : Observable<Array<Group>>{
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = AppConfig.COLLECTION_URL + '/' + collectionId + AppConfig.GROUPS_URL;
+
+    return this.http.get(url, options)
+      .map((response: Response, index: number) => Group.toObjectArray(response.json()));
+  }
+
+  public deleteAssignedGroup(collectionId, groupId){
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = AppConfig.COLLECTION_URL+'/'+collectionId+AppConfig.GROUPS_URL+'/rel/'+groupId;
+
+
+    return this.http.delete(url,options)
       .map(response => {
         return response.json()
       })
