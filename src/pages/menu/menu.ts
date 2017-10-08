@@ -98,19 +98,13 @@ export class MenuPage {
     //var regexp = /teachers/gi;
     //if(this.utilsService.getMyUrl().search(regexp) >= 0) {
     if(this.utilsService.role === Role.TEACHER) {
-      this.collectionService.getMyCollections().subscribe(
-        ((value: Array<CollectionCard>)=> this.navController.push(CollectionTpage, { collectionCards: value })),
-        error => {
-          this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        });
-
+     this.navController.push(CollectionTpage).catch(error => {
+       this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+     });
     } else {
-
-      this.collectionService.getMyCollections().subscribe(
-        ((value: Array<CollectionCard>)=> this.navController.push(CollectionSpage, { collectionCards: value })),
-        error => {
-          this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        });
+      this.navController.push(CollectionSpage).catch(error => {
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+      });
 
     }
 

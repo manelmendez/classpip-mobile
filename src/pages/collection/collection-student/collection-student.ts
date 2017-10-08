@@ -30,8 +30,17 @@ export class CollectionSpage {
     public ionicService: IonicService,
     public navController: NavController) {
 
-    this.collectionCards = this.navParams.data.collectionCards;
+  }
 
+  /**
+   * Fires when the page appears on the screen.
+   * Used to get all the data needed in page
+   */
+  public ionViewDidEnter(): void {
+
+    this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
+
+    this.getCollections();
   }
 
   /**
@@ -42,6 +51,7 @@ export class CollectionSpage {
   private getCollections(refresher?: Refresher): void {
     this.collectionService.getMyCollections().finally(() => {
       refresher ? refresher.complete() : null;
+      this.ionicService.removeLoading();
     }).subscribe(
       ((value: Array<CollectionCard>) => this.collectionCards = value),
       error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
