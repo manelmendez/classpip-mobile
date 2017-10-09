@@ -8,9 +8,10 @@ import {CollectionCreate} from "./create-collection/create-collection";
 import {CollectionCard} from "../../../model/collectionCard";
 import {IonicService} from "../../../../providers/ionic.service";
 import {Card} from "../../../../model/card";
+import {CardCreate} from "../create-card/create-card";
 
 
-declare var google;
+declare let google;
 
 
 @Component({
@@ -44,5 +45,9 @@ export class CollectionTeacherDetail {
     }).subscribe(
       ((value: Array<Card>) => this.cards = value),
       error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
+  }
+
+  private goToCreateCard() {
+    this.navController.push(CardCreate, {id: this.id});
   }
 }

@@ -34,6 +34,7 @@ import { CollectionStudentDetail } from "../pages/collection/collection-student/
 import { CollectionAssign } from "../pages/collection/collection-teacher/assign-collection/assign-collection";
 import { CollectionEdit } from "../pages/collection/collection-teacher/edit-collection/edit-collection";
 import { CollectionsAssigned } from "../pages/collection/collection-teacher/assigned-collections/assigned-collections";
+import {CardCreate} from "../pages/collection/collection-teacher/create-card/create-card";
 
 
 // pipes
@@ -93,6 +94,7 @@ export function exportTranslateStaticLoader(http: Http) {
     CollectionAssign,
     CollectionEdit,
     CollectionsAssigned,
+    CardCreate,
     // pipes
     OrderByIdPipe,
     OrderByNamePipe,
@@ -130,7 +132,8 @@ export function exportTranslateStaticLoader(http: Http) {
     CollectionStudentDetail,
     CollectionAssign,
     CollectionEdit,
-    CollectionsAssigned
+    CollectionsAssigned,
+    CardCreate
   ],
   providers: [
     IonicService,
