@@ -15,6 +15,7 @@ export class AppConfig {
   public static get GRADES_URL(): string { return this.SERVER_URL + '/api/grades'; }
   public static get GROUP_URL(): string { return this.SERVER_URL + '/api/groups'; }
   public static get COLLECTION_URL(): string { return this.SERVER_URL + '/api/collectionCards'; }
+  public static get CARD_URL(): string { return this.SERVER_URL + '/api/cards'; }
 
 
   public static get LOGIN_URL(): string { return '/login'; }
@@ -26,6 +27,7 @@ export class AppConfig {
   public static get COUNT_URL(): string { return '/count'; }
   public static get GROUPS_URL(): string { return '/groups'; }
   public static get COLLECTIONS_URL(): string { return '/collectionCards'; }
+  public static get CARDS_URL(): string { return '/cards'; }
 
 
 

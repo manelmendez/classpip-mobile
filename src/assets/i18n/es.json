@@ -98,5 +98,13 @@
   },
   "COLLECTIONS-ASSIGNED": {
     "TITLE": "Grupos asignados"
+  },
+  "CREATE-CARD": {
+    "TITLE": "Crear Carta",
+    "NAME": "Nombre de la nueva carta",
+    "RATIO": "Ratio de aparición de la carta",
+    "RANK": "Calidad de la carta (rareza)",
+    "IMAGE": "Imagen de la carta",
+    "CREATE": "CREAR"
   }
 }

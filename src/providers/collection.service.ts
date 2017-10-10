@@ -191,4 +191,25 @@ export class CollectionService {
       })
       .catch ((error : Response) => this.utilsService.handleAPIError(error));
   }
+
+  public postCard(card: Card){
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = AppConfig.COLLECTION_URL + '/' + card.collectionId + AppConfig.CARDS_URL;
+    let body = {
+      "name": card.name,
+      "ratio": card.ratio,
+      "rank": card.rank,
+      "image": card.image
+    };
+
+    return this.http.post(url,body,options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
 }
