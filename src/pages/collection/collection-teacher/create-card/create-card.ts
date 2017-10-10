@@ -31,6 +31,7 @@ export class CardCreate {
 
   @ViewChild('map') mapElement: ElementRef;
   public card: Card = new Card();
+  public returnedCard: Card = new Card();
   public cardToPost: Card = new Card();
   public profile: Profile;
   public id: string;
@@ -97,6 +98,7 @@ export class CardCreate {
     this.cardToPost.image=dbpath;
     this.collectionService.postCard(this.cardToPost).subscribe(
       response => {
+        this.returnedCard = response;
         this.utilsService.presentToast('Card created successfully');
         this.navController.setRoot(MenuPage).then(()=>{
           this.navController.push(CollectionTpage);

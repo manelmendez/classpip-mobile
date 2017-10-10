@@ -198,12 +198,11 @@ export class CollectionService {
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
     });
 
-    let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL;
+    let url: string = AppConfig.COLLECTION_URL + '/' + card.collectionId + AppConfig.CARDS_URL;
     let body = {
       "name": card.name,
       "ratio": card.ratio,
       "rank": card.rank,
-      "collectionId": card.collectionId,
       "image": card.image
     };
 
