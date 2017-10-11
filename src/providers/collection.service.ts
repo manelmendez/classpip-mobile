@@ -7,6 +7,7 @@ import {CollectionCard} from "../model/collectionCard";
 import {AppConfig} from "../app/app.config";
 import {Card} from "../model/card";
 import {Group} from "../model/group";
+import {Student} from "../model/student";
 
 
 @Injectable()
@@ -207,6 +208,19 @@ export class CollectionService {
     };
 
     return this.http.post(url,body,options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
+
+  public assignCollectionToStudent (studentId, collectionId) {
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+    let url: string = AppConfig.COLLECTION_URL+'/'+collectionId+AppConfig.STUDENTS_URL+'/rel/'+studentId;
+
+    return this.http.put(url,options)
       .map(response => {
         return response.json()
       })

@@ -17,6 +17,8 @@ import {Profile} from "../../../../model/profile";
 import {Group} from "../../../../model/group";
 import {CollectionTpage} from "../collection-teacher";
 import {MenuPage} from "../../../menu/menu";
+import {GroupService} from "../../../../providers/group.service";
+import {Student} from "../../../../model/student";
 
 declare let google;
 declare let cordova;
@@ -33,12 +35,13 @@ export class CollectionAssign {
   loading: Loading;
   public profile: Profile;
   public groups: Array<Group>;
-
+  public students: Array<Student>;
   constructor(
     public navParams: NavParams,
     public navController: NavController,
     public utilsService: UtilsService,
     public collectionService: CollectionService,
+    public groupService: GroupService,
     public translateService: TranslateService,
     public ionicService: IonicService,
     public platform: Platform,
@@ -51,7 +54,15 @@ export class CollectionAssign {
   public assignGroup(collectionId, groupId) {
     this.collectionService.assignCollection(collectionId, groupId).subscribe(
       response => {
-        this.utilsService.presentToast('Collection assigned to group successfuly');
+        this.groupService.getMyGroupStudents(groupId).subscribe(students => {
+          this.students = students;
+          this.students.forEach( (element) => {
+            this.collectionService.assignCollectionToStudent(element.id, collectionId).subscribe(response => {
+
+            })
+          });
+          this.utilsService.presentToast('Collection assigned to group successfuly');
+        });
         this.navController.setRoot(MenuPage).then(()=>{
           this.navController.push(CollectionTpage);
         });
