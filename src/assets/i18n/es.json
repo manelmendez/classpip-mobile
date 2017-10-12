@@ -106,5 +106,13 @@
     "RANK": "Calidad de la carta (rareza)",
     "IMAGE": "Imagen de la carta",
     "CREATE": "CREAR"
+  },
+  "EDIT-CARD": {
+    "TITLE": "Editar carta",
+    "NAME": "Nombre de la carta",
+    "RATIO": "Ratio de aparición de la carta",
+    "RANK": "Calidad de la carta (rareza)",
+    "IMAGE": "Imagen de la carta",
+    "EDIT": "EDITAR"
   }
 }
