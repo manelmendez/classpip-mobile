@@ -17,20 +17,21 @@ import { MenuPage } from "../../../menu/menu";
 import { UserService } from "../../../../providers/user.service";
 import { UploadImageService } from "../../../../providers/uploadImage.service";
 import {CollectionTpage} from "../collection-teacher";
+import {Card} from "../../../../model/card";
 
 declare let google;
 declare let cordova;
 
 
 @Component({
-  selector: 'page-edit-collection',
-  templateUrl: './edit-collection.html'
+  selector: 'page-edit-card',
+  templateUrl: './edit-card.html'
 })
-export class CollectionEdit {
+export class CardEdit {
 
   @ViewChild('map') mapElement: ElementRef;
-  public collectionCard: CollectionCard = new CollectionCard();
-  public collectionToPost: CollectionCard = new CollectionCard();
+  public card: Card = new Card();
+  public cardToPost: Card = new Card();
   public profile: Profile;
   public groups: Array<Group>;
   oldImage: string = null;
@@ -44,28 +45,27 @@ export class CollectionEdit {
     public uploadImageService: UploadImageService,
     public translateService: TranslateService,
     public ionicService: IonicService,
-    public userService: UserService,
     private camera: Camera,
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform,
     ) {
-    this.collectionCard = this.navParams.data.collectionCard;
-    this.oldImage = this.collectionCard.image;
+    this.card = this.navParams.data.card;
+    this.oldImage = this.card.image;
   }
 
-  public editCollection(): void {
-    if(this.oldImage===this.collectionCard.image){
+  public editCard(): void {
+    if(this.oldImage===this.card.image){
       let dbpath = this.oldImage;
       try{
-        this.putNewCollection(dbpath);
+        this.putNewCard(dbpath);
       }
       catch(error){
         alert(error);
       }
     }
     else{
-      this.uploadImageService.uploadImage(this.collectionCard.image);
-      this.putNewCollection(this.collectionCard.image);
+      this.uploadImageService.uploadImage(this.card.image);
+      this.putNewCard(this.card.image);
     }
   }
 
@@ -82,13 +82,13 @@ export class CollectionEdit {
         {
           text: 'Load from Library',
           handler: () => {
-            this.collectionCard.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+            this.card.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
           }
         },
         {
           text: 'Use Camera',
           handler: () => {
-            this.collectionCard.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.CAMERA);
+            this.card.image=this.uploadImageService.takePicture(this.camera.PictureSourceType.CAMERA);
           }
         },
         {
@@ -105,25 +105,21 @@ export class CollectionEdit {
    * server and save it on DB
    * @param dbpath
    */
-  public putNewCollection(dbpath): void {
-    this.collectionToPost.name=this.collectionCard.name;
-    this.collectionToPost.num=this.collectionCard.num;
-    this.collectionToPost.image=dbpath;
-    this.collectionToPost.id=this.collectionCard.id;
-    this.userService.getMyProfile().finally(() => {
-      this.collectionToPost.createdBy = this.profile.username;
-      this.collectionService.editCollection(this.collectionToPost).subscribe(
-        response => {
-          this.utilsService.presentToast('Collection edited successfully');
-          this.navController.setRoot(MenuPage).then(()=>{
-            this.navController.push(CollectionTpage);
-          });        },
-        error => {
-          this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
-        });
-    }).subscribe(
-      ((value: Profile) => this.profile = value)
-    );
+  public putNewCard(dbpath): void {
+    this.cardToPost.name=this.card.name;
+    this.cardToPost.ratio=this.card.ratio;
+    this.cardToPost.rank=this.card.rank;
+    this.cardToPost.image=dbpath;
+    this.cardToPost.id=this.card.id;
+    this.collectionService.editCard(this.cardToPost).subscribe(
+      response => {
+        this.utilsService.presentToast('Card edited successfully');
+        this.navController.setRoot(MenuPage).then(()=>{
+          this.navController.push(CollectionTpage);
+        });        },
+      error => {
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+      });
   }
 
 }

@@ -11,7 +11,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-item *ngFor="let card of cards">
+    <ion-item *ngFor="let card of cards" (press)="onHold(card)">
       <ion-thumbnail item-left>
         <img [src]="card.image">
       </ion-thumbnail>

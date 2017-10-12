@@ -226,4 +226,40 @@ export class CollectionService {
       })
       .catch ((error : Response) => this.utilsService.handleAPIError(error));
   }
+
+  public deleteCard(cardId){
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = AppConfig.CARD_URL + '/' + cardId;
+
+
+    return this.http.delete(url,options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
+  public editCard(card: Card){
+
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = AppConfig.CARD_URL  + '/' + card.id;
+    let body = {
+      "name": card.name,
+      "image": card.image,
+      "ratio": card.ratio,
+      "rank": card.rank
+    };
+
+    return this.http.put(url, body, options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
 }

@@ -89,11 +89,11 @@ export class CollectionTpage {
    *
    * @param id
    */
-  public goToCollectionDetail(id): void {
+  public goToCollectionDetail(collectionCard): void {
     this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
-    this.collectionService.getCollectionDetails(id).subscribe(
-      ((value: Array<Card>)=> this.navController.push(CollectionTeacherDetail, { cards: value, id: id })),
+    this.collectionService.getCollectionDetails(collectionCard.id).subscribe(
+      ((value: Array<Card>)=> this.navController.push(CollectionTeacherDetail, { cards: value, collectionCard: collectionCard })),
       error => {
         this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
       });
