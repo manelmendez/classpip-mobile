@@ -18,6 +18,7 @@ import { UserService } from "../../../../providers/user.service";
 import { UploadImageService } from "../../../../providers/uploadImage.service";
 import {CollectionTpage} from "../collection-teacher";
 import {Card} from "../../../../model/card";
+import {AppConfig} from "../../../../app/app.config";
 
 declare let google;
 declare let cordova;
@@ -65,7 +66,7 @@ export class CardEdit {
     }
     else{
       this.uploadImageService.uploadImage(this.card.image);
-      this.putNewCard(this.card.image);
+      this.putNewCard(AppConfig.SERVER_URL+/collectionTmp/+this.card.image);
     }
   }
 

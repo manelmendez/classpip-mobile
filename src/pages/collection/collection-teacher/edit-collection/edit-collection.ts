@@ -17,6 +17,7 @@ import { MenuPage } from "../../../menu/menu";
 import { UserService } from "../../../../providers/user.service";
 import { UploadImageService } from "../../../../providers/uploadImage.service";
 import {CollectionTpage} from "../collection-teacher";
+import {AppConfig} from "../../../../app/app.config";
 
 declare let google;
 declare let cordova;
@@ -65,7 +66,7 @@ export class CollectionEdit {
     }
     else{
       this.uploadImageService.uploadImage(this.collectionCard.image);
-      this.putNewCollection(this.collectionCard.image);
+      this.putNewCollection(AppConfig.SERVER_URL+/collectionTmp/+this.collectionCard.image);
     }
   }
 

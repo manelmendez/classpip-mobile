@@ -18,6 +18,7 @@ import {UploadImageService} from "../../../../providers/uploadImage.service";
 import {CollectionTpage} from "../collection-teacher";
 import {Card} from "../../../../model/card";
 import {CollectionService} from "../../../../providers/collection.service";
+import {AppConfig} from "../../../../app/app.config";
 
 declare let google;
 declare let cordova;
@@ -52,7 +53,7 @@ export class CardCreate {
   }
   public createCard(): void {
     this.uploadImageService.uploadImage(this.card.image);
-    this.postNewCard(this.card.image);
+    this.postNewCard(AppConfig.SERVER_URL+/collectionTmp/+this.card.image);
   }
 
   /**
