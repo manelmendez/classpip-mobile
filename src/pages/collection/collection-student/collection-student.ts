@@ -11,7 +11,7 @@ import {CollectionStudentDetail} from "./collection-student-detail/collection-st
 import {Card} from "../../../model/card";
 
 
-declare var google;
+declare let google;
 
 
 @Component({
@@ -65,7 +65,29 @@ export class CollectionSpage {
     this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
 
     this.collectionService.getCollectionDetails(id).subscribe(
-      ((value: Array<Card>)=> this.navController.push(CollectionStudentDetail, { cards: value, id: id })),
+      ((value: Array<Card>)=> {
+        let allCards : Array<Card> = value;
+        let assignedCardsIds = Array();
+        let finalCards = Array<Card>();
+        let unknownCard = new Card();
+        unknownCard.name="No conseguida";
+        unknownCard.image="https://image.flaticon.com/icons/png/512/37/37232.png";
+        this.collectionService.getAssignedCards().subscribe((assignedCards: Array<Card>)=> {
+          assignedCards.forEach((assignedCard) => {
+              assignedCardsIds.push(assignedCard.id);
+          });
+          allCards.forEach((allCard) => {
+            if (assignedCardsIds.indexOf(allCard.id) == -1){
+              finalCards.push(unknownCard);
+            }
+            else {
+              finalCards.push(allCard);
+            }
+          });
+        });
+
+        this.navController.push(CollectionStudentDetail, { cards: finalCards, id: id })
+      }),
       error => {
         this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
       });

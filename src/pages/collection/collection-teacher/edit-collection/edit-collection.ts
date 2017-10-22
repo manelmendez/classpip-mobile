@@ -66,7 +66,7 @@ export class CollectionEdit {
     }
     else{
       this.uploadImageService.uploadImage(this.collectionCard.image);
-      this.putNewCollection(AppConfig.SERVER_URL+/collectionTmp/+this.collectionCard.image);
+      this.putNewCollection(AppConfig.SERVER_URL+/public/+this.collectionCard.image);
     }
   }
 

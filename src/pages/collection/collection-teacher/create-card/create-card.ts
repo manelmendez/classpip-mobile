@@ -53,7 +53,7 @@ export class CardCreate {
   }
   public createCard(): void {
     this.uploadImageService.uploadImage(this.card.image);
-    this.postNewCard(AppConfig.SERVER_URL+/collectionTmp/+this.card.image);
+    this.postNewCard(AppConfig.SERVER_URL+/public/+this.card.image);
   }
 
   /**

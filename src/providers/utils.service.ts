@@ -79,7 +79,7 @@ export class UtilsService {
   /* tslint:disable */
   public handleAPIError(response: Response): Observable<any> {
     /* tslint:enable */
-
+    alert(response);
     let message: string = '';
     let error: Error = Error.toObject(response.json().error);
     console.error(error);

@@ -17,7 +17,6 @@ import {Group} from "../../../model/group";
 import {UtilsService} from "../../../providers/utils.service";
 import {Profile} from "../../../model/profile";
 import {UserService} from "../../../providers/user.service";
-import {MenuPage} from "../../menu/menu";
 import {CollectionEdit} from "./edit-collection/edit-collection";
 import {CollectionsAssigned} from "./assigned-collections/assigned-collections";
 import {MatterService} from "../../../providers/matter.service";
@@ -179,53 +178,54 @@ export class CollectionTpage {
 
   public selectDelete(collectionCard): void {
     this.userService.getMyProfile().subscribe(
-      ((value: Profile) => this.profile = value),
+      ((value: Profile) => {
+        this.profile = value;
+        if(collectionCard.createdBy===this.profile.username){
+          let confirm = this.alertCtrl.create({
+            title: 'Esta colección ha sido creada por ti',
+            message: 'Si la borras se eliminará completamente, estás de acuerdo?',
+            buttons: [
+              {
+                text: 'Cancelar',
+                handler: () => {
+
+                }
+              },
+              {
+                text: 'Aceptar',
+                handler: () => {
+                  this.boolean=true;
+                  this.deleteCollection(collectionCard.id);
+                }
+              }
+            ]
+          });
+          confirm.present();
+        }
+        else {
+          let confirm = this.alertCtrl.create({
+            title: 'Esta colección NO ha sido creada por ti',
+            message: 'Estás seguro que deseas borrarla de tus colecciones?',
+            buttons: [
+              {
+                text: 'Cancelar',
+                handler: () => {
+
+                }
+              },
+              {
+                text: 'Aceptar',
+                handler: () => {
+                  this.boolean=false;
+                  this.deleteCollection(collectionCard.id);
+                }
+              }
+            ]
+          });
+          confirm.present();
+        }
+      })
     );
-    if(collectionCard.createdBy===this.profile.username){
-      let confirm = this.alertCtrl.create({
-        title: 'Esta colección ha sido creada por ti',
-        message: 'Si la borras se eliminará completamente, estás de acuerdo?',
-        buttons: [
-          {
-            text: 'Cancelar',
-            handler: () => {
-
-            }
-          },
-          {
-            text: 'Aceptar',
-            handler: () => {
-              this.boolean=true;
-              this.deleteCollection(collectionCard.id);
-            }
-          }
-        ]
-      });
-      confirm.present();
-    }
-    else {
-      let confirm = this.alertCtrl.create({
-        title: 'Esta colección NO ha sido creada por ti',
-        message: 'Estás seguro que deseas borrarla de tus colecciones?',
-        buttons: [
-          {
-            text: 'Cancelar',
-            handler: () => {
-
-            }
-          },
-          {
-            text: 'Aceptar',
-            handler: () => {
-              this.boolean=false;
-              this.deleteCollection(collectionCard.id);
-            }
-          }
-        ]
-      });
-      confirm.present();
-    }
-
   }
   public deleteCollection(collectionId) {
     if (this.boolean==true){

@@ -66,7 +66,7 @@ export class CardEdit {
     }
     else{
       this.uploadImageService.uploadImage(this.card.image);
-      this.putNewCard(AppConfig.SERVER_URL+/collectionTmp/+this.card.image);
+      this.putNewCard(AppConfig.SERVER_URL+/public/+this.card.image);
     }
   }
 

@@ -30,7 +30,6 @@ export class CollectionService {
     });
 
     let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL;
-    console.log(url);
 
     return this.http.get(url, options)
       .map((response: Response, index: number) => CollectionCard.toObjectArray(response.json()));
@@ -47,7 +46,6 @@ export class CollectionService {
     });
 
     let url: string = this.utilsService.getMyApiUrl() + AppConfig.COLLECTIONS_URL +"/"+id+"/cards";
-    console.log(url);
 
     return this.http.get(url, options)
       .map((response: Response, index: number) => Card.toObjectArray(response.json()));
@@ -89,11 +87,10 @@ export class CollectionService {
    */
   public assignCollection(collectionId, groupId) {
     let options: RequestOptions = new RequestOptions({
-      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id),
     });
     let url: string = AppConfig.COLLECTION_URL+'/'+collectionId+AppConfig.GROUPS_URL+'/rel/'+groupId;
-
-    return this.http.put(url,options)
+    return this.http.put(url,null,options)
       .map(response => {
         return response.json()
       })
@@ -220,7 +217,7 @@ export class CollectionService {
     });
     let url: string = AppConfig.COLLECTION_URL+'/'+collectionId+AppConfig.STUDENTS_URL+'/rel/'+studentId;
 
-    return this.http.put(url,options)
+    return this.http.put(url,null,options)
       .map(response => {
         return response.json()
       })
@@ -257,6 +254,19 @@ export class CollectionService {
     };
 
     return this.http.put(url, body, options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
+  public getAssignedCards() {
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+
+    let url: string = this.utilsService.getMyUrl() + AppConfig.CARDS_URL;
+
+    return this.http.get(url, options)
       .map(response => {
         return response.json()
       })
