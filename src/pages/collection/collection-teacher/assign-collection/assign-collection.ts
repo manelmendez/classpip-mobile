@@ -68,7 +68,6 @@ export class CollectionAssign {
         });
       },
       error => {
-        this.ionicService.removeLoading();
         this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
       });
   }

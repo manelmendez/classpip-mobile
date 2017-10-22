@@ -52,7 +52,7 @@ export class CollectionCreate {
   }
   public createCollection(): void {
     this.uploadImageService.uploadImage(this.collectionCard.image);
-    this.postNewCollection(AppConfig.SERVER_URL+/collectionTmp/+this.collectionCard.image);
+    this.postNewCollection(AppConfig.SERVER_URL+/public/+this.collectionCard.image);
   }
 
   /**
