@@ -146,7 +146,6 @@ export class CollectionTpage {
       ((value: Array<Group>) => this.assignedGroups = value),
       error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error)
     );
-
   }
 
   public goToAssignedCollections(collectionId): void {

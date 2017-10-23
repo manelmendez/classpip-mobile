@@ -133,7 +133,6 @@ export class CollectionService {
 
     let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL + '/rel/' + collectionId;
 
-
     return this.http.delete(url,options)
       .map(response => {
         return response.json()
@@ -181,7 +180,6 @@ export class CollectionService {
     });
 
     let url: string = AppConfig.COLLECTION_URL+'/'+collectionId+AppConfig.GROUPS_URL+'/rel/'+groupId;
-
 
     return this.http.delete(url,options)
       .map(response => {

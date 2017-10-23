@@ -232,26 +232,21 @@ export class CollectionTeacherDetail {
     });
     for (let i = 0; i<num; i++){
       let randomNumber = this.randomNumber(1,100);
-      alert(randomNumber);
       if ((randomNumber > 65)&&(altoArray.length!=0)){
         let cardPosition = this.randomNumber(0,altoArray.length);
-        alert(altoArray[cardPosition].name);
         randomCards.push(altoArray[cardPosition]);
       }
       else if ((randomNumber > 35)&&(medioArray.length!=0)){
         let cardPosition = this.randomNumber(0,medioArray.length);
-        alert(medioArray[cardPosition].name);
         randomCards.push(medioArray[cardPosition]);
 
       }
       else if ((randomNumber > 10)&&(bajoArray.length!=0)){
         let cardPosition = this.randomNumber(0,bajoArray.length);
-        alert(bajoArray[cardPosition].name);
         randomCards.push(bajoArray[cardPosition]);
       }
       else if ((randomNumber > 0)&&(raroArray.length!=0)){
         let cardPosition = this.randomNumber(0,raroArray.length);
-        alert(raroArray[cardPosition].name);
         randomCards.push(raroArray[cardPosition]);
       }
     }
