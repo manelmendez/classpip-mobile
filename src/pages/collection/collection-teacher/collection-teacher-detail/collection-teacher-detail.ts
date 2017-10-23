@@ -7,12 +7,16 @@ import {CollectionService} from "../../../../providers/collection.service";
 import {CollectionCreate} from "./create-collection/create-collection";
 import {IonicService} from "../../../../providers/ionic.service";
 import {Card} from "../../../../model/card";
+import {Group} from "../../../../model/group";
 import {CardCreate} from "../create-card/create-card";
 import {Profile} from "../../../../model/profile";
 import {UserService} from "../../../../providers/user.service";
 import {UtilsService} from "../../../../providers/utils.service";
 import {CollectionCard} from "../../../../model/collectionCard";
 import {CardEdit} from "../edit-card/edit-card";
+import {CardAssign} from "../assign-card/assign-card";
+import {GradeService} from "../../../../providers/grade.service";
+import {MatterService} from "../../../../providers/matter.service";
 
 declare let google;
 
@@ -34,6 +38,8 @@ export class CollectionTeacherDetail {
     public utilsService: UtilsService,
     public collectionService: CollectionService,
     public userService: UserService,
+    public gradeService: GradeService,
+    public matterService: MatterService,
     public ionicService: IonicService,
     public navController: NavController,
     public actionSheetCtrl: ActionSheetController,
@@ -84,6 +90,41 @@ export class CollectionTeacherDetail {
 
   public goToEditCard(card) {
     this.navController.push(CardEdit, {card:card});
+  }
+
+  public goToAssignCard(cardId){
+    let assignedGroups = Array<Group>();
+    let groupArray = Array<Group>();
+    this.collectionService.getAssignedGroups(this.collectionCard.id).finally(()=>{
+      if (assignedGroups.length == 0) {
+        this.utilsService.presentToast("Esta colección no tiene ningún grupo asignado aún");
+      }
+      else {
+        //now get all parameters inside group
+        assignedGroups.forEach(group => {
+          this.gradeService.getGrade(group.gradeId).subscribe(
+            grade => {
+              group.grade = grade;
+              this.matterService.getMatter(group.matterId).subscribe(
+                matter => {
+                  group.matter = matter;
+                  groupArray.push(group);
+                  if (groupArray.length === assignedGroups.length) {
+                    this.navController.push(CardAssign, {
+                      groups: groupArray,
+                      collectionId: this.collectionCard.id,
+                      cardId: cardId
+                    });
+                  }
+                })
+            })
+        });
+      }
+    })
+    .subscribe(
+      ((value: Array<Group>) => assignedGroups = value
+    ),
+    error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error))
   }
 
   public onHold(card){
@@ -137,6 +178,12 @@ export class CollectionTeacherDetail {
             }).subscribe(
               ((value: Profile) => this.profile = value),
             );
+          }
+        },
+        {
+          text: 'Asignar',
+          handler: () => {
+            this.goToAssignCard(card.id);
           }
         },
         {

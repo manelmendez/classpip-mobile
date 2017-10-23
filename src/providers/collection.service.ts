@@ -272,4 +272,17 @@ export class CollectionService {
       })
       .catch ((error : Response) => this.utilsService.handleAPIError(error));
   }
+
+  public assignCardToStudent (studentId, cardId) {
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+    let url: string = AppConfig.CARD_URL+'/'+cardId+'/student/rel/'+studentId;
+
+    return this.http.put(url,null,options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
 }
