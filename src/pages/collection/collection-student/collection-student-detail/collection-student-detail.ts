@@ -45,18 +45,6 @@ export class CollectionStudentDetail {
     this.prepareGrid();
     this.ionicService.removeLoading();
   }
-  /**
-   * This method returns the collection list of the
-   * current teacher
-   * @param {Refresher} Refresher element
-   */
-  private getCollectionDetail(refresher?: Refresher): void {
-    this.collectionService.getCollectionDetails(this.id).finally(() => {
-      refresher ? refresher.complete() : null;
-    }).subscribe(
-      ((value: Array<Card>) => this.cards = value),
-      error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error));
-  }
 
   /**
    * This method converts an array of students into a

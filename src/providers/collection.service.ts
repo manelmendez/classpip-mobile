@@ -133,7 +133,6 @@ export class CollectionService {
 
     let url: string = this.utilsService.getMyUrl() + AppConfig.COLLECTIONS_URL + '/rel/' + collectionId;
 
-
     return this.http.delete(url,options)
       .map(response => {
         return response.json()
@@ -181,7 +180,6 @@ export class CollectionService {
     });
 
     let url: string = AppConfig.COLLECTION_URL+'/'+collectionId+AppConfig.GROUPS_URL+'/rel/'+groupId;
-
 
     return this.http.delete(url,options)
       .map(response => {
@@ -267,6 +265,19 @@ export class CollectionService {
     let url: string = this.utilsService.getMyUrl() + AppConfig.CARDS_URL;
 
     return this.http.get(url, options)
+      .map(response => {
+        return response.json()
+      })
+      .catch ((error : Response) => this.utilsService.handleAPIError(error));
+  }
+
+  public assignCardToStudent (studentId, cardId) {
+    let options: RequestOptions = new RequestOptions({
+      headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
+    });
+    let url: string = AppConfig.CARD_URL+'/'+cardId+AppConfig.STUDENTS_URL+'/rel/'+studentId;
+
+    return this.http.put(url,null,options)
       .map(response => {
         return response.json()
       })

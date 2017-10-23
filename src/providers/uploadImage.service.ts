@@ -98,13 +98,11 @@ export class UploadImageService {
    */
   public uploadImage(path) {
     // Returned String
-    let imagePath= new String();
-
+    let imagePath= String();
     // Destination URL
     let url = AppConfig.SERVER_URL+"/upload";
     // File for Upload
     let targetPath = this.pathForImage(path);
-
     // File name only
     let filename = path;
 
@@ -115,9 +113,7 @@ export class UploadImageService {
       mimeType: "image/jpeg",
       params : {'fileName': filename}
     };
-
     const fileTransfer: TransferObject = this.transfer.create();
-
     // Use the FileTransfer to upload the image
     fileTransfer.upload(targetPath, url, options).then(data => {
       imagePath = data.response;

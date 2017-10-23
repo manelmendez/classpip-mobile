@@ -114,5 +114,11 @@
     "RANK": "Calidad de la carta (rareza)",
     "IMAGE": "Imagen de la carta",
     "EDIT": "EDITAR"
+  },
+  "CARD-ASSIGN": {
+    "TITLE": "Selecciona un grupo"
+  },
+  "CARD-ASSIGN-STUDENT": {
+  "TITLE": "Asignar carta a estudiante"
   }
 }

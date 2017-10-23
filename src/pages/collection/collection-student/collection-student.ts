@@ -63,7 +63,6 @@ export class CollectionSpage {
    */
   public goToCollectionDetail(id): void {
     this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
-
     this.collectionService.getCollectionDetails(id).subscribe(
       ((value: Array<Card>)=> {
         let allCards : Array<Card> = value;
@@ -85,14 +84,11 @@ export class CollectionSpage {
             }
           });
         });
-
         this.navController.push(CollectionStudentDetail, { cards: finalCards, id: id })
       }),
       error => {
         this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
       });
-
-
     this.ionicService.removeLoading();
   }
 }
