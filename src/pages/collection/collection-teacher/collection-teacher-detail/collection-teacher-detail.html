@@ -21,7 +21,7 @@
         <img [src]="card.image">
       </ion-thumbnail>
       <h2>{{ card.name }}</h2>
-      <h3>{{ card.rank }}</h3>
+      <h3>Nivel: {{ card.rank }}</h3>
     </ion-item>
   </ion-list>
   <button ion-button round class="createButton" (click)="goToCreateCard()">Añadir carta</button>
