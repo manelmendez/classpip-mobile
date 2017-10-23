@@ -277,7 +277,7 @@ export class CollectionService {
     let options: RequestOptions = new RequestOptions({
       headers: this.utilsService.setAuthorizationHeader(new Headers(), this.utilsService.currentUser.id)
     });
-    let url: string = AppConfig.CARD_URL+'/'+cardId+'/student/rel/'+studentId;
+    let url: string = AppConfig.CARD_URL+'/'+cardId+AppConfig.STUDENTS_URL+'/rel/'+studentId;
 
     return this.http.put(url,null,options)
       .map(response => {
