@@ -1,5 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import {Refresher, NavParams, NavController, ActionSheetController, AlertController} from 'ionic-angular';
+import {
+  Refresher, NavParams, NavController, ActionSheetController, AlertController,
+  MenuController
+} from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import {Page} from "../../../model/page";
@@ -42,6 +45,7 @@ export class CollectionTeacherDetail {
     public matterService: MatterService,
     public ionicService: IonicService,
     public navController: NavController,
+    public menuController: MenuController,
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController) {
 
@@ -49,6 +53,15 @@ export class CollectionTeacherDetail {
     this.collectionCard = this.navParams.data.collectionCard;
   }
 
+  /**
+   * Fires when the page appears on the screen.
+   * Used to get all the data needed in page
+   */
+  public ionViewDidEnter(): void {
+
+    this.menuController.enable(true);
+
+  }
   /**
    * This method returns the collection list of the
    * current teacher
@@ -92,7 +105,8 @@ export class CollectionTeacherDetail {
     this.navController.push(CardEdit, {card:card});
   }
 
-  public goToAssignCard(cardId){
+  public goToAssignCard(cards){
+    let assignCards = cards;
     let assignedGroups = Array<Group>();
     let groupArray = Array<Group>();
     this.collectionService.getAssignedGroups(this.collectionCard.id).finally(()=>{
@@ -113,7 +127,7 @@ export class CollectionTeacherDetail {
                     this.navController.push(CardAssign, {
                       groups: groupArray,
                       collectionId: this.collectionCard.id,
-                      cardId: cardId
+                      cards: assignCards
                     });
                   }
                 })
@@ -127,7 +141,7 @@ export class CollectionTeacherDetail {
     error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error))
   }
 
-  public onHold(card){
+  public press(card){
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Selecciona la acción',
       buttons: [
@@ -181,9 +195,94 @@ export class CollectionTeacherDetail {
           }
         },
         {
-          text: 'Asignar',
+          text: 'Asignar a 1 estudiante',
           handler: () => {
-            this.goToAssignCard(card.id);
+            let selectedCard = Array<Card>();
+            selectedCard.push(card);
+            this.goToAssignCard(selectedCard);
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+  public goToAssignRandomCard(num) {
+    let randomCards = Array<Card>();
+    let altoArray = Array<Card>();
+    let medioArray = Array<Card>();
+    let bajoArray = Array<Card>();
+    let raroArray = Array<Card>();
+    this.cards.forEach(card => {
+      if (card.ratio === "alto"){
+        altoArray.push(card);
+      }
+      if (card.ratio === "medio"){
+        medioArray.push(card);
+      }
+      if (card.ratio === "bajo"){
+        bajoArray.push(card);
+      }
+      if (card.ratio === "raro"){
+        raroArray.push(card);
+      }
+    });
+    for (let i = 0; i<num; i++){
+      let randomNumber = this.randomNumber(1,100);
+      alert(randomNumber);
+      if ((randomNumber > 65)&&(altoArray.length!=0)){
+        let cardPosition = this.randomNumber(0,altoArray.length);
+        alert(altoArray[cardPosition].name);
+        randomCards.push(altoArray[cardPosition]);
+      }
+      else if ((randomNumber > 35)&&(medioArray.length!=0)){
+        let cardPosition = this.randomNumber(0,medioArray.length);
+        alert(medioArray[cardPosition].name);
+        randomCards.push(medioArray[cardPosition]);
+
+      }
+      else if ((randomNumber > 10)&&(bajoArray.length!=0)){
+        let cardPosition = this.randomNumber(0,bajoArray.length);
+        alert(bajoArray[cardPosition].name);
+        randomCards.push(bajoArray[cardPosition]);
+      }
+      else if ((randomNumber > 0)&&(raroArray.length!=0)){
+        let cardPosition = this.randomNumber(0,raroArray.length);
+        alert(raroArray[cardPosition].name);
+        randomCards.push(raroArray[cardPosition]);
+      }
+    }
+    this.goToAssignCard(randomCards);
+  };
+
+  public randomNumber(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
+
+  public presentActions(event: UIEvent): void {
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Selecciona la acción',
+      buttons: [
+        {
+          text: 'Asignar 1 carta aleatoria',
+          handler: () => {
+            this.goToAssignRandomCard(1);
+          }
+        },
+        {
+          text: 'Asignar 3 cartas aleatorias',
+          handler: () => {
+            this.goToAssignRandomCard(3);
+          }
+        },
+        {
+          text: 'Asignar 5 carta aleatorias',
+          handler: () => {
+            this.goToAssignRandomCard(5);
           }
         },
         {

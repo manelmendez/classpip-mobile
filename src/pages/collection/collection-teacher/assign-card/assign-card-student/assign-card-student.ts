@@ -30,7 +30,7 @@ export class CardAssignStudent {
 
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
-  public card: Card = new Card();
+  public cards: Array<Card> = Array<Card>();
   loading: Loading;
   public students: Array<Student>;
   constructor(
@@ -45,18 +45,45 @@ export class CardAssignStudent {
 
     this.collectionCard.id = this.navParams.data.id;
     this.students = this.navParams.data.students;
-    this.card.id = this.navParams.data.cardId;
+    this.cards = this.navParams.data.cards;
   }
 
   public assignCardToStudents(studentId) {
-    this.collectionService.assignCardToStudent(studentId,this.card.id).subscribe(response => {
-      this.utilsService.presentToast('Card assigned to student successfuly');
-      this.navController.setRoot(MenuPage).then(()=>{
+    for (let i=0 ; i<this.cards.length ; i++){
+      this.collectionService.assignCardToStudent(studentId,this.cards[i].id).subscribe(response => {
+          this.utilsService.presentToast('Card assigned to student successfuly');
+        },
+        error => {
+          this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+        });
+    }
+    this.navController.setRoot(MenuPage).then(()=>{
       this.navController.push(CollectionTpage);
     });
-  },
-  error => {
-  this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
-});
+  }
+
+  public assignToRandomStudent(){
+    let studentPosition = this.randomNumber(0,this.students.length);
+    let studentName;
+    this.students.forEach(student => {
+      if (student.id == this.students[studentPosition].id) {
+        studentName = student.name
+      }
+    });
+    for (let i=0 ; i<this.cards.length ; i++) {
+      this.collectionService.assignCardToStudent(this.students[studentPosition].id, this.cards[i].id).subscribe(response => {
+          this.utilsService.presentToast('Card assigned to random student successfuly (' + studentName + ')');
+          },
+          error => {
+        this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);
+      });
+    }
+    this.navController.setRoot(MenuPage).then(() => {
+      this.navController.push(CollectionTpage);
+    });
+  }
+
+  public randomNumber(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
   }
 }

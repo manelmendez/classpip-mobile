@@ -32,7 +32,7 @@ export class CardAssign {
 
   @ViewChild('map') mapElement: ElementRef;
   public collectionCard: CollectionCard = new CollectionCard();
-  public card: Card = new Card();
+  public cards: Array<Card> = Array<Card>();
   loading: Loading;
   public profile: Profile;
   public groups: Array<Group>;
@@ -50,12 +50,12 @@ export class CardAssign {
 
     this.collectionCard.id = this.navParams.data.collectionId;
     this.groups = this.navParams.data.groups;
-    this.card.id = this.navParams.data.cardId;
+    this.cards = this.navParams.data.cards;
   }
 
   public selectGroup(groupId) {
     this.groupService.getMyGroupStudents(groupId).subscribe(
-      ((value: Array<Student>) => this.navController.push(CardAssignStudent, { students: value, collectionId: this.collectionCard.id, cardId: this.card.id })
+      ((value: Array<Student>) => this.navController.push(CardAssignStudent, { students: value, collectionId: this.collectionCard.id, cards: this.cards })
       ),
       error => this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error))
   }
