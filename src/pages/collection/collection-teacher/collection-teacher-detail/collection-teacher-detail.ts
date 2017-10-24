@@ -83,7 +83,7 @@ export class CollectionTeacherDetail {
           this.navController.push(CardCreate, {id: this.collectionCard.id});
         }
         else {
-          this.utilsService.presentToast('No crear carta en esta colección porque no es tuya');
+          this.utilsService.presentToast('No puedes crear carta en esta colección porque no es tuya');
         }
       });
   }
@@ -219,37 +219,40 @@ export class CollectionTeacherDetail {
     this.cards.forEach(card => {
       if (card.ratio === "alto"){
         altoArray.push(card);
+        alert( altoArray);
+
       }
       if (card.ratio === "medio"){
-        medioArray.push(card);
+        medioArray.push(card);alert( medioArray);
       }
       if (card.ratio === "bajo"){
-        bajoArray.push(card);
+        bajoArray.push(card);alert( bajoArray);
       }
       if (card.ratio === "raro"){
-        raroArray.push(card);
+        raroArray.push(card);alert( raroArray);
       }
     });
     for (let i = 0; i<num; i++){
       let randomNumber = this.randomNumber(1,100);
       if ((randomNumber > 65)&&(altoArray.length!=0)){
-        let cardPosition = this.randomNumber(0,altoArray.length);
+        let cardPosition = this.randomNumber(0,altoArray.length -1);
         randomCards.push(altoArray[cardPosition]);
       }
       else if ((randomNumber > 35)&&(medioArray.length!=0)){
-        let cardPosition = this.randomNumber(0,medioArray.length);
+        let cardPosition = this.randomNumber(0,medioArray.length -1);
         randomCards.push(medioArray[cardPosition]);
 
       }
       else if ((randomNumber > 10)&&(bajoArray.length!=0)){
-        let cardPosition = this.randomNumber(0,bajoArray.length);
+        let cardPosition = this.randomNumber(0,bajoArray.length -1);
         randomCards.push(bajoArray[cardPosition]);
       }
       else if ((randomNumber > 0)&&(raroArray.length!=0)){
-        let cardPosition = this.randomNumber(0,raroArray.length);
+        let cardPosition = this.randomNumber(0,raroArray.length -1);
         randomCards.push(raroArray[cardPosition]);
       }
     }
+    alert(JSON.stringify(randomCards));
     this.goToAssignCard(randomCards);
   };
 
