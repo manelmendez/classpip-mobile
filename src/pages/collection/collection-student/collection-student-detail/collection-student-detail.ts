@@ -5,9 +5,9 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import {Page} from "../../../model/page";
 import {CollectionService} from "../../../../providers/collection.service";
 import {CollectionCreate} from "./create-collection/create-collection";
-import {CollectionCard} from "../../../model/collectionCard";
 import {IonicService} from "../../../../providers/ionic.service";
 import {Card} from "../../../../model/card";
+import {CollectionCard} from "../../../../model/collectionCard";
 
 
 declare var google;
@@ -21,8 +21,9 @@ export class CollectionStudentDetail {
 
   @ViewChild('map') mapElement: ElementRef;
   public cards: Array<Card>;
+  public collectionCard: CollectionCard;
   public grid: Array<Array<Card>>; //array of arrays
-  private elements: number = 3;
+  private elements: number = 2;
   public id: string;
   constructor(
     public navParams: NavParams,
@@ -32,7 +33,7 @@ export class CollectionStudentDetail {
     public navController: NavController) {
 
     this.cards = this.navParams.data.cards;
-    this.id = this.navParams.data.id;
+    this.collectionCard = this.navParams.data.collectionCard;
     this.grid = Array(Math.ceil(this.cards.length / this.elements));
   }
 

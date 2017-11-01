@@ -61,15 +61,16 @@ export class CollectionSpage {
    * Method called from the collections page to open the list of the
    * cards of the current collection
    */
-  public goToCollectionDetail(id): void {
+  public goToCollectionDetail(collectionCard): void {
     this.ionicService.showLoading(this.translateService.instant('APP.WAIT'));
-    this.collectionService.getCollectionDetails(id).subscribe(
+    this.collectionService.getCollectionDetails(collectionCard.id).subscribe(
       ((value: Array<Card>)=> {
         let allCards : Array<Card> = value;
         let assignedCardsIds = Array();
         let finalCards = Array<Card>();
         let unknownCard = new Card();
-        unknownCard.name="No conseguida";
+        unknownCard.name="Desconocida";
+        unknownCard.rank="Desconocido";
         unknownCard.image="https://image.flaticon.com/icons/png/512/37/37232.png";
         this.collectionService.getAssignedCards().subscribe((assignedCards: Array<Card>)=> {
           assignedCards.forEach((assignedCard) => {
@@ -84,7 +85,7 @@ export class CollectionSpage {
             }
           });
         });
-        this.navController.push(CollectionStudentDetail, { cards: finalCards, id: id })
+        this.navController.push(CollectionStudentDetail, { cards: finalCards, collectionCard: collectionCard })
       }),
       error => {
         this.ionicService.showAlert(this.translateService.instant('APP.ERROR'), error);

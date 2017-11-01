@@ -219,17 +219,15 @@ export class CollectionTeacherDetail {
     this.cards.forEach(card => {
       if (card.ratio === "alto"){
         altoArray.push(card);
-        alert( altoArray);
-
       }
       if (card.ratio === "medio"){
-        medioArray.push(card);alert( medioArray);
+        medioArray.push(card);
       }
       if (card.ratio === "bajo"){
-        bajoArray.push(card);alert( bajoArray);
+        bajoArray.push(card);
       }
       if (card.ratio === "raro"){
-        raroArray.push(card);alert( raroArray);
+        raroArray.push(card);
       }
     });
     for (let i = 0; i<num; i++){
@@ -252,7 +250,6 @@ export class CollectionTeacherDetail {
         randomCards.push(raroArray[cardPosition]);
       }
     }
-    alert(JSON.stringify(randomCards));
     this.goToAssignCard(randomCards);
   };
 
